@@ -6,19 +6,80 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.17.6 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
+  cached_network_image:
+  cloud_firestore: ^3.4.6
+  cloud_functions: ^3.3.6
+  confetti: ^0.6.0-nullsafetys
+  connectivity_plus:
+  cookie_jar:
+  cupertino_icons:
+  dio:
+  dio_cookie_manager:
+  firebase_analytics: ^9.3.3
+  firebase_auth: ^3.7.0
+  firebase_core: ^1.21.1
+  firebase_crashlytics: ^2.8.9
+  firebase_dynamic_links: ^4.3.6
+  firebase_messaging: ^13.0.0
+  firebase_storage: ^10.3.7
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
+  flutter_datetime_picker_bdaya:
+  flutter_hooks:
+  flutter_local_notifications:
+  flutter_localizations:
+    sdk: flutter
+  flutter_spinkit:
+  font_awesome_flutter:
+  freezed_annotation:
+  gap:
+  hooks_riverpod:
+  intl:
+  json_annotation:
+  lottie: ^1.4.1
+  package_info_plus: ^1.4.3
+  path_provider:
+  path_to_regexp:
+  shimmer:
+  simple_logger:
+  tuple:
+  uuid:
 
 dev_dependencies:
+  build_runner:
+  flutter_launcher_icons:
+  flutter_lints: ^2.0.0
+  flutter_native_splash:
   flutter_test:
     sdk: flutter
+  freezed:
+  json_serializable: ^6.3.1
+  pedantic_mono:
 
-  flutter_lints: ^2.0.0
+dependency_overrides:
+  hooks_riverpod: '>=2.0.0-0'
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/lotties/
+    - assets/images/
+
+flutter_icons:
+  android: true
+  ios: true
+
+flutter_native_splash:
+  color: '#ffffff'
+  image: 'assets/splash_icons/splash_icon_light.png'
+  color_dark: '#000000'
+  image_dark: 'assets/splash_icons/splash_icon_dark.png'
+  fullscreen: true
+  android_12:
+    icon_background_color: '#ffffff'
+    image: 'assets/splash_icons/splash_icon_light.png'
+    icon_background_color_dark: '#000000'
+    image_dark: 'assets/splash_icons/splash_icon_dark.png'
