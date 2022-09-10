@@ -1,0 +1,46 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug (local)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--debug",
+        "--dart-define=FLAVOR=local",
+        "--dart-define=GITHUB_TOKEN=xxx"
+      ]
+    },
+    {
+      "name": "Debug (dev)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--debug",
+        "--dart-define=FLAVOR=dev",
+        "--dart-define=GITHUB_TOKEN="
+      ]
+    },
+    {
+      "name": "Release (dev)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--release",
+        "--dart-define=FLAVOR=dev",
+        "--dart-define=GITHUB_TOKEN=xxx"
+      ]
+    },
+
+    {
+      "name": "Debug Functions (local)",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9229
+    }
+  ]
+}
