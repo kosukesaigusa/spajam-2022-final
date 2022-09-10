@@ -28,9 +28,8 @@ enum Flavor {
     switch (this) {
       // Note: このような画像ファイル名にハイフンは使用できない。
       case dev:
-        return '@drawable/transparent_notification_icon_dev';
       case local:
-        return '@drawable/transparent_notification_icon_local';
+        return '@drawable/transparent_notification_icon';
     }
   }
 }
