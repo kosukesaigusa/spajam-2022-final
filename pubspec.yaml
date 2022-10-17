@@ -40,7 +40,7 @@ dependencies:
   intl:
   json_annotation:
   lottie: ^1.4.1
-  package_info_plus: ^1.4.3
+  package_info_plus: ^2.0.0
   path_provider:
   path_to_regexp:
   shimmer:
