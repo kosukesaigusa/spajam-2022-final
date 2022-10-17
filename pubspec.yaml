@@ -12,7 +12,7 @@ dependencies:
   cached_network_image:
   cloud_firestore: ^3.4.6
   cloud_functions: ^3.3.6
-  confetti: ^0.6.0-nullsafetys
+  confetti: ^0.7.0
   connectivity_plus:
   cookie_jar:
   cupertino_icons:
