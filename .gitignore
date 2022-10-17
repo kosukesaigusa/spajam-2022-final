@@ -51,3 +51,6 @@ app.*.map.json
 # fabfile
 fabfile/__init__.py
 __pycache__/
+
+# FVM
+.fvm/flutter_sdk
