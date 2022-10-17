@@ -217,7 +217,7 @@ packages:
       name: confetti
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0"
+    version: "0.7.0"
   connectivity_plus:
     dependency: "direct main"
     description:
