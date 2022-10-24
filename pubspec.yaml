@@ -10,21 +10,21 @@ environment:
 
 dependencies:
   cached_network_image:
-  cloud_firestore: ^3.4.6
-  cloud_functions: ^3.3.6
+  cloud_firestore: ^4.0.2
+  cloud_functions: ^4.0.2
   confetti: ^0.7.0
   connectivity_plus:
   cookie_jar:
   cupertino_icons:
   dio:
   dio_cookie_manager:
-  firebase_analytics: ^9.3.3
-  firebase_auth: ^3.7.0
-  firebase_core: ^1.21.1
-  firebase_crashlytics: ^2.8.9
-  firebase_dynamic_links: ^4.3.6
-  firebase_messaging: ^13.0.0
-  firebase_storage: ^10.3.7
+  firebase_analytics: ^10.0.2
+  firebase_auth: ^4.0.2
+  firebase_core: ^2.1.0
+  firebase_crashlytics: ^3.0.2
+  firebase_dynamic_links: ^5.0.2
+  firebase_messaging: ^14.0.2
+  firebase_storage: ^11.0.2
   flutter:
     sdk: flutter
   flutter_datetime_picker_bdaya:
