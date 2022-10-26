@@ -13,7 +13,7 @@ dependencies:
   cloud_firestore: ^4.0.2
   cloud_functions: ^4.0.2
   confetti: ^0.7.0
-  connectivity_plus:
+  connectivity_plus: ^3.0.2
   cookie_jar:
   cupertino_icons:
   dio:
