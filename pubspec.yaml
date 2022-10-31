@@ -22,7 +22,7 @@ dependencies:
   firebase_auth: ^4.0.2
   firebase_core: ^2.1.0
   firebase_crashlytics: ^3.0.2
-  firebase_dynamic_links: ^5.0.2
+  firebase_dynamic_links: ^5.0.3
   firebase_messaging: ^14.0.2
   firebase_storage: ^11.0.2
   flutter:
