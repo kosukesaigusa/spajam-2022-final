@@ -36,7 +36,7 @@ dependencies:
   font_awesome_flutter:
   freezed_annotation:
   gap:
-  hooks_riverpod:
+  hooks_riverpod: ^2.1.0
   intl:
   json_annotation:
   lottie: ^1.4.1
