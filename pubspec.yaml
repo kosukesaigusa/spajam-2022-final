@@ -11,7 +11,7 @@ environment:
 dependencies:
   cached_network_image:
   cloud_firestore: ^4.0.2
-  cloud_functions: ^4.0.2
+  cloud_functions: ^4.0.3
   confetti: ^0.7.0
   connectivity_plus: ^3.0.2
   cookie_jar:
@@ -21,7 +21,7 @@ dependencies:
   firebase_analytics: ^10.0.2
   firebase_auth: ^4.0.2
   firebase_core: ^2.1.0
-  firebase_crashlytics: ^3.0.2
+  firebase_crashlytics: ^3.0.4
   firebase_dynamic_links: ^5.0.4
   firebase_messaging: ^14.0.2
   firebase_storage: ^11.0.2
@@ -36,7 +36,7 @@ dependencies:
   font_awesome_flutter:
   freezed_annotation:
   gap:
-  hooks_riverpod:
+  hooks_riverpod: ^2.1.1
   intl:
   json_annotation:
   lottie: ^1.4.1
@@ -55,7 +55,7 @@ dev_dependencies:
   flutter_native_splash: ^2.2.12
   flutter_test:
     sdk: flutter
-  freezed:
+  freezed: ^2.2.1
   json_serializable: ^6.5.3
   pedantic_mono:
 
