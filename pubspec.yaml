@@ -29,7 +29,7 @@ dependencies:
     sdk: flutter
   flutter_datetime_picker_bdaya:
   flutter_hooks:
-  flutter_local_notifications:
+  flutter_local_notifications: ^12.0.3
   flutter_localizations:
     sdk: flutter
   flutter_spinkit:
