@@ -39,7 +39,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
   intl:
   json_annotation:
-  lottie: ^1.4.1
+  lottie: ^2.0.0
   package_info_plus: ^3.0.1
   path_provider:
   path_to_regexp:
