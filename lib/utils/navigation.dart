@@ -3,20 +3,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/bottom_tab/bottom_tab.dart';
 
-final navigationServiceProvider = Provider.autoDispose((ref) => NavigationService(ref.read));
+final navigationServiceProvider = Provider.autoDispose(NavigationService.new);
 
 /// 画面遷移の挙動を提供するクラス
 class NavigationService {
-  NavigationService(this._read);
-
-  final Reader _read;
+  NavigationService(ProviderRef<NavigationService> ref) : _ref = ref;
+  final ProviderRef<NavigationService> _ref;
 
   /// 現在アクティブな下タブに指定したパスのページを push する。
   Future<void> pushOnCurrentTab<T extends Object>({
     required String location,
     T? arguments,
   }) async =>
-      _read(bottomTabStateProvider)
+      _ref
+          .read(bottomTabStateProvider)
           .key
           .currentState
           ?.pushNamed<void>(location, arguments: arguments);
@@ -26,7 +26,7 @@ class NavigationService {
   /// 指定したパスが MainPage のいずれかのページのパスと一致する場合には push せず、
   /// そのタブをアクティブにするだけで終わりにする。
   void popUntilFirstRoute() {
-    final currentContext = _read(bottomTabStateProvider).key.currentContext;
+    final currentContext = _ref.read(bottomTabStateProvider).key.currentContext;
     if (currentContext == null) {
       return;
     }
@@ -42,13 +42,14 @@ class NavigationService {
     required String location,
     T? extra,
   }) async {
-    final currentContext = _read(bottomTabStateProvider).key.currentContext;
+    final currentContext = _ref.read(bottomTabStateProvider).key.currentContext;
     if (currentContext == null) {
       return;
     }
     Navigator.popUntil(currentContext, (route) => route.isFirst);
-    _read(bottomTabStateProvider.notifier).update((state) => bottomTab);
-    return _read(bottomTabStateProvider)
+    _ref.read(bottomTabStateProvider.notifier).update((state) => bottomTab);
+    return _ref
+        .read(bottomTabStateProvider)
         .key
         .currentState
         ?.pushNamed<void>(location, arguments: extra);
@@ -57,7 +58,7 @@ class NavigationService {
   /// Android OS の戻るボタンでアプリが終了しないために、
   /// ウィジェットツリーの上部の WillPopScope ウィジェットで使用する。
   Future<bool> maybePop() async {
-    final currentContext = _read(bottomTabStateProvider).key.currentContext;
+    final currentContext = _ref.read(bottomTabStateProvider).key.currentContext;
     if (currentContext == null) {
       return Future.value(false);
     }

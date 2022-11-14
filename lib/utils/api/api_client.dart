@@ -13,11 +13,11 @@ import '../exceptions/api.dart';
 import '../extensions/dio.dart';
 import 'abstract_api_client.dart';
 
-final apiClientProvider = Provider<ApiClient>((ref) => ApiClient(ref.read));
+final apiClientProvider = Provider<ApiClient>(ApiClient.new);
 
 class ApiClient implements AbstractApiClient {
-  ApiClient(this._read);
-  final Reader _read;
+  ApiClient(ProviderRef<ApiClient> ref) : _ref = ref;
+  final ProviderRef<ApiClient> _ref;
 
   @override
   Future<ResponseResult> get(
@@ -29,13 +29,13 @@ class ApiClient implements AbstractApiClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _read(dioProvider).get<dynamic>(
-        path,
-        queryParameters: queryParameters,
-        options: options ?? Options(headers: header),
-        cancelToken: cancelToken,
-        onReceiveProgress: onReceiveProgress,
-      );
+      final response = await _ref.read(dioProvider).get<dynamic>(
+            path,
+            queryParameters: queryParameters,
+            options: options ?? Options(headers: header),
+            cancelToken: cancelToken,
+            onReceiveProgress: onReceiveProgress,
+          );
       final baseResponseData = _parseResponse(response);
       return ResponseResult.success(data: baseResponseData);
     } on DioError catch (dioError) {
@@ -64,15 +64,15 @@ class ApiClient implements AbstractApiClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _read(dioProvider).put<dynamic>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options ?? Options(headers: header),
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
+      final response = await _ref.read(dioProvider).put<dynamic>(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+            options: options ?? Options(headers: header),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+          );
       final baseResponseData = _parseResponse(response);
       return ResponseResult.success(data: baseResponseData);
     } on DioError catch (dioError) {
@@ -101,15 +101,15 @@ class ApiClient implements AbstractApiClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _read(dioProvider).post<dynamic>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options ?? Options(headers: header),
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
+      final response = await _ref.read(dioProvider).post<dynamic>(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+            options: options ?? Options(headers: header),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+          );
       final baseResponseData = _parseResponse(response);
       return ResponseResult.success(data: baseResponseData);
     } on DioError catch (dioError) {
@@ -138,15 +138,15 @@ class ApiClient implements AbstractApiClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _read(dioProvider).patch<dynamic>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options ?? Options(headers: header),
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
+      final response = await _ref.read(dioProvider).patch<dynamic>(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+            options: options ?? Options(headers: header),
+            cancelToken: cancelToken,
+            onSendProgress: onSendProgress,
+            onReceiveProgress: onReceiveProgress,
+          );
       final baseResponseData = _parseResponse(response);
       return ResponseResult.success(data: baseResponseData);
     } on DioError catch (dioError) {
@@ -173,13 +173,13 @@ class ApiClient implements AbstractApiClient {
     CancelToken? cancelToken,
   }) async {
     try {
-      final response = await _read(dioProvider).delete<dynamic>(
-        path,
-        data: data,
-        queryParameters: queryParameters,
-        options: options ?? Options(headers: header),
-        cancelToken: cancelToken,
-      );
+      final response = await _ref.read(dioProvider).delete<dynamic>(
+            path,
+            data: data,
+            queryParameters: queryParameters,
+            options: options ?? Options(headers: header),
+            cancelToken: cancelToken,
+          );
       final baseResponseData = _parseResponse(response);
       return ResponseResult.success(data: baseResponseData);
     } on DioError catch (dioError) {

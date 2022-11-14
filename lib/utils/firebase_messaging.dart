@@ -173,7 +173,8 @@ final _initializeLocalNotificationProvider = Provider.autoDispose(
         android: AndroidInitializationSettings(flavor.androidForegroundNotificationIcon),
         // iOS の場合は上で早期 return しているので、iOS の設定は記述しない。
       ),
-      onSelectNotification: (payloadString) async {
+      onDidReceiveNotificationResponse: (notificationResponse) async {
+        final payloadString = notificationResponse.payload;
         if (payloadString == null) {
           return;
         }

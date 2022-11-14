@@ -30,6 +30,7 @@ class AboutPage extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('App Name: ${_getAppNameText(packageInfo)}'),
+            Text('(${_getPackageNameText(packageInfo)})'),
             Text('Version: ${_getVersionInfoText(packageInfo)}'),
             if (ref.watch(isSignedInProvider).value ?? false) ...[
               if (ref.watch(userIdProvider).value?.isNotEmpty ?? false) ...[
@@ -62,6 +63,9 @@ class AboutPage extends HookConsumerWidget {
 
   /// バージョン番号のテキストを取得する
   String _getAppNameText(PackageInfo? packageInfo) => packageInfo?.appName ?? '';
+
+  /// バージョン番号のテキストを取得する
+  String _getPackageNameText(PackageInfo? packageInfo) => packageInfo?.packageName ?? '';
 
   /// バージョン番号のテキストを取得する
   String _getVersionInfoText(PackageInfo? packageInfo) {
