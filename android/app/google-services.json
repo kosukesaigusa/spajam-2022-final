@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "866860133863-eqph35gn7ran2a8vo9a2miih050fvgl7.apps.googleusercontent.com",
+              "client_id": "866860133863-0c8dnsekmrkl8lenjjke6q720hudvgic.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.kosukesaigusa.spajam2022"
+                "bundle_id": "com.kosukesaigusa.spajam2022final"
               }
             }
           ]
@@ -67,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "866860133863-eqph35gn7ran2a8vo9a2miih050fvgl7.apps.googleusercontent.com",
+              "client_id": "866860133863-0c8dnsekmrkl8lenjjke6q720hudvgic.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.kosukesaigusa.spajam2022"
+                "bundle_id": "com.kosukesaigusa.spajam2022final"
               }
             }
           ]
