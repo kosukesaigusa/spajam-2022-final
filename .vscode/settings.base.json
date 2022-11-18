@@ -6,6 +6,6 @@
   "files.watcherExclude": {
     "**/.fvm": true
   },
-  "dart.runPubGetOnPubspecChanges": false,
+  "dart.runPubGetOnPubspecChanges": "never",
   "eslint.workingDirectories": ["./firebase/functions"]
 }
