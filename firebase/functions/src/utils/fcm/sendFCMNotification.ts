@@ -127,7 +127,7 @@ export const sendFCMByToken = async ({
     const fcmTargets: FCMTarget[] = [
         {
             fcmTokens: [token],
-            badgeNumber: 1
+            badgeNumber: 0
         }
     ]
     await sendFCMByTargets({ fcmTargets, title, body, location })
