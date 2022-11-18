@@ -4,7 +4,23 @@ Flutter Lovers チームが参加する SPAJAM 2022 本戦のリポジトリで�
 
 ## Flutter
 
-これから書きます。
+SDK バージョン
+
+```plain
+Dart SDK: >=2.18.2 <3.0.0
+Flutter SDK: 3.3.8
+```
+
+VSCode を使用している場合は、`.vscode/settings.base.json` を参考にしてください。
+
+## Dart Define
+
+VSCode を使用している場合は `.vscode/launch.base.json` を参考にしてください。
+
+|  内容  |  設定  |
+| ---- | ---- |
+|  --dart-define=FLAVOR=local  |  Firebase Local Emulator に接続したい場合  |
+|  --dart-define=GITHUB_TOKEN={your-github-token}  |  あなたの GitHub トークン  |
 
 ## Firebase Local Emulator
 
@@ -64,3 +80,13 @@ Firebase Functions のソースコードを随時編集してホットリロー�
 ```shell
 npm --prefix functions run watch && firebase emulators:start --inspect-functions --import data --export-on-exit
 ```
+
+実行中の Firebase Emulator は Control + C で停止できますが、何らかの理由でプロセスが残ったままの場合には、次のコマンドを一通り実行してください。
+
+```shell
+kill -9 $(lsof -t -i:9099)
+kill -9 $(lsof -t -i:5001)
+kill -9 $(lsof -t -i:8080)
+kill -9 $(lsof -t -i:8085)
+kill -9 $(lsof -t -i:9199)
+``
