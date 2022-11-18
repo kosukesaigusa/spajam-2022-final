@@ -53,6 +53,14 @@ VSCode でブレイクポイントを打ちながらデバッグできるよう�
 }
 ```
 
-成功すると、上記で `firebase emulators:start` したコンソールに "Debugger attached." という出力が現れます。
+成功すると、上記で `firebase emulators:start` したコンソールに "Debugger attached." という出力が現れ、VSCode に下記のような表示が現れます。
+
+![vscode_debug_functions](docs/images/vscode_debug_functions.png)
 
 これで VSCode で `firebase/functions/src/firebase-functions` 下の Firebase Functions のソースコードにブレイクポイントを打ちながらデバッグすることが可能になりました。
+
+Firebase Functions のソースコードを随時編集してホットリロードしながら同様にデバッグしたい場合は、`concurrently` を使用している `npm run watch` のコマンドの方を使用してください。
+
+```shell
+npm --prefix functions run watch && firebase emulators:start --inspect-functions --import data --export-on-exit
+```
