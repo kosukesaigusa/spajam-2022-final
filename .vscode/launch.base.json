@@ -9,32 +9,23 @@
       "args": [
         "--debug",
         "--dart-define=FLAVOR=local",
-        "--dart-define=GITHUB_TOKEN=xxx"
+        "--dart-define=GITHUB_TOKEN=your-github-token"
       ]
     },
     {
-      "name": "Debug (dev)",
+      "name": "Debug",
       "program": "lib/main.dart",
       "request": "launch",
       "type": "dart",
-      "args": [
-        "--debug",
-        "--dart-define=FLAVOR=dev",
-        "--dart-define=GITHUB_TOKEN="
-      ]
+      "args": ["--debug", "--dart-define=GITHUB_TOKEN=your-github-token"]
     },
     {
-      "name": "Release (dev)",
+      "name": "Release",
       "program": "lib/main.dart",
       "request": "launch",
       "type": "dart",
-      "args": [
-        "--release",
-        "--dart-define=FLAVOR=dev",
-        "--dart-define=GITHUB_TOKEN=xxx"
-      ]
+      "args": ["--release", "--dart-define=GITHUB_TOKEN=your-github-token"]
     },
-
     {
       "name": "Debug Functions (local)",
       "type": "node",
