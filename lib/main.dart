@@ -12,11 +12,11 @@ import 'utils/setup_local_emulator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  WidgetsFlutterBinding.ensureInitialized();
   // 画面の向きを固定する。
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // Firebase を初期化する。
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initialize();
   runApp(
     ProviderScope(
       overrides: <Override>[
