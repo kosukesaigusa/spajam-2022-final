@@ -38,7 +38,8 @@ mixin _$Todo {
 /// @nodoc
 abstract class $TodoCopyWith<$Res> {
   factory $TodoCopyWith(Todo value, $Res Function(Todo) then) =
-      _$TodoCopyWithImpl<$Res>;
+      _$TodoCopyWithImpl<$Res, Todo>;
+  @useResult
   $Res call(
       {String todoId,
       String userId,
@@ -54,59 +55,63 @@ abstract class $TodoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TodoCopyWithImpl<$Res> implements $TodoCopyWith<$Res> {
+class _$TodoCopyWithImpl<$Res, $Val extends Todo>
+    implements $TodoCopyWith<$Res> {
   _$TodoCopyWithImpl(this._value, this._then);
 
-  final Todo _value;
   // ignore: unused_field
-  final $Res Function(Todo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? todoId = freezed,
-    Object? userId = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? todoId = null,
+    Object? userId = null,
+    Object? title = null,
+    Object? description = null,
     Object? dueDateTime = freezed,
-    Object? isDone = freezed,
-    Object? updatedAt = freezed,
+    Object? isDone = null,
+    Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
-      todoId: todoId == freezed
+      todoId: null == todoId
           ? _value.todoId
           : todoId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      dueDateTime: dueDateTime == freezed
+      dueDateTime: freezed == dueDateTime
           ? _value.dueDateTime
           : dueDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isDone: isDone == freezed
+      isDone: null == isDone
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      updatedAt: updatedAt == freezed
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as UnionTimestamp,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UnionTimestampCopyWith<$Res> get updatedAt {
     return $UnionTimestampCopyWith<$Res>(_value.updatedAt, (value) {
-      return _then(_value.copyWith(updatedAt: value));
+      return _then(_value.copyWith(updatedAt: value) as $Val);
     });
   }
 }
@@ -116,6 +121,7 @@ abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
   factory _$$_TodoCopyWith(_$_Todo value, $Res Function(_$_Todo) then) =
       __$$_TodoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String todoId,
       String userId,
@@ -132,50 +138,48 @@ abstract class _$$_TodoCopyWith<$Res> implements $TodoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res>
+class __$$_TodoCopyWithImpl<$Res> extends _$TodoCopyWithImpl<$Res, _$_Todo>
     implements _$$_TodoCopyWith<$Res> {
   __$$_TodoCopyWithImpl(_$_Todo _value, $Res Function(_$_Todo) _then)
-      : super(_value, (v) => _then(v as _$_Todo));
+      : super(_value, _then);
 
-  @override
-  _$_Todo get _value => super._value as _$_Todo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? todoId = freezed,
-    Object? userId = freezed,
-    Object? title = freezed,
-    Object? description = freezed,
+    Object? todoId = null,
+    Object? userId = null,
+    Object? title = null,
+    Object? description = null,
     Object? dueDateTime = freezed,
-    Object? isDone = freezed,
-    Object? updatedAt = freezed,
+    Object? isDone = null,
+    Object? updatedAt = null,
   }) {
     return _then(_$_Todo(
-      todoId: todoId == freezed
+      todoId: null == todoId
           ? _value.todoId
           : todoId // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      dueDateTime: dueDateTime == freezed
+      dueDateTime: freezed == dueDateTime
           ? _value.dueDateTime
           : dueDateTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      isDone: isDone == freezed
+      isDone: null == isDone
           ? _value.isDone
           : isDone // ignore: cast_nullable_to_non_nullable
               as bool,
-      updatedAt: updatedAt == freezed
+      updatedAt: null == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as UnionTimestamp,
@@ -233,31 +237,26 @@ class _$_Todo extends _Todo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Todo &&
-            const DeepCollectionEquality().equals(other.todoId, todoId) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality()
-                .equals(other.dueDateTime, dueDateTime) &&
-            const DeepCollectionEquality().equals(other.isDone, isDone) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
+            (identical(other.todoId, todoId) || other.todoId == todoId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.dueDateTime, dueDateTime) ||
+                other.dueDateTime == dueDateTime) &&
+            (identical(other.isDone, isDone) || other.isDone == isDone) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(todoId),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(dueDateTime),
-      const DeepCollectionEquality().hash(isDone),
-      const DeepCollectionEquality().hash(updatedAt));
+  int get hashCode => Object.hash(runtimeType, todoId, userId, title,
+      description, dueDateTime, isDone, updatedAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TodoCopyWith<_$_Todo> get copyWith =>
       __$$_TodoCopyWithImpl<_$_Todo>(this, _$identity);
 

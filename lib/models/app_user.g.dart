@@ -1,31 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: type=lint, implicit_dynamic_parameter, implicit_dynamic_type, implicit_dynamic_method, strict_raw_type, unnecessary_cast, todo
-
 part of 'app_user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AppUser _$$_AppUserFromJson(Map json) => $checkedCreate(
-      r'_$_AppUser',
-      json,
-      ($checkedConvert) {
-        final val = _$_AppUser(
-          userId: $checkedConvert('userId', (v) => v as String? ?? ''),
-          fcmTokens: $checkedConvert(
-              'fcmTokens',
-              (v) =>
-                  (v as List<dynamic>?)?.map((e) => e as String).toList() ??
-                  const <String>[]),
-        );
-        return val;
-      },
+_$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
+      appUserId: json['appUserId'] as String? ?? '',
+      imageUrl: json['imageUrl'] as String? ?? '',
+      country: json['country'] as String? ?? '',
+      isVisible: json['isVisible'] as bool? ?? true,
+      flags:
+          (json['flags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
+      comment: json['comment'] as String? ?? '',
+      location: json['location'] == null
+          ? FirestorePosition.defaultValue
+          : FirestorePosition.fromJson(
+              json['location'] as Map<String, dynamic>),
+      fcmTokens: (json['fcmTokens'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
     );
 
 Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
     <String, dynamic>{
-      'userId': instance.userId,
+      'appUserId': instance.appUserId,
+      'imageUrl': instance.imageUrl,
+      'country': instance.country,
+      'isVisible': instance.isVisible,
+      'flags': instance.flags,
+      'comment': instance.comment,
+      'location': instance.location,
       'fcmTokens': instance.fcmTokens,
     };

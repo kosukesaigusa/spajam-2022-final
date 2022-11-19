@@ -34,47 +34,51 @@ mixin _$GetRepoResponse {
 abstract class $GetRepoResponseCopyWith<$Res> {
   factory $GetRepoResponseCopyWith(
           GetRepoResponse value, $Res Function(GetRepoResponse) then) =
-      _$GetRepoResponseCopyWithImpl<$Res>;
+      _$GetRepoResponseCopyWithImpl<$Res, GetRepoResponse>;
+  @useResult
   $Res call({bool success, String message, Repo repo});
 
   $RepoCopyWith<$Res> get repo;
 }
 
 /// @nodoc
-class _$GetRepoResponseCopyWithImpl<$Res>
+class _$GetRepoResponseCopyWithImpl<$Res, $Val extends GetRepoResponse>
     implements $GetRepoResponseCopyWith<$Res> {
   _$GetRepoResponseCopyWithImpl(this._value, this._then);
 
-  final GetRepoResponse _value;
   // ignore: unused_field
-  final $Res Function(GetRepoResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? repo = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? repo = null,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      repo: repo == freezed
+      repo: null == repo
           ? _value.repo
           : repo // ignore: cast_nullable_to_non_nullable
               as Repo,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $RepoCopyWith<$Res> get repo {
     return $RepoCopyWith<$Res>(_value.repo, (value) {
-      return _then(_value.copyWith(repo: value));
+      return _then(_value.copyWith(repo: value) as $Val);
     });
   }
 }
@@ -86,6 +90,7 @@ abstract class _$$_GetRepoResponseCopyWith<$Res>
           _$_GetRepoResponse value, $Res Function(_$_GetRepoResponse) then) =
       __$$_GetRepoResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool success, String message, Repo repo});
 
   @override
@@ -94,31 +99,29 @@ abstract class _$$_GetRepoResponseCopyWith<$Res>
 
 /// @nodoc
 class __$$_GetRepoResponseCopyWithImpl<$Res>
-    extends _$GetRepoResponseCopyWithImpl<$Res>
+    extends _$GetRepoResponseCopyWithImpl<$Res, _$_GetRepoResponse>
     implements _$$_GetRepoResponseCopyWith<$Res> {
   __$$_GetRepoResponseCopyWithImpl(
       _$_GetRepoResponse _value, $Res Function(_$_GetRepoResponse) _then)
-      : super(_value, (v) => _then(v as _$_GetRepoResponse));
+      : super(_value, _then);
 
-  @override
-  _$_GetRepoResponse get _value => super._value as _$_GetRepoResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? repo = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? repo = null,
   }) {
     return _then(_$_GetRepoResponse(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      repo: repo == freezed
+      repo: null == repo
           ? _value.repo
           : repo // ignore: cast_nullable_to_non_nullable
               as Repo,
@@ -156,21 +159,18 @@ class _$_GetRepoResponse implements _GetRepoResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GetRepoResponse &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.repo, repo));
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.repo, repo) || other.repo == repo));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(repo));
+  int get hashCode => Object.hash(runtimeType, success, message, repo);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GetRepoResponseCopyWith<_$_GetRepoResponse> get copyWith =>
       __$$_GetRepoResponseCopyWithImpl<_$_GetRepoResponse>(this, _$identity);
 

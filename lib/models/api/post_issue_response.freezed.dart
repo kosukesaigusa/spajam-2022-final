@@ -34,47 +34,51 @@ mixin _$PostIssueResponse {
 abstract class $PostIssueResponseCopyWith<$Res> {
   factory $PostIssueResponseCopyWith(
           PostIssueResponse value, $Res Function(PostIssueResponse) then) =
-      _$PostIssueResponseCopyWithImpl<$Res>;
+      _$PostIssueResponseCopyWithImpl<$Res, PostIssueResponse>;
+  @useResult
   $Res call({bool success, String message, Issue issue});
 
   $IssueCopyWith<$Res> get issue;
 }
 
 /// @nodoc
-class _$PostIssueResponseCopyWithImpl<$Res>
+class _$PostIssueResponseCopyWithImpl<$Res, $Val extends PostIssueResponse>
     implements $PostIssueResponseCopyWith<$Res> {
   _$PostIssueResponseCopyWithImpl(this._value, this._then);
 
-  final PostIssueResponse _value;
   // ignore: unused_field
-  final $Res Function(PostIssueResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? issue = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? issue = null,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      issue: issue == freezed
+      issue: null == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
               as Issue,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $IssueCopyWith<$Res> get issue {
     return $IssueCopyWith<$Res>(_value.issue, (value) {
-      return _then(_value.copyWith(issue: value));
+      return _then(_value.copyWith(issue: value) as $Val);
     });
   }
 }
@@ -86,6 +90,7 @@ abstract class _$$_PostIssueResponseCopyWith<$Res>
           $Res Function(_$_PostIssueResponse) then) =
       __$$_PostIssueResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool success, String message, Issue issue});
 
   @override
@@ -94,31 +99,29 @@ abstract class _$$_PostIssueResponseCopyWith<$Res>
 
 /// @nodoc
 class __$$_PostIssueResponseCopyWithImpl<$Res>
-    extends _$PostIssueResponseCopyWithImpl<$Res>
+    extends _$PostIssueResponseCopyWithImpl<$Res, _$_PostIssueResponse>
     implements _$$_PostIssueResponseCopyWith<$Res> {
   __$$_PostIssueResponseCopyWithImpl(
       _$_PostIssueResponse _value, $Res Function(_$_PostIssueResponse) _then)
-      : super(_value, (v) => _then(v as _$_PostIssueResponse));
+      : super(_value, _then);
 
-  @override
-  _$_PostIssueResponse get _value => super._value as _$_PostIssueResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? issue = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? issue = null,
   }) {
     return _then(_$_PostIssueResponse(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      issue: issue == freezed
+      issue: null == issue
           ? _value.issue
           : issue // ignore: cast_nullable_to_non_nullable
               as Issue,
@@ -157,21 +160,18 @@ class _$_PostIssueResponse implements _PostIssueResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PostIssueResponse &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality().equals(other.issue, issue));
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.issue, issue) || other.issue == issue));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(issue));
+  int get hashCode => Object.hash(runtimeType, success, message, issue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PostIssueResponseCopyWith<_$_PostIssueResponse> get copyWith =>
       __$$_PostIssueResponseCopyWithImpl<_$_PostIssueResponse>(
           this, _$identity);

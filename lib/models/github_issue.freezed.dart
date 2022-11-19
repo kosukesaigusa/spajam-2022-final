@@ -41,7 +41,8 @@ mixin _$Issue {
 /// @nodoc
 abstract class $IssueCopyWith<$Res> {
   factory $IssueCopyWith(Issue value, $Res Function(Issue) then) =
-      _$IssueCopyWithImpl<$Res>;
+      _$IssueCopyWithImpl<$Res, Issue>;
+  @useResult
   $Res call(
       {int id,
       int number,
@@ -58,78 +59,81 @@ abstract class $IssueCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$IssueCopyWithImpl<$Res> implements $IssueCopyWith<$Res> {
+class _$IssueCopyWithImpl<$Res, $Val extends Issue>
+    implements $IssueCopyWith<$Res> {
   _$IssueCopyWithImpl(this._value, this._then);
 
-  final Issue _value;
   // ignore: unused_field
-  final $Res Function(Issue) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? number = freezed,
-    Object? title = freezed,
-    Object? htmlUrl = freezed,
-    Object? state = freezed,
-    Object? description = freezed,
-    Object? body = freezed,
-    Object? comments = freezed,
+    Object? id = null,
+    Object? number = null,
+    Object? title = null,
+    Object? htmlUrl = null,
+    Object? state = null,
+    Object? description = null,
+    Object? body = null,
+    Object? comments = null,
     Object? assignee = freezed,
     Object? assignees = freezed,
     Object? updatedAt = freezed,
     Object? closedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      number: number == freezed
+      number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as int,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      state: state == freezed
+      state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      body: body == freezed
+      body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
-      comments: comments == freezed
+      comments: null == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as int,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignees: assignees == freezed
+      assignees: freezed == assignees
           ? _value.assignees
           : assignees // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      closedAt: closedAt == freezed
+      closedAt: freezed == closedAt
           ? _value.closedAt
           : closedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -139,6 +143,7 @@ abstract class _$$_GithubIssueCopyWith<$Res> implements $IssueCopyWith<$Res> {
           _$_GithubIssue value, $Res Function(_$_GithubIssue) then) =
       __$$_GithubIssueCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       int number,
@@ -155,76 +160,75 @@ abstract class _$$_GithubIssueCopyWith<$Res> implements $IssueCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_GithubIssueCopyWithImpl<$Res> extends _$IssueCopyWithImpl<$Res>
+class __$$_GithubIssueCopyWithImpl<$Res>
+    extends _$IssueCopyWithImpl<$Res, _$_GithubIssue>
     implements _$$_GithubIssueCopyWith<$Res> {
   __$$_GithubIssueCopyWithImpl(
       _$_GithubIssue _value, $Res Function(_$_GithubIssue) _then)
-      : super(_value, (v) => _then(v as _$_GithubIssue));
+      : super(_value, _then);
 
-  @override
-  _$_GithubIssue get _value => super._value as _$_GithubIssue;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? number = freezed,
-    Object? title = freezed,
-    Object? htmlUrl = freezed,
-    Object? state = freezed,
-    Object? description = freezed,
-    Object? body = freezed,
-    Object? comments = freezed,
+    Object? id = null,
+    Object? number = null,
+    Object? title = null,
+    Object? htmlUrl = null,
+    Object? state = null,
+    Object? description = null,
+    Object? body = null,
+    Object? comments = null,
     Object? assignee = freezed,
     Object? assignees = freezed,
     Object? updatedAt = freezed,
     Object? closedAt = freezed,
   }) {
     return _then(_$_GithubIssue(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      number: number == freezed
+      number: null == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as int,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      state: state == freezed
+      state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      body: body == freezed
+      body: null == body
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String,
-      comments: comments == freezed
+      comments: null == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
               as int,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignees: assignees == freezed
+      assignees: freezed == assignees
           ? _value._assignees
           : assignees // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      closedAt: closedAt == freezed
+      closedAt: freezed == closedAt
           ? _value.closedAt
           : closedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
@@ -304,41 +308,46 @@ class _$_GithubIssue implements _GithubIssue {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_GithubIssue &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.htmlUrl, htmlUrl) &&
-            const DeepCollectionEquality().equals(other.state, state) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.body, body) &&
-            const DeepCollectionEquality().equals(other.comments, comments) &&
-            const DeepCollectionEquality().equals(other.assignee, assignee) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.number, number) || other.number == number) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.htmlUrl, htmlUrl) || other.htmlUrl == htmlUrl) &&
+            (identical(other.state, state) || other.state == state) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.comments, comments) ||
+                other.comments == comments) &&
+            (identical(other.assignee, assignee) ||
+                other.assignee == assignee) &&
             const DeepCollectionEquality()
                 .equals(other._assignees, _assignees) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality().equals(other.closedAt, closedAt));
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.closedAt, closedAt) ||
+                other.closedAt == closedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(number),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(htmlUrl),
-      const DeepCollectionEquality().hash(state),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(body),
-      const DeepCollectionEquality().hash(comments),
-      const DeepCollectionEquality().hash(assignee),
+      id,
+      number,
+      title,
+      htmlUrl,
+      state,
+      description,
+      body,
+      comments,
+      assignee,
       const DeepCollectionEquality().hash(_assignees),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(closedAt));
+      updatedAt,
+      closedAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_GithubIssueCopyWith<_$_GithubIssue> get copyWith =>
       __$$_GithubIssueCopyWithImpl<_$_GithubIssue>(this, _$identity);
 

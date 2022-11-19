@@ -19,10 +19,12 @@ DocumentReference<AppUser> appUserRef({
     appUsersRef.doc(userId);
 
 /// testNotificationRequest コレクションの参照。
-final testNotificationRequestsRef = db.collection('testNotificationRequests').withConverter(
-      fromFirestore: (ds, _) => TestNotificationRequest.fromDocumentSnapshot(ds),
-      toFirestore: (obj, _) => obj.toJson(),
-    );
+final testNotificationRequestsRef =
+    db.collection('testNotificationRequests').withConverter(
+          fromFirestore: (ds, _) =>
+              TestNotificationRequest.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
 
 /// todo コレクションの参照。
 CollectionReference<Todo> todosRef({

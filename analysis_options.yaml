@@ -7,6 +7,8 @@ analyzer:
 
   exclude:
     - lib/firebase_options.dart
+    - "lib/**/*.g.dart"
+    - "lib/**/*.freezed.dart"
 
   errors:
     # Remi さんの推奨設定
