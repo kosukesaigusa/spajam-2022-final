@@ -83,26 +83,36 @@ class UserView extends HookConsumerWidget {
             ),
           ],
         ),
-        Row(
-          children: [
-            const Text('国旗: '),
-            Expanded(
-              child: Wrap(
-                children: user.flags
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: e.icon(
-                          width: 50,
-                          height: 50,
+        if (user.flags.isNotEmpty)
+          Row(
+            children: [
+              const Text('国旗: '),
+              Expanded(
+                child: Wrap(
+                  children: user.flags
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: e.icon(
+                            width: 50,
+                            height: 50,
+                          ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          )
+        else
+          const Text('まだ交流した人はいません。'),
+        if (user.comment.isNotEmpty)
+          Row(
+            children: [
+              const Text('一言: '),
+              Text(user.comment),
+            ],
+          ),
       ],
     );
   }
