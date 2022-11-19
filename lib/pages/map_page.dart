@@ -7,16 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/auth.dart';
 import '../features/map/map.dart';
-import '../features/message/attending_chat_room.dart';
 import '../models/app_user.dart';
-import '../repositories/firestore/chat_room_repository.dart';
-import '../utils/exceptions/common.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
 import '../utils/scaffold_messenger_service.dart';
+import 'app_user_detail_page.dart';
 import 'attending_chat_rooms_page.dart';
-import 'chat_room_page.dart';
+import 'widgets/contact_button.dart';
 
 const double _stackedGreyBackgroundHeight = 200;
 const double _stackedGreyBackgroundBorderRadius = 36;
@@ -366,93 +364,54 @@ class AppUserPageViewItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width / 4,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(pageViewImageBorderRadius),
-              child: Image.network(appUser.imageUrl),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => Navigator.pushNamed<void>(
+        context,
+        AppUserDetailPage.location(appUserId: appUser.appUserId),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width / 4,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(pageViewImageBorderRadius),
+                child: Image.network(appUser.imageUrl),
+              ),
             ),
           ),
-        ),
-        const Gap(8),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                appUser.appUserId,
-                style: context.titleMedium,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-              const Gap(4),
-              Text(
-                appUser.comment,
-                style: context.bodySmall,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-              ),
-              const Spacer(),
-              ref
-                      .watch(matchAttendingChatRoomProvider(appUser.appUserId))
-                      .whenData(
-                        (attendingChatRooms) => Row(
-                          children: [
-                            const Spacer(),
-                            if (attendingChatRooms.isEmpty)
-                              ElevatedButton(
-                                onPressed: () async {
-                                  final appUserId =
-                                      ref.watch(userIdProvider).value;
-                                  if (appUserId == null) {
-                                    throw const SignInRequiredException();
-                                  }
-                                  final chatRmId = await ref
-                                      .read(chatRoomRepositoryProvider)
-                                      .createChatRoom(
-                                        appUserId: appUserId,
-                                        partnerId: appUser.appUserId,
-                                      );
-                                  await Navigator.pushNamed<void>(
-                                    context,
-                                    ChatRoomPage.location(
-                                      chatRoomId: chatRmId,
-                                    ),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: const StadiumBorder(),
-                                ),
-                                child: const Text(
-                                  '連絡',
-                                ),
-                              )
-                            else
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.pushNamed<void>(
-                                    context,
-                                    ChatRoomPage.location(
-                                      chatRoomId:
-                                          attendingChatRooms.first.chatRoomId,
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.chat),
-                              )
-                          ],
-                        ),
-                      )
-                      .value ??
-                  Container(),
-            ],
+          const Gap(8),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  appUser.appUserId,
+                  style: context.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                const Gap(4),
+                Text(
+                  appUser.comment,
+                  style: context.bodySmall,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+                const Spacer(),
+                Row(
+                  children: [
+                    const Spacer(),
+                    ContactButton(partnerId: appUser.appUserId),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

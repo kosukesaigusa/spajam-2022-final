@@ -63,6 +63,14 @@ final appRoutes = <AppRoute>[
       child: const AppUserDetailPage(key: ValueKey(AppUserDetailPage.name)),
     ),
   ),
+  AppRoute(
+    path: AppUserDetailPage.path,
+    name: AppUserDetailPage.name,
+    builder: (context, state) => ProviderScope(
+      overrides: <Override>[appRouterStateProvider.overrideWithValue(state)],
+      child: const AppUserDetailPage(key: ValueKey(AppUserDetailPage.name)),
+    ),
+  ),
   // AppRoute(
   //   path: TodosPage.path,
   //   name: TodosPage.name,
