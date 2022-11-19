@@ -31,33 +31,37 @@ mixin _$AppUser {
 /// @nodoc
 abstract class $AppUserCopyWith<$Res> {
   factory $AppUserCopyWith(AppUser value, $Res Function(AppUser) then) =
-      _$AppUserCopyWithImpl<$Res>;
+      _$AppUserCopyWithImpl<$Res, AppUser>;
+  @useResult
   $Res call({String userId, List<String> fcmTokens});
 }
 
 /// @nodoc
-class _$AppUserCopyWithImpl<$Res> implements $AppUserCopyWith<$Res> {
+class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
+    implements $AppUserCopyWith<$Res> {
   _$AppUserCopyWithImpl(this._value, this._then);
 
-  final AppUser _value;
   // ignore: unused_field
-  final $Res Function(AppUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? fcmTokens = freezed,
+    Object? userId = null,
+    Object? fcmTokens = null,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      fcmTokens: fcmTokens == freezed
+      fcmTokens: null == fcmTokens
           ? _value.fcmTokens
           : fcmTokens // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -67,29 +71,29 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
           _$_AppUser value, $Res Function(_$_AppUser) then) =
       __$$_AppUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String userId, List<String> fcmTokens});
 }
 
 /// @nodoc
-class __$$_AppUserCopyWithImpl<$Res> extends _$AppUserCopyWithImpl<$Res>
+class __$$_AppUserCopyWithImpl<$Res>
+    extends _$AppUserCopyWithImpl<$Res, _$_AppUser>
     implements _$$_AppUserCopyWith<$Res> {
   __$$_AppUserCopyWithImpl(_$_AppUser _value, $Res Function(_$_AppUser) _then)
-      : super(_value, (v) => _then(v as _$_AppUser));
+      : super(_value, _then);
 
-  @override
-  _$_AppUser get _value => super._value as _$_AppUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? fcmTokens = freezed,
+    Object? userId = null,
+    Object? fcmTokens = null,
   }) {
     return _then(_$_AppUser(
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      fcmTokens: fcmTokens == freezed
+      fcmTokens: null == fcmTokens
           ? _value._fcmTokens
           : fcmTokens // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -129,7 +133,7 @@ class _$_AppUser extends _AppUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppUser &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             const DeepCollectionEquality()
                 .equals(other._fcmTokens, _fcmTokens));
   }
@@ -137,12 +141,11 @@ class _$_AppUser extends _AppUser {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(_fcmTokens));
+      runtimeType, userId, const DeepCollectionEquality().hash(_fcmTokens));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AppUserCopyWith<_$_AppUser> get copyWith =>
       __$$_AppUserCopyWithImpl<_$_AppUser>(this, _$identity);
 

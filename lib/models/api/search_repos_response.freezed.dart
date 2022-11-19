@@ -37,7 +37,8 @@ mixin _$SearchReposResponse {
 abstract class $SearchReposResponseCopyWith<$Res> {
   factory $SearchReposResponseCopyWith(
           SearchReposResponse value, $Res Function(SearchReposResponse) then) =
-      _$SearchReposResponseCopyWithImpl<$Res>;
+      _$SearchReposResponseCopyWithImpl<$Res, SearchReposResponse>;
+  @useResult
   $Res call(
       {bool success,
       String message,
@@ -47,44 +48,46 @@ abstract class $SearchReposResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SearchReposResponseCopyWithImpl<$Res>
+class _$SearchReposResponseCopyWithImpl<$Res, $Val extends SearchReposResponse>
     implements $SearchReposResponseCopyWith<$Res> {
   _$SearchReposResponseCopyWithImpl(this._value, this._then);
 
-  final SearchReposResponse _value;
   // ignore: unused_field
-  final $Res Function(SearchReposResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? totalCount = freezed,
-    Object? incompleteResults = freezed,
-    Object? repos = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? totalCount = null,
+    Object? incompleteResults = null,
+    Object? repos = null,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      totalCount: totalCount == freezed
+      totalCount: null == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
-      incompleteResults: incompleteResults == freezed
+      incompleteResults: null == incompleteResults
           ? _value.incompleteResults
           : incompleteResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      repos: repos == freezed
+      repos: null == repos
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<Repo>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -95,6 +98,7 @@ abstract class _$$_SearchReposResponseCopyWith<$Res>
           $Res Function(_$_SearchReposResponse) then) =
       __$$_SearchReposResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool success,
       String message,
@@ -105,41 +109,39 @@ abstract class _$$_SearchReposResponseCopyWith<$Res>
 
 /// @nodoc
 class __$$_SearchReposResponseCopyWithImpl<$Res>
-    extends _$SearchReposResponseCopyWithImpl<$Res>
+    extends _$SearchReposResponseCopyWithImpl<$Res, _$_SearchReposResponse>
     implements _$$_SearchReposResponseCopyWith<$Res> {
   __$$_SearchReposResponseCopyWithImpl(_$_SearchReposResponse _value,
       $Res Function(_$_SearchReposResponse) _then)
-      : super(_value, (v) => _then(v as _$_SearchReposResponse));
+      : super(_value, _then);
 
-  @override
-  _$_SearchReposResponse get _value => super._value as _$_SearchReposResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? totalCount = freezed,
-    Object? incompleteResults = freezed,
-    Object? repos = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? totalCount = null,
+    Object? incompleteResults = null,
+    Object? repos = null,
   }) {
     return _then(_$_SearchReposResponse(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      totalCount: totalCount == freezed
+      totalCount: null == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
               as int,
-      incompleteResults: incompleteResults == freezed
+      incompleteResults: null == incompleteResults
           ? _value.incompleteResults
           : incompleteResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      repos: repos == freezed
+      repos: null == repos
           ? _value._repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<Repo>,
@@ -192,27 +194,23 @@ class _$_SearchReposResponse implements _SearchReposResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SearchReposResponse &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
-            const DeepCollectionEquality()
-                .equals(other.totalCount, totalCount) &&
-            const DeepCollectionEquality()
-                .equals(other.incompleteResults, incompleteResults) &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.totalCount, totalCount) ||
+                other.totalCount == totalCount) &&
+            (identical(other.incompleteResults, incompleteResults) ||
+                other.incompleteResults == incompleteResults) &&
             const DeepCollectionEquality().equals(other._repos, _repos));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(message),
-      const DeepCollectionEquality().hash(totalCount),
-      const DeepCollectionEquality().hash(incompleteResults),
-      const DeepCollectionEquality().hash(_repos));
+  int get hashCode => Object.hash(runtimeType, success, message, totalCount,
+      incompleteResults, const DeepCollectionEquality().hash(_repos));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SearchReposResponseCopyWith<_$_SearchReposResponse> get copyWith =>
       __$$_SearchReposResponseCopyWithImpl<_$_SearchReposResponse>(
           this, _$identity);

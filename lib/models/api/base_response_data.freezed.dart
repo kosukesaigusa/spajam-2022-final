@@ -35,7 +35,8 @@ mixin _$BaseResponseData {
 abstract class $BaseResponseDataCopyWith<$Res> {
   factory $BaseResponseDataCopyWith(
           BaseResponseData value, $Res Function(BaseResponseData) then) =
-      _$BaseResponseDataCopyWithImpl<$Res>;
+      _$BaseResponseDataCopyWithImpl<$Res, BaseResponseData>;
+  @useResult
   $Res call(
       {bool success,
       String message,
@@ -43,34 +44,36 @@ abstract class $BaseResponseDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BaseResponseDataCopyWithImpl<$Res>
+class _$BaseResponseDataCopyWithImpl<$Res, $Val extends BaseResponseData>
     implements $BaseResponseDataCopyWith<$Res> {
   _$BaseResponseDataCopyWithImpl(this._value, this._then);
 
-  final BaseResponseData _value;
   // ignore: unused_field
-  final $Res Function(BaseResponseData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? data = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -81,6 +84,7 @@ abstract class _$$_BaseResponseDataCopyWith<$Res>
           _$_BaseResponseData value, $Res Function(_$_BaseResponseData) then) =
       __$$_BaseResponseDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool success,
       String message,
@@ -89,31 +93,29 @@ abstract class _$$_BaseResponseDataCopyWith<$Res>
 
 /// @nodoc
 class __$$_BaseResponseDataCopyWithImpl<$Res>
-    extends _$BaseResponseDataCopyWithImpl<$Res>
+    extends _$BaseResponseDataCopyWithImpl<$Res, _$_BaseResponseData>
     implements _$$_BaseResponseDataCopyWith<$Res> {
   __$$_BaseResponseDataCopyWithImpl(
       _$_BaseResponseData _value, $Res Function(_$_BaseResponseData) _then)
-      : super(_value, (v) => _then(v as _$_BaseResponseData));
+      : super(_value, _then);
 
-  @override
-  _$_BaseResponseData get _value => super._value as _$_BaseResponseData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? success = freezed,
-    Object? message = freezed,
-    Object? data = freezed,
+    Object? success = null,
+    Object? message = null,
+    Object? data = null,
   }) {
     return _then(_$_BaseResponseData(
-      success: success == freezed
+      success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool,
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      data: data == freezed
+      data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
@@ -158,21 +160,19 @@ class _$_BaseResponseData implements _BaseResponseData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BaseResponseData &&
-            const DeepCollectionEquality().equals(other.success, success) &&
-            const DeepCollectionEquality().equals(other.message, message) &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(success),
-      const DeepCollectionEquality().hash(message),
+  int get hashCode => Object.hash(runtimeType, success, message,
       const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BaseResponseDataCopyWith<_$_BaseResponseData> get copyWith =>
       __$$_BaseResponseDataCopyWithImpl<_$_BaseResponseData>(this, _$identity);
 

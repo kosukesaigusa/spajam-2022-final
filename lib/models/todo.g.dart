@@ -1,35 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: type=lint, implicit_dynamic_parameter, implicit_dynamic_type, implicit_dynamic_method, strict_raw_type, unnecessary_cast, todo
-
 part of 'todo.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Todo _$$_TodoFromJson(Map json) => $checkedCreate(
-      r'_$_Todo',
-      json,
-      ($checkedConvert) {
-        final val = _$_Todo(
-          todoId: $checkedConvert('todoId', (v) => v as String? ?? ''),
-          userId: $checkedConvert('userId', (v) => v as String? ?? ''),
-          title: $checkedConvert('title', (v) => v as String? ?? ''),
-          description:
-              $checkedConvert('description', (v) => v as String? ?? ''),
-          dueDateTime: $checkedConvert(
-              'dueDateTime', (v) => timestampConverter.fromJson(v)),
-          isDone: $checkedConvert('isDone', (v) => v as bool? ?? false),
-          updatedAt: $checkedConvert(
-              'updatedAt',
-              (v) => v == null
-                  ? const UnionTimestamp.serverTimestamp()
-                  : alwaysUseServerTimestampUnionTimestampConverter
-                      .fromJson(v as Object)),
-        );
-        return val;
-      },
+_$_Todo _$$_TodoFromJson(Map<String, dynamic> json) => _$_Todo(
+      todoId: json['todoId'] as String? ?? '',
+      userId: json['userId'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      dueDateTime: timestampConverter.fromJson(json['dueDateTime']),
+      isDone: json['isDone'] as bool? ?? false,
+      updatedAt: json['updatedAt'] == null
+          ? const UnionTimestamp.serverTimestamp()
+          : alwaysUseServerTimestampUnionTimestampConverter
+              .fromJson(json['updatedAt'] as Object),
     );
 
 Map<String, dynamic> _$$_TodoToJson(_$_Todo instance) => <String, dynamic>{
