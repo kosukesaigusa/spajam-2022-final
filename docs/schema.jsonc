@@ -38,7 +38,7 @@
     },
     "collection: memories": {
       "document: {memoryId}": {
-        "matchingId": "{memoryId}",
+        "memoryId": "{memoryId}",
         "partnerId": "{appUserId}",
         "imageUrl": "https://...",
         "comment": "楽しかったです、ありがとう！",
