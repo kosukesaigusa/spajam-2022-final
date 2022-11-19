@@ -159,14 +159,15 @@ class __$$_MemoryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Memory implements _Memory {
+class _$_Memory extends _Memory {
   _$_Memory(
       {required this.memoryId,
       required this.appUserId,
       required this.imageUrl,
       this.comment = '',
       @unionTimestampConverter
-          this.createdAt = const UnionTimestamp.serverTimestamp()});
+          this.createdAt = const UnionTimestamp.serverTimestamp()})
+      : super._();
 
   factory _$_Memory.fromJson(Map<String, dynamic> json) =>
       _$$_MemoryFromJson(json);
@@ -225,13 +226,14 @@ class _$_Memory implements _Memory {
   }
 }
 
-abstract class _Memory implements Memory {
+abstract class _Memory extends Memory {
   factory _Memory(
       {required final String memoryId,
       required final String appUserId,
       required final String imageUrl,
       final String comment,
       @unionTimestampConverter final UnionTimestamp createdAt}) = _$_Memory;
+  _Memory._() : super._();
 
   factory _Memory.fromJson(Map<String, dynamic> json) = _$_Memory.fromJson;
 
