@@ -15,6 +15,7 @@ import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
 import '../utils/scaffold_messenger_service.dart';
+import '../widgets/dialog.dart';
 import 'attending_chat_rooms_page.dart';
 import 'chat_room_page.dart';
 
@@ -65,6 +66,29 @@ class MapPage extends HookConsumerWidget {
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      await ref.read(
+                                        googleSignInProvider,
+                                      )();
+                                      Navigator.pop(context);
+                                      ref
+                                          .read(
+                                            scaffoldMessengerServiceProvider,
+                                          )
+                                          .showSnackBar('ログインしました。');
+                                    } on Exception catch (e) {
+                                      // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
+                                      // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
+                                      ref
+                                          .read(
+                                              scaffoldMessengerServiceProvider)
+                                          .showSnackBarByException(e);
+                                    }
+                                  },
+                                  child: const Text('Google アカウントでサインイン'),
+                                ),
                                 for (var i = 0; i < 5; i++)
                                   ElevatedButton(
                                     onPressed: () async {
