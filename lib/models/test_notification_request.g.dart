@@ -1,36 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: type=lint, implicit_dynamic_parameter, implicit_dynamic_type, implicit_dynamic_method, strict_raw_type, unnecessary_cast, todo
-
 part of 'test_notification_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TestNotificationRequest _$$_TestNotificationRequestFromJson(Map json) =>
-    $checkedCreate(
-      r'_$_TestNotificationRequest',
-      json,
-      ($checkedConvert) {
-        final val = _$_TestNotificationRequest(
-          token: $checkedConvert('token', (v) => v as String? ?? ''),
-          testNotificationRequest: $checkedConvert(
-              'testNotificationRequest', (v) => v as String? ?? ''),
-          testNotificationRequestType: $checkedConvert(
-              'testNotificationRequestType',
-              (v) =>
-                  $enumDecodeNullable(
-                      _$TestNotificationRequestTypeEnumMap, v) ??
-                  TestNotificationRequestType.normal),
-          createdAt: $checkedConvert(
-              'createdAt',
-              (v) => v == null
-                  ? const UnionTimestamp.serverTimestamp()
-                  : unionTimestampConverter.fromJson(v as Object)),
-        );
-        return val;
-      },
+_$_TestNotificationRequest _$$_TestNotificationRequestFromJson(
+        Map<String, dynamic> json) =>
+    _$_TestNotificationRequest(
+      token: json['token'] as String? ?? '',
+      testNotificationRequest: json['testNotificationRequest'] as String? ?? '',
+      testNotificationRequestType: $enumDecodeNullable(
+              _$TestNotificationRequestTypeEnumMap,
+              json['testNotificationRequestType']) ??
+          TestNotificationRequestType.normal,
+      createdAt: json['createdAt'] == null
+          ? const UnionTimestamp.serverTimestamp()
+          : unionTimestampConverter.fromJson(json['createdAt'] as Object),
     );
 
 Map<String, dynamic> _$$_TestNotificationRequestToJson(

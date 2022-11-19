@@ -5,14 +5,15 @@ import '../../models/app_user.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/logger.dart';
 
-final appUserRepositoryProvider = Provider.autoDispose((_) => AppUserRepository());
+final appUserRepositoryProvider =
+    Provider.autoDispose((_) => AppUserRepository());
 
 class AppUserRepository {
   /// 指定した AppUser を取得する。
   Future<AppUser?> fetchAppUser({
-    required String userId,
+    required String appUserId,
   }) async {
-    final ds = await appUserRef(userId: userId).get();
+    final ds = await appUserRef(userId: appUserId).get();
     if (!ds.exists) {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
@@ -23,12 +24,12 @@ class AppUserRepository {
   /// 指定した userId のユーザーを `SetOptions(merge: true)` で作成する。
   /// 通知を受け取るために必要な fcmToken も登録する。
   Future<void> setUser({
-    required String userId,
+    required String appUserId,
     String? fcmToken,
   }) async {
-    await appUserRef(userId: userId).set(
+    await appUserRef(userId: appUserId).set(
       AppUser(
-        userId: userId,
+        appUserId: appUserId,
         // 本当は FieldValue.arrayUnion を使うべきだが、いったんこれで。
         fcmTokens: fcmToken == null ? [] : <String>[fcmToken],
       ),

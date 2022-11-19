@@ -38,7 +38,8 @@ mixin _$TestNotificationRequest {
 abstract class $TestNotificationRequestCopyWith<$Res> {
   factory $TestNotificationRequestCopyWith(TestNotificationRequest value,
           $Res Function(TestNotificationRequest) then) =
-      _$TestNotificationRequestCopyWithImpl<$Res>;
+      _$TestNotificationRequestCopyWithImpl<$Res, TestNotificationRequest>;
+  @useResult
   $Res call(
       {String token,
       String testNotificationRequest,
@@ -49,45 +50,49 @@ abstract class $TestNotificationRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TestNotificationRequestCopyWithImpl<$Res>
+class _$TestNotificationRequestCopyWithImpl<$Res,
+        $Val extends TestNotificationRequest>
     implements $TestNotificationRequestCopyWith<$Res> {
   _$TestNotificationRequestCopyWithImpl(this._value, this._then);
 
-  final TestNotificationRequest _value;
   // ignore: unused_field
-  final $Res Function(TestNotificationRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = freezed,
-    Object? testNotificationRequest = freezed,
-    Object? testNotificationRequestType = freezed,
-    Object? createdAt = freezed,
+    Object? token = null,
+    Object? testNotificationRequest = null,
+    Object? testNotificationRequestType = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      testNotificationRequest: testNotificationRequest == freezed
+      testNotificationRequest: null == testNotificationRequest
           ? _value.testNotificationRequest
           : testNotificationRequest // ignore: cast_nullable_to_non_nullable
               as String,
-      testNotificationRequestType: testNotificationRequestType == freezed
+      testNotificationRequestType: null == testNotificationRequestType
           ? _value.testNotificationRequestType
           : testNotificationRequestType // ignore: cast_nullable_to_non_nullable
               as TestNotificationRequestType,
-      createdAt: createdAt == freezed
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as UnionTimestamp,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UnionTimestampCopyWith<$Res> get createdAt {
     return $UnionTimestampCopyWith<$Res>(_value.createdAt, (value) {
-      return _then(_value.copyWith(createdAt: value));
+      return _then(_value.copyWith(createdAt: value) as $Val);
     });
   }
 }
@@ -99,6 +104,7 @@ abstract class _$$_TestNotificationRequestCopyWith<$Res>
           $Res Function(_$_TestNotificationRequest) then) =
       __$$_TestNotificationRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String token,
       String testNotificationRequest,
@@ -111,37 +117,35 @@ abstract class _$$_TestNotificationRequestCopyWith<$Res>
 
 /// @nodoc
 class __$$_TestNotificationRequestCopyWithImpl<$Res>
-    extends _$TestNotificationRequestCopyWithImpl<$Res>
+    extends _$TestNotificationRequestCopyWithImpl<$Res,
+        _$_TestNotificationRequest>
     implements _$$_TestNotificationRequestCopyWith<$Res> {
   __$$_TestNotificationRequestCopyWithImpl(_$_TestNotificationRequest _value,
       $Res Function(_$_TestNotificationRequest) _then)
-      : super(_value, (v) => _then(v as _$_TestNotificationRequest));
+      : super(_value, _then);
 
-  @override
-  _$_TestNotificationRequest get _value =>
-      super._value as _$_TestNotificationRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? token = freezed,
-    Object? testNotificationRequest = freezed,
-    Object? testNotificationRequestType = freezed,
-    Object? createdAt = freezed,
+    Object? token = null,
+    Object? testNotificationRequest = null,
+    Object? testNotificationRequestType = null,
+    Object? createdAt = null,
   }) {
     return _then(_$_TestNotificationRequest(
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      testNotificationRequest: testNotificationRequest == freezed
+      testNotificationRequest: null == testNotificationRequest
           ? _value.testNotificationRequest
           : testNotificationRequest // ignore: cast_nullable_to_non_nullable
               as String,
-      testNotificationRequestType: testNotificationRequestType == freezed
+      testNotificationRequestType: null == testNotificationRequestType
           ? _value.testNotificationRequestType
           : testNotificationRequestType // ignore: cast_nullable_to_non_nullable
               as TestNotificationRequestType,
-      createdAt: createdAt == freezed
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as UnionTimestamp,
@@ -187,26 +191,26 @@ class _$_TestNotificationRequest extends _TestNotificationRequest {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TestNotificationRequest &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality().equals(
-                other.testNotificationRequest, testNotificationRequest) &&
-            const DeepCollectionEquality().equals(
-                other.testNotificationRequestType,
-                testNotificationRequestType) &&
-            const DeepCollectionEquality().equals(other.createdAt, createdAt));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(
+                    other.testNotificationRequest, testNotificationRequest) ||
+                other.testNotificationRequest == testNotificationRequest) &&
+            (identical(other.testNotificationRequestType,
+                    testNotificationRequestType) ||
+                other.testNotificationRequestType ==
+                    testNotificationRequestType) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(testNotificationRequest),
-      const DeepCollectionEquality().hash(testNotificationRequestType),
-      const DeepCollectionEquality().hash(createdAt));
+  int get hashCode => Object.hash(runtimeType, token, testNotificationRequest,
+      testNotificationRequestType, createdAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TestNotificationRequestCopyWith<_$_TestNotificationRequest>
       get copyWith =>
           __$$_TestNotificationRequestCopyWithImpl<_$_TestNotificationRequest>(

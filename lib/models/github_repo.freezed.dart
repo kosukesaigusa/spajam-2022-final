@@ -38,7 +38,8 @@ mixin _$Repo {
 /// @nodoc
 abstract class $RepoCopyWith<$Res> {
   factory $RepoCopyWith(Repo value, $Res Function(Repo) then) =
-      _$RepoCopyWithImpl<$Res>;
+      _$RepoCopyWithImpl<$Res, Repo>;
+  @useResult
   $Res call(
       {int id,
       String name,
@@ -54,69 +55,73 @@ abstract class $RepoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RepoCopyWithImpl<$Res> implements $RepoCopyWith<$Res> {
+class _$RepoCopyWithImpl<$Res, $Val extends Repo>
+    implements $RepoCopyWith<$Res> {
   _$RepoCopyWithImpl(this._value, this._then);
 
-  final Repo _value;
   // ignore: unused_field
-  final $Res Function(Repo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? owner = freezed,
-    Object? htmlUrl = freezed,
-    Object? description = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? owner = null,
+    Object? htmlUrl = null,
+    Object? description = null,
     Object? updatedAt = freezed,
-    Object? stargazersCount = freezed,
-    Object? forksCount = freezed,
-    Object? watchersCount = freezed,
+    Object? stargazersCount = null,
+    Object? forksCount = null,
+    Object? watchersCount = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      owner: owner == freezed
+      owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as Owner,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      stargazersCount: stargazersCount == freezed
+      stargazersCount: null == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
               as int,
-      forksCount: forksCount == freezed
+      forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
               as int,
-      watchersCount: watchersCount == freezed
+      watchersCount: null == watchersCount
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $OwnerCopyWith<$Res> get owner {
     return $OwnerCopyWith<$Res>(_value.owner, (value) {
-      return _then(_value.copyWith(owner: value));
+      return _then(_value.copyWith(owner: value) as $Val);
     });
   }
 }
@@ -126,6 +131,7 @@ abstract class _$$_RepoCopyWith<$Res> implements $RepoCopyWith<$Res> {
   factory _$$_RepoCopyWith(_$_Repo value, $Res Function(_$_Repo) then) =
       __$$_RepoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int id,
       String name,
@@ -142,60 +148,58 @@ abstract class _$$_RepoCopyWith<$Res> implements $RepoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res>
+class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res, _$_Repo>
     implements _$$_RepoCopyWith<$Res> {
   __$$_RepoCopyWithImpl(_$_Repo _value, $Res Function(_$_Repo) _then)
-      : super(_value, (v) => _then(v as _$_Repo));
+      : super(_value, _then);
 
-  @override
-  _$_Repo get _value => super._value as _$_Repo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-    Object? owner = freezed,
-    Object? htmlUrl = freezed,
-    Object? description = freezed,
+    Object? id = null,
+    Object? name = null,
+    Object? owner = null,
+    Object? htmlUrl = null,
+    Object? description = null,
     Object? updatedAt = freezed,
-    Object? stargazersCount = freezed,
-    Object? forksCount = freezed,
-    Object? watchersCount = freezed,
+    Object? stargazersCount = null,
+    Object? forksCount = null,
+    Object? watchersCount = null,
   }) {
     return _then(_$_Repo(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      owner: owner == freezed
+      owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as Owner,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      updatedAt: updatedAt == freezed
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      stargazersCount: stargazersCount == freezed
+      stargazersCount: null == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
               as int,
-      forksCount: forksCount == freezed
+      forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
               as int,
-      watchersCount: watchersCount == freezed
+      watchersCount: null == watchersCount
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
               as int,
@@ -257,37 +261,30 @@ class _$_Repo implements _Repo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Repo &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.owner, owner) &&
-            const DeepCollectionEquality().equals(other.htmlUrl, htmlUrl) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
-            const DeepCollectionEquality()
-                .equals(other.stargazersCount, stargazersCount) &&
-            const DeepCollectionEquality()
-                .equals(other.forksCount, forksCount) &&
-            const DeepCollectionEquality()
-                .equals(other.watchersCount, watchersCount));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.owner, owner) || other.owner == owner) &&
+            (identical(other.htmlUrl, htmlUrl) || other.htmlUrl == htmlUrl) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.stargazersCount, stargazersCount) ||
+                other.stargazersCount == stargazersCount) &&
+            (identical(other.forksCount, forksCount) ||
+                other.forksCount == forksCount) &&
+            (identical(other.watchersCount, watchersCount) ||
+                other.watchersCount == watchersCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(owner),
-      const DeepCollectionEquality().hash(htmlUrl),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(updatedAt),
-      const DeepCollectionEquality().hash(stargazersCount),
-      const DeepCollectionEquality().hash(forksCount),
-      const DeepCollectionEquality().hash(watchersCount));
+  int get hashCode => Object.hash(runtimeType, id, name, owner, htmlUrl,
+      description, updatedAt, stargazersCount, forksCount, watchersCount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_RepoCopyWith<_$_Repo> get copyWith =>
       __$$_RepoCopyWithImpl<_$_Repo>(this, _$identity);
 
