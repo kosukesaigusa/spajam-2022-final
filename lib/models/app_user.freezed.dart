@@ -20,6 +20,7 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AppUser {
+  String get name => throw _privateConstructorUsedError;
   String get appUserId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get country => throw _privateConstructorUsedError;
@@ -30,6 +31,7 @@ mixin _$AppUser {
   /// 交流した人の国旗
   List<String> get flags => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
+  @FirestorePositionConverter()
   FirestorePosition get location => throw _privateConstructorUsedError;
   List<String> get fcmTokens => throw _privateConstructorUsedError;
 
@@ -44,13 +46,14 @@ abstract class $AppUserCopyWith<$Res> {
       _$AppUserCopyWithImpl<$Res, AppUser>;
   @useResult
   $Res call(
-      {String appUserId,
+      {String name,
+      String appUserId,
       String imageUrl,
       String country,
       bool isVisible,
       List<String> flags,
       String comment,
-      FirestorePosition location,
+      @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
 
   $FirestorePositionCopyWith<$Res> get location;
@@ -69,6 +72,7 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? appUserId = null,
     Object? imageUrl = null,
     Object? country = null,
@@ -79,6 +83,10 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
     Object? fcmTokens = null,
   }) {
     return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       appUserId: null == appUserId
           ? _value.appUserId
           : appUserId // ignore: cast_nullable_to_non_nullable
@@ -131,13 +139,14 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String appUserId,
+      {String name,
+      String appUserId,
       String imageUrl,
       String country,
       bool isVisible,
       List<String> flags,
       String comment,
-      FirestorePosition location,
+      @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
 
   @override
@@ -154,6 +163,7 @@ class __$$_AppUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? appUserId = null,
     Object? imageUrl = null,
     Object? country = null,
@@ -164,6 +174,10 @@ class __$$_AppUserCopyWithImpl<$Res>
     Object? fcmTokens = null,
   }) {
     return _then(_$_AppUser(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       appUserId: null == appUserId
           ? _value.appUserId
           : appUserId // ignore: cast_nullable_to_non_nullable
@@ -204,13 +218,15 @@ class __$$_AppUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AppUser extends _AppUser {
   const _$_AppUser(
-      {this.appUserId = '',
+      {this.name = '',
+      this.appUserId = '',
       this.imageUrl = '',
       this.country = '',
       this.isVisible = true,
       final List<String> flags = const <String>[],
       this.comment = '',
-      this.location = FirestorePosition.defaultValue,
+      @FirestorePositionConverter()
+          this.location = FirestorePosition.defaultValue,
       final List<String> fcmTokens = const <String>[]})
       : _flags = flags,
         _fcmTokens = fcmTokens,
@@ -219,6 +235,9 @@ class _$_AppUser extends _AppUser {
   factory _$_AppUser.fromJson(Map<String, dynamic> json) =>
       _$$_AppUserFromJson(json);
 
+  @override
+  @JsonKey()
+  final String name;
   @override
   @JsonKey()
   final String appUserId;
@@ -250,6 +269,7 @@ class _$_AppUser extends _AppUser {
   final String comment;
   @override
   @JsonKey()
+  @FirestorePositionConverter()
   final FirestorePosition location;
   final List<String> _fcmTokens;
   @override
@@ -261,7 +281,7 @@ class _$_AppUser extends _AppUser {
 
   @override
   String toString() {
-    return 'AppUser(appUserId: $appUserId, imageUrl: $imageUrl, country: $country, isVisible: $isVisible, flags: $flags, comment: $comment, location: $location, fcmTokens: $fcmTokens)';
+    return 'AppUser(name: $name, appUserId: $appUserId, imageUrl: $imageUrl, country: $country, isVisible: $isVisible, flags: $flags, comment: $comment, location: $location, fcmTokens: $fcmTokens)';
   }
 
   @override
@@ -269,6 +289,7 @@ class _$_AppUser extends _AppUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AppUser &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.appUserId, appUserId) ||
                 other.appUserId == appUserId) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -288,6 +309,7 @@ class _$_AppUser extends _AppUser {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      name,
       appUserId,
       imageUrl,
       country,
@@ -313,18 +335,21 @@ class _$_AppUser extends _AppUser {
 
 abstract class _AppUser extends AppUser {
   const factory _AppUser(
-      {final String appUserId,
+      {final String name,
+      final String appUserId,
       final String imageUrl,
       final String country,
       final bool isVisible,
       final List<String> flags,
       final String comment,
-      final FirestorePosition location,
+      @FirestorePositionConverter() final FirestorePosition location,
       final List<String> fcmTokens}) = _$_AppUser;
   const _AppUser._() : super._();
 
   factory _AppUser.fromJson(Map<String, dynamic> json) = _$_AppUser.fromJson;
 
+  @override
+  String get name;
   @override
   String get appUserId;
   @override
@@ -342,6 +367,7 @@ abstract class _AppUser extends AppUser {
   @override
   String get comment;
   @override
+  @FirestorePositionConverter()
   FirestorePosition get location;
   @override
   List<String> get fcmTokens;

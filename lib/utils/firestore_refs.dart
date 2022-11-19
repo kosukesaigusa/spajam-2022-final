@@ -12,9 +12,14 @@ final db = FirebaseFirestore.instance;
 
 /// appUsers コレクションの参照。
 final appUsersRef = db.collection('appUsers').withConverter(
-      fromFirestore: (ds, _) => AppUser.fromDocumentSnapshot(ds),
-      toFirestore: (obj, _) => obj.toJson(),
-    );
+  fromFirestore: (ds, _) {
+    return AppUser.fromDocumentSnapshot(ds);
+  },
+  toFirestore: (obj, _) {
+    final json = obj.toJson();
+    return json;
+  },
+);
 
 /// appUser ドキュメントの参照。
 DocumentReference<AppUser> appUserRef({

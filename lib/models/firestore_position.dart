@@ -10,9 +10,7 @@ part 'firestore_position.g.dart';
 class FirestorePosition with _$FirestorePosition {
   const factory FirestorePosition({
     @Default('') String geohash,
-    @Default(GeoPoint(35.6812, 139.7671))
-    @GeoPointConverter()
-        GeoPoint geopoint,
+    @Default(GeoPoint(35.6812, 139.7671)) @GeoPointConverter() GeoPoint geopoint,
   }) = _FirestorePosition;
 
   factory FirestorePosition.fromJson(Map<String, dynamic> json) =>
@@ -22,15 +20,13 @@ class FirestorePosition with _$FirestorePosition {
     final data = ds.data()! as Map<String, dynamic>;
     return FirestorePosition.fromJson(<String, dynamic>{
       ...data,
-      // 'userId': ds.id,
     });
   }
 
   static const defaultValue = FirestorePosition();
 }
 
-class FirestorePositionConverter
-    implements JsonConverter<FirestorePosition, Map<String, dynamic>> {
+class FirestorePositionConverter implements JsonConverter<FirestorePosition, Map<String, dynamic>> {
   const FirestorePositionConverter();
 
   @override

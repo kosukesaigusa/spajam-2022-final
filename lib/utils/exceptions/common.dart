@@ -17,3 +17,13 @@ class RouteNotFoundException implements Exception {
   @override
   String toString() => '$_path：指定されたページが見つかりませんでした。';
 }
+
+/// ログインが必須である場合に使用する例外。
+class SignInRequiredException implements Exception {
+  const SignInRequiredException();
+
+  String get message => 'ご使用の操作やページの表示のためにはサインインが必要です。';
+
+  @override
+  String toString() => message;
+}

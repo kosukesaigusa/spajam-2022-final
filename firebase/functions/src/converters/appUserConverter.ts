@@ -13,7 +13,7 @@ export const appUserConverter: FirestoreDataConverter<AppUser> = {
             flags: data.flags,
             comment: data.comment,
             // 位置情報に関しては使用しない
-            fcmTokens: data.fcm,
+            fcmTokens: data.fcmTokens,
 
         }
     },
