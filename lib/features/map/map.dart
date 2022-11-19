@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
@@ -5,6 +6,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/app_user.dart';
+import '../../models/firestore_position.dart';
+import '../../repositories/firestore/app_user_repository.dart';
+import '../../utils/exceptions/common.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
 import '../auth/auth.dart';
@@ -209,3 +213,31 @@ Future<LatLng> get initialCenterLatLng async {
   final p = await currentPosition;
   return p == null ? _defaultLatLng : LatLng(p.latitude, p.longitude);
 }
+
+/// ユーザの現在位置の更新
+final updateUserLocation = Provider.autoDispose(
+  (ref) => () async {
+    final p = await currentPosition;
+    final geoPoint = p == null
+        ? GeoPoint(_defaultLatLng.latitude, _defaultLatLng.longitude)
+        : GeoPoint(p.latitude, p.longitude);
+    final geo = Geoflutterfire();
+    final geoFirePoint = geo.point(
+      latitude: geoPoint.latitude,
+      longitude: geoPoint.longitude,
+    );
+    final location = FirestorePosition(
+      geohash: geoFirePoint.data['geohash'] as String,
+      geopoint: geoPoint,
+    );
+
+    final userId = ref.watch(userIdProvider).value;
+    if (userId == null) {
+      throw const SignInRequiredException();
+    }
+    await ref.read(appUserRepositoryProvider).updateLocation(
+          appUserId: userId,
+          location: location,
+        );
+  },
+);

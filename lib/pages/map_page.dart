@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -36,6 +37,15 @@ class MapPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(
+      () {
+        /// 初期表示の時にユーザの位置情報を更新する
+        ref.read(updateUserLocation)();
+        return null;
+      },
+      [],
+    );
+
     return Scaffold(
       // TODO: マップは消すかもしれないけど、
       //  開発中は他の画面に遷移したりするボタンを配置したいので。
@@ -251,7 +261,10 @@ class AppUserPageView extends HookConsumerWidget {
             color: context.theme.primaryColor,
           ),
           child: GestureDetector(
-            onTap: () => ref.read(backToCurrentPositionProvider)(),
+            onTap: () {
+              ref.read(backToCurrentPositionProvider)();
+              ref.read(updateUserLocation)();
+            },
             child: const Icon(
               Icons.near_me,
               size: _nearMeIconSize,
