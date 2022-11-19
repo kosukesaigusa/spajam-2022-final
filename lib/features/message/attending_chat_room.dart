@@ -81,15 +81,15 @@ final unreadCountProvider =
 });
 
 final matchAttendingChatRoomProvider = StreamProvider.autoDispose
-    .family<List<AttendingChatRoom>, String>((ref, appUserId) {
-  final userId = ref.watch(userIdProvider).value;
-  if (userId == null) {
+    .family<List<AttendingChatRoom>, String>((ref, partnerId) {
+  final myId = ref.watch(userIdProvider).value;
+  if (myId == null) {
     return Stream.value([]);
   }
   return ref
       .read(attendingChatRoomRepositoryProvider)
       .subscribeAttendingChatRooms(
-        appUserId: appUserId,
-        queryBuilder: (q) => q.where('partnerId', isEqualTo: userId),
+        appUserId: partnerId,
+        queryBuilder: (q) => q.where('partnerId', isEqualTo: myId),
       );
 });

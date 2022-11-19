@@ -358,36 +358,32 @@ class AppUserPageViewItem extends HookConsumerWidget {
                 maxLines: 3,
               ),
               const Spacer(),
-              ref.watch(matchAttendingChatRoomProvider(appUser.appUserId)).when(
-                data: (attendingChatRooms) {
-                  return Row(
-                    children: [
-                      const Spacer(),
-                      if (attendingChatRooms.isEmpty)
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            shape: const StadiumBorder(),
-                          ),
-                          child: const Text(
-                            '連絡',
-                          ),
-                        )
-                      else
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.chat),
-                        )
-                    ],
-                  );
-                },
-                loading: () {
-                  return Container();
-                },
-                error: (error, stackTrace) {
-                  return Container();
-                },
-              ),
+              ref
+                      .watch(matchAttendingChatRoomProvider(appUser.appUserId))
+                      .whenData(
+                        (attendingChatRooms) => Row(
+                          children: [
+                            const Spacer(),
+                            if (attendingChatRooms.isEmpty)
+                              ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder(),
+                                ),
+                                child: const Text(
+                                  '連絡',
+                                ),
+                              )
+                            else
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.chat),
+                              )
+                          ],
+                        ),
+                      )
+                      .value ??
+                  Container(),
             ],
           ),
         ),
