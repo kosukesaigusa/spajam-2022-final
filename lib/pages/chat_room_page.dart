@@ -15,8 +15,9 @@ import '../utils/extensions/build_context.dart';
 import '../utils/extensions/date_time.dart';
 import '../utils/routing/app_router_state.dart';
 import '../widgets/image.dart';
+import 'create_memory_page.dart';
 
-final _chatRoomIdProvider = Provider.autoDispose<String>(
+final chatRoomIdProvider = Provider.autoDispose<String>(
   (ref) {
     final state = ref.watch(appRouterStateProvider);
     final chatRoomId = state.params['chatRoomId'];
@@ -49,11 +50,24 @@ class ChatRoomPage extends StatefulHookConsumerWidget {
 class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
   @override
   Widget build(BuildContext context) {
-    final chatRoomId = ref.watch(_chatRoomIdProvider);
-    final messages = ref.watch(roomPageStateNotifierProvider(chatRoomId).select((s) => s.messages));
+    final chatRoomId = ref.watch(chatRoomIdProvider);
+    final messages = ref.watch(
+      roomPageStateNotifierProvider(chatRoomId).select((s) => s.messages),
+    );
     final userId = ref.watch(userIdProvider).value;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('メッセージ'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.pushNamed<void>(
+              context,
+              CreateMemoryPage.location(chatRoomId: chatRoomId),
+            ),
+            icon: const Icon(Icons.camera),
+          )
+        ],
+      ),
       body: ref.watch(roomPageStateNotifierProvider(chatRoomId)).loading
           ? const Center(
               child: FaIcon(
@@ -69,7 +83,9 @@ class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: ListView.builder(
                       controller: ref
-                          .watch(roomPageStateNotifierProvider(chatRoomId).notifier)
+                          .watch(
+                            roomPageStateNotifierProvider(chatRoomId).notifier,
+                          )
                           .scrollController,
                       itemBuilder: (context, index) {
                         final message = messages[index];
@@ -339,13 +355,19 @@ class MessageAdditionalInfoWidget extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(to24HourNotationString(message.createdAt.dateTime), style: context.bodySmall),
+          Text(
+            to24HourNotationString(message.createdAt.dateTime),
+            style: context.bodySmall,
+          ),
           if (isMyMessage)
             SizedBox(
               height: 14,
               child: ref.watch(partnerReadStatusProvider(chatRoomId)).when(
                     data: (readStatus) => Text(
-                      _isRead(message: message, lastReadAt: readStatus?.lastReadAt.dateTime)
+                      _isRead(
+                        message: message,
+                        lastReadAt: readStatus?.lastReadAt.dateTime,
+                      )
                           ? '既読'
                           : '未読',
                       style: context.bodySmall,
