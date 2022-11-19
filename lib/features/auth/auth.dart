@@ -33,7 +33,9 @@ final signInAsTestUserProvider = Provider.autoDispose.family<Future<void> Functi
         throw const AppException(message: 'Email とパスワードによるサインインに失敗しました。');
       }
       final fcmToken = await ref.read(getFcmTokenProvider)();
-      await ref.read(appUserRepositoryProvider).setUser(appUserId: user.uid, fcmToken: fcmToken);
+      await ref
+          .read(appUserRepositoryProvider)
+          .updateUserFcmToken(appUserId: user.uid, fcmToken: fcmToken);
     } on FirebaseException catch (e) {
       logger.warning(e.toString());
     } on AppException catch (e) {
@@ -52,7 +54,7 @@ final signInAnonymouslyProvider = Provider.autoDispose<Future<void> Function()>(
         throw const AppException(message: '匿名サインインに失敗しました。');
       }
       final fcmToken = await ref.read(getFcmTokenProvider)();
-      await ref.read(appUserRepositoryProvider).setUser(appUserId: user.uid, fcmToken: fcmToken);
+      // await ref.read(appUserRepositoryProvider).setUser(appUserId: user.uid, fcmToken: fcmToken);
     } on FirebaseException catch (e) {
       logger.warning(e.toString());
     } on AppException catch (e) {
