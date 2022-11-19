@@ -7,7 +7,18 @@ part of 'app_user.dart';
 // **************************************************************************
 
 _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
-      userId: json['userId'] as String? ?? '',
+      appUserId: json['appUserId'] as String? ?? '',
+      imageUrl: json['imageUrl'] as String? ?? '',
+      country: json['country'] as String? ?? '',
+      isVisible: json['isVisible'] as bool? ?? true,
+      flags:
+          (json['flags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const <String>[],
+      comment: json['comment'] as String? ?? '',
+      location: json['location'] == null
+          ? FirestorePosition.defaultValue
+          : FirestorePosition.fromJson(
+              json['location'] as Map<String, dynamic>),
       fcmTokens: (json['fcmTokens'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -16,6 +27,12 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
 
 Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
     <String, dynamic>{
-      'userId': instance.userId,
+      'appUserId': instance.appUserId,
+      'imageUrl': instance.imageUrl,
+      'country': instance.country,
+      'isVisible': instance.isVisible,
+      'flags': instance.flags,
+      'comment': instance.comment,
+      'location': instance.location,
       'fcmTokens': instance.fcmTokens,
     };
