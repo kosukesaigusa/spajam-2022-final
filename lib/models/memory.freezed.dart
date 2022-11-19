@@ -24,7 +24,7 @@ mixin _$Memory {
   String get appUserId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
-  @unionTimestampConverter
+  @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,7 +42,8 @@ abstract class $MemoryCopyWith<$Res> {
       String appUserId,
       String imageUrl,
       String comment,
-      @unionTimestampConverter UnionTimestamp createdAt});
+      @alwaysUseServerTimestampUnionTimestampConverter
+          UnionTimestamp createdAt});
 
   $UnionTimestampCopyWith<$Res> get createdAt;
 }
@@ -110,7 +111,8 @@ abstract class _$$_MemoryCopyWith<$Res> implements $MemoryCopyWith<$Res> {
       String appUserId,
       String imageUrl,
       String comment,
-      @unionTimestampConverter UnionTimestamp createdAt});
+      @alwaysUseServerTimestampUnionTimestampConverter
+          UnionTimestamp createdAt});
 
   @override
   $UnionTimestampCopyWith<$Res> get createdAt;
@@ -165,7 +167,7 @@ class _$_Memory extends _Memory {
       required this.appUserId,
       required this.imageUrl,
       this.comment = '',
-      @unionTimestampConverter
+      @alwaysUseServerTimestampUnionTimestampConverter
           this.createdAt = const UnionTimestamp.serverTimestamp()})
       : super._();
 
@@ -183,7 +185,7 @@ class _$_Memory extends _Memory {
   final String comment;
   @override
   @JsonKey()
-  @unionTimestampConverter
+  @alwaysUseServerTimestampUnionTimestampConverter
   final UnionTimestamp createdAt;
 
   @override
@@ -232,7 +234,8 @@ abstract class _Memory extends Memory {
       required final String appUserId,
       required final String imageUrl,
       final String comment,
-      @unionTimestampConverter final UnionTimestamp createdAt}) = _$_Memory;
+      @alwaysUseServerTimestampUnionTimestampConverter
+          final UnionTimestamp createdAt}) = _$_Memory;
   _Memory._() : super._();
 
   factory _Memory.fromJson(Map<String, dynamic> json) = _$_Memory.fromJson;
@@ -246,7 +249,7 @@ abstract class _Memory extends Memory {
   @override
   String get comment;
   @override
-  @unionTimestampConverter
+  @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt;
   @override
   @JsonKey(ignore: true)
