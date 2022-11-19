@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/app_user/app_user.dart';
+import '../features/auth/auth.dart';
 import '../models/app_user.dart';
 import '../utils/enums/country.dart';
 import '../utils/exceptions/base.dart';
 import '../utils/routing/app_router_state.dart';
+import 'widgets/contact_button.dart';
 
 final _appUserIdProvider = Provider.autoDispose<String>(
   (ref) {
@@ -34,6 +36,7 @@ class AppUserDetailPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: ref
             .watch(
           appUserFutureProvider(
@@ -42,7 +45,6 @@ class AppUserDetailPage extends HookConsumerWidget {
         )
             .when(
           data: (user) {
-            print(user);
             return UserView(user: user!);
           },
           loading: () {
@@ -63,6 +65,7 @@ class UserView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CircleAvatar(
           radius: 80,
@@ -112,6 +115,11 @@ class UserView extends HookConsumerWidget {
               const Text('一言: '),
               Text(user.comment),
             ],
+          ),
+        if (user.appUserId != ref.watch(userIdProvider).value)
+          ContactButton(
+            partnerId: user.appUserId,
+            chatButtonLabel: 'メッセージを送る',
           ),
       ],
     );

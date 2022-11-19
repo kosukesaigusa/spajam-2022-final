@@ -11,9 +11,11 @@ class ContactButton extends HookConsumerWidget {
   const ContactButton({
     super.key,
     required this.partnerId,
+    this.chatButtonLabel,
   });
 
   final String partnerId;
+  final String? chatButtonLabel;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref
@@ -49,17 +51,34 @@ class ContactButton extends HookConsumerWidget {
                 ),
               );
             } else {
-              return IconButton(
-                onPressed: () {
-                  Navigator.pushNamed<void>(
-                    context,
-                    ChatRoomPage.location(
-                      chatRoomId: attendingChatRooms.first.chatRoomId,
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.chat),
-              );
+              if (chatButtonLabel == null) {
+                return IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed<void>(
+                      context,
+                      ChatRoomPage.location(
+                        chatRoomId: attendingChatRooms.first.chatRoomId,
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.chat),
+                );
+              } else {
+                return ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed<void>(
+                      context,
+                      ChatRoomPage.location(
+                        chatRoomId: attendingChatRooms.first.chatRoomId,
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                  ),
+                  child: Text(chatButtonLabel!),
+                );
+              }
             }
           },
         ).value ??
