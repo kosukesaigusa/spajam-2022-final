@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../models/app_user.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
+import '../auth/auth.dart';
 
 /// マップのデフォルトの緯度経度。
 const _defaultLatLng = LatLng(35.6812, 139.7671);
@@ -15,7 +16,7 @@ const _defaultLatLng = LatLng(35.6812, 139.7671);
 const double _defaultZoom = 15;
 
 /// マップのデフォルトの検出半径。
-const double _defaultRadius = 50;
+const double _defaultRadius = 1;
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
 final googleMapControllerProvider =
@@ -110,12 +111,13 @@ final markersProvider = Provider.autoDispose((ref) {
 
 /// マップ上に検出された AppUser 一覧を提供する Provider。
 final appUsersOnMapProvider = Provider.autoDispose((ref) {
+  final userId = ref.watch(userIdProvider).value;
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
   final appUsers = <AppUser>[];
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
       final appUser = ds.data();
-      if (appUser == null) {
+      if (appUser == null || appUser.appUserId == userId) {
         continue;
       }
       appUsers.add(appUser);
