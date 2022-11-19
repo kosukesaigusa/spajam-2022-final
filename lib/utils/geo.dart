@@ -25,7 +25,7 @@ double getRadiusFromZoom(double zoom) {
     return 50;
   }
   if (zoom <= 11) {
-    return 50;
+    return 25;
   }
   if (zoom <= 12) {
     return 15;
