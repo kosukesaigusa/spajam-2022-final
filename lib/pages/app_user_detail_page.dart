@@ -77,7 +77,10 @@ class UserView extends HookConsumerWidget {
         Row(
           children: [
             const Text('国: '),
-            Text(user.country.name),
+            user.country.icon(
+              width: 50,
+              height: 50,
+            ),
           ],
         ),
         Row(
