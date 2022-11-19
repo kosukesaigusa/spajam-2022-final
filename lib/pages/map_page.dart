@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/auth.dart';
 import '../features/map/map.dart';
+import '../features/message/attending_chat_room.dart';
 import '../models/app_user.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
@@ -355,6 +356,37 @@ class AppUserPageViewItem extends HookConsumerWidget {
                 style: context.bodySmall,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
+              ),
+              const Spacer(),
+              ref.watch(matchAttendingChatRoomProvider(appUser.appUserId)).when(
+                data: (attendingChatRooms) {
+                  return Row(
+                    children: [
+                      const Spacer(),
+                      if (attendingChatRooms.isEmpty)
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            shape: const StadiumBorder(),
+                          ),
+                          child: const Text(
+                            '連絡',
+                          ),
+                        )
+                      else
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.chat),
+                        )
+                    ],
+                  );
+                },
+                loading: () {
+                  return Container();
+                },
+                error: (error, stackTrace) {
+                  return Container();
+                },
               ),
             ],
           ),

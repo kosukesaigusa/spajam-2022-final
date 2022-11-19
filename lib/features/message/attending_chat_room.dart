@@ -34,7 +34,8 @@ final latestMessageOfRoomProvider =
 
 /// ユーザーの attendingChatRoom コレクションを購読する StreamProvider。
 /// ユーザーがログインしていない場合は例外をスローする。
-final attendingChatRoomsProvider = StreamProvider.autoDispose<List<AttendingChatRoom>>((ref) {
+final attendingChatRoomsProvider =
+    StreamProvider.autoDispose<List<AttendingChatRoom>>((ref) {
   final appUserId = ref.watch(userIdProvider).value;
   if (appUserId == null) {
     throw const SignInRequiredException();
@@ -50,7 +51,8 @@ final attendingChatRoomsProvider = StreamProvider.autoDispose<List<AttendingChat
 /// 指定した chatRoomId の messages サブコレクションに、message.createdAt が指定した DateTime より
 /// 未来かつ送信者が相手である（自分ではない）ドキュメントの個数（最大 10 個）を購読する
 /// StreamProvider。
-final unreadCountProvider = StreamProvider.autoDispose.family<int, String>((ref, chatRoomId) {
+final unreadCountProvider =
+    StreamProvider.autoDispose.family<int, String>((ref, chatRoomId) {
   final userId = ref.watch(userIdProvider).value;
   if (userId == null) {
     return Stream.value(0);
@@ -72,5 +74,22 @@ final unreadCountProvider = StreamProvider.autoDispose.family<int, String>((ref,
                 .limit(10)
             : q.orderBy('createdAt', descending: true).limit(10),
       )
-      .map((messages) => messages.where((message) => message.senderId != userId).toList().length);
+      .map((messages) => messages
+          .where((message) => message.senderId != userId)
+          .toList()
+          .length);
+});
+
+final matchAttendingChatRoomProvider = StreamProvider.autoDispose
+    .family<List<AttendingChatRoom>, String>((ref, appUserId) {
+  final userId = ref.watch(userIdProvider).value;
+  if (userId == null) {
+    return Stream.value([]);
+  }
+  return ref
+      .read(attendingChatRoomRepositoryProvider)
+      .subscribeAttendingChatRooms(
+        appUserId: appUserId,
+        queryBuilder: (q) => q.where('partnerId', isEqualTo: userId),
+      );
 });
