@@ -146,7 +146,7 @@ class GoogleMapWidget extends HookConsumerWidget {
         Circle(
           circleId: const CircleId('value'),
           center: ref.watch(centerLatLngProvider),
-          radius: ref.watch(radiusProvider) * 1000,
+          radius: 1000,
           fillColor: Colors.black12,
           strokeWidth: 0,
         ),

@@ -15,7 +15,7 @@ const _defaultLatLng = LatLng(35.6812, 139.7671);
 const double _defaultZoom = 15;
 
 /// マップのデフォルトの検出半径。
-const double _defaultRadius = 1;
+const double _defaultRadius = 50;
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
 final googleMapControllerProvider =
