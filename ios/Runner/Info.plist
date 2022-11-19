@@ -28,6 +28,12 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>ユーザーがカメラを起動して、撮影した画像をメッセージやプロフィールに使用するために、端末のカメラを使用します。</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>マップ上で現在地に応じたイベントや情報を取得・表示するために、現在地を使用します。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>ユーザーがメッセージに画像を添付したり、自身のプロフィール画像を選択したりするために、端末内の画像を使用します。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
