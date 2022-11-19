@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
 import '../features/message/chat_room.dart';
+import '../features/message/read_status.dart';
 import '../models/message.dart';
 import '../utils/constants/style.dart';
 import '../utils/exceptions/base.dart';
@@ -339,20 +340,20 @@ class MessageAdditionalInfoWidget extends HookConsumerWidget {
         crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(to24HourNotationString(message.createdAt.dateTime), style: context.bodySmall),
-          // if (isMyMessage)
-          //   SizedBox(
-          //     height: 14,
-          //     child: ref.watch(partnerReadStatusProvider(chatRoomId)).when(
-          //           data: (readStatus) => Text(
-          //             _isRead(message: message, lastReadAt: readStatus?.lastReadAt.dateTime)
-          //                 ? '既読'
-          //                 : '未読',
-          //             style: context.bodySmall,
-          //           ),
-          //           error: (_, __) => const SizedBox(),
-          //           loading: () => const SizedBox(),
-          //         ),
-          //   ),
+          if (isMyMessage)
+            SizedBox(
+              height: 14,
+              child: ref.watch(partnerReadStatusProvider(chatRoomId)).when(
+                    data: (readStatus) => Text(
+                      _isRead(message: message, lastReadAt: readStatus?.lastReadAt.dateTime)
+                          ? '既読'
+                          : '未読',
+                      style: context.bodySmall,
+                    ),
+                    error: (_, __) => const SizedBox(),
+                    loading: () => const SizedBox(),
+                  ),
+            ),
         ],
       ),
     );

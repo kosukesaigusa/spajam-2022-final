@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
@@ -7,8 +10,10 @@ import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
 import '../features/message/attending_chat_room.dart';
 import '../models/attending_chat_room.dart';
+import '../models/read_status.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/date_time.dart';
+import '../utils/firestore_refs.dart';
 import '../utils/loading.dart';
 import '../widgets/empty_placeholder.dart';
 import '../widgets/image.dart';
@@ -63,12 +68,10 @@ class AttendingChatRoomWidget extends HookConsumerWidget {
         ? InkWell(
             onTap: () async {
               // 非同期的に lastReadAt を更新する
-              // unawaited(
-              //   ref
-              //       .read(messageRepositoryProvider)
-              //       .readStatusRef(chatRoomId: attendingChatRoom.chatRoomId, readStatusId: userId)
-              //       .set(const ReadStatus(), SetOptions(merge: true)),
-              // );
+              unawaited(
+                readStatusRef(chatRoomId: attendingChatRoom.chatRoomId, readStatusId: userId)
+                    .set(const ReadStatus(), SetOptions(merge: true)),
+              );
               await Navigator.pushNamed<void>(
                 context,
                 ChatRoomPage.location(chatRoomId: attendingChatRoom.chatRoomId),
@@ -196,35 +199,35 @@ class LatestMessageCreatedAtWidget extends HookConsumerWidget {
 }
 
 /// 未読数カウントのバッジウィジェット。
-// class UnreadCountBadgeWidget extends HookConsumerWidget {
-//   const UnreadCountBadgeWidget({
-//     super.key,
-//     required this.chatRoomId,
-//   });
+class UnreadCountBadgeWidget extends HookConsumerWidget {
+  const UnreadCountBadgeWidget({
+    super.key,
+    required this.chatRoomId,
+  });
 
-//   final String chatRoomId;
+  final String chatRoomId;
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return ref.watch(unreadCountProvider(chatRoomId)).when(
-//           data: (count) => count > 0
-//               ? Container(
-//                   width: 20,
-//                   height: 20,
-//                   decoration: BoxDecoration(
-//                     shape: BoxShape.circle,
-//                     color: context.theme.primaryColor,
-//                   ),
-//                   child: Center(
-//                     child: Text(
-//                       count > 9 ? '9+' : count.toString(),
-//                       style: context.titleSmall!.copyWith(color: Colors.white),
-//                     ),
-//                   ),
-//                 )
-//               : const SizedBox(width: 20, height: 20),
-//           error: (_, __) => const SizedBox(width: 20, height: 20),
-//           loading: () => const SizedBox(width: 20, height: 20),
-//         );
-//   }
-// }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ref.watch(unreadCountProvider(chatRoomId)).when(
+          data: (count) => count > 0
+              ? Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: context.theme.primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      count > 9 ? '9+' : count.toString(),
+                      style: context.titleSmall!.copyWith(color: Colors.white),
+                    ),
+                  ),
+                )
+              : const SizedBox(width: 20, height: 20),
+          error: (_, __) => const SizedBox(width: 20, height: 20),
+          loading: () => const SizedBox(width: 20, height: 20),
+        );
+  }
+}
