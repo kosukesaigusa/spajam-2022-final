@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../models/app_user.dart';
+import '../enums/country.dart';
 
 /// Firestore の Country 型 と Dart の Country 型とを変換するコンバータ。
 class CountryConverter implements JsonConverter<Country, dynamic> {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../utils/enums/country.dart';
 import '../utils/json_converters/country.dart';
 import '../utils/json_converters/flags.dart';
 import 'firestore_position.dart';
@@ -40,15 +41,4 @@ class AppUser with _$AppUser {
   }
 
   const AppUser._();
-}
-
-enum Country {
-  japan,
-  korea,
-  china,
-  france,
-  spain,
-  america,
-  brazil,
-  unknown,
 }

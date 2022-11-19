@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../models/app_user.dart';
+import '../enums/country.dart';
 import 'country.dart';
 
 /// Firestore の Flags 型 と Dart の Flags 型とを変換するコンバータ。
