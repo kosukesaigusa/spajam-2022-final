@@ -26,7 +26,7 @@
       },
       "fcmToken": "{fcmToken}"
     },
-    "collection: chatRooms": {
+    "collection: attendingChatRooms": {
       "document: {chatRoomId}": {
         "chatRoomId": "{chatRoomId}",
         // 自分じゃない方、相手の appUserId
