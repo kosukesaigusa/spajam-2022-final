@@ -23,13 +23,15 @@ mixin _$AppUser {
   String get name => throw _privateConstructorUsedError;
   String get appUserId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  String get country => throw _privateConstructorUsedError;
+  @CountryConverter()
+  Country get country => throw _privateConstructorUsedError;
 
   /// マップ上に表示されるかどうか
   bool get isVisible => throw _privateConstructorUsedError;
 
   /// 交流した人の国旗
-  List<String> get flags => throw _privateConstructorUsedError;
+  @FlagsConverter()
+  List<Country> get flags => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
   @FirestorePositionConverter()
   FirestorePosition get location => throw _privateConstructorUsedError;
@@ -49,9 +51,9 @@ abstract class $AppUserCopyWith<$Res> {
       {String name,
       String appUserId,
       String imageUrl,
-      String country,
+      @CountryConverter() Country country,
       bool isVisible,
-      List<String> flags,
+      @FlagsConverter() List<Country> flags,
       String comment,
       @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
@@ -98,7 +100,7 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Country,
       isVisible: null == isVisible
           ? _value.isVisible
           : isVisible // ignore: cast_nullable_to_non_nullable
@@ -106,7 +108,7 @@ class _$AppUserCopyWithImpl<$Res, $Val extends AppUser>
       flags: null == flags
           ? _value.flags
           : flags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Country>,
       comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
@@ -142,9 +144,9 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       {String name,
       String appUserId,
       String imageUrl,
-      String country,
+      @CountryConverter() Country country,
       bool isVisible,
-      List<String> flags,
+      @FlagsConverter() List<Country> flags,
       String comment,
       @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
@@ -189,7 +191,7 @@ class __$$_AppUserCopyWithImpl<$Res>
       country: null == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Country,
       isVisible: null == isVisible
           ? _value.isVisible
           : isVisible // ignore: cast_nullable_to_non_nullable
@@ -197,7 +199,7 @@ class __$$_AppUserCopyWithImpl<$Res>
       flags: null == flags
           ? _value._flags
           : flags // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Country>,
       comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
@@ -221,9 +223,11 @@ class _$_AppUser extends _AppUser {
       {this.name = '',
       this.appUserId = '',
       this.imageUrl = '',
-      this.country = '',
+      @CountryConverter()
+          this.country = Country.unknown,
       this.isVisible = true,
-      final List<String> flags = const <String>[],
+      @FlagsConverter()
+          final List<Country> flags = const <Country>[],
       this.comment = '',
       @FirestorePositionConverter()
           this.location = FirestorePosition.defaultValue,
@@ -246,7 +250,8 @@ class _$_AppUser extends _AppUser {
   final String imageUrl;
   @override
   @JsonKey()
-  final String country;
+  @CountryConverter()
+  final Country country;
 
   /// マップ上に表示されるかどうか
   @override
@@ -254,12 +259,13 @@ class _$_AppUser extends _AppUser {
   final bool isVisible;
 
   /// 交流した人の国旗
-  final List<String> _flags;
+  final List<Country> _flags;
 
   /// 交流した人の国旗
   @override
   @JsonKey()
-  List<String> get flags {
+  @FlagsConverter()
+  List<Country> get flags {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_flags);
   }
@@ -338,9 +344,9 @@ abstract class _AppUser extends AppUser {
       {final String name,
       final String appUserId,
       final String imageUrl,
-      final String country,
+      @CountryConverter() final Country country,
       final bool isVisible,
-      final List<String> flags,
+      @FlagsConverter() final List<Country> flags,
       final String comment,
       @FirestorePositionConverter() final FirestorePosition location,
       final List<String> fcmTokens}) = _$_AppUser;
@@ -355,7 +361,8 @@ abstract class _AppUser extends AppUser {
   @override
   String get imageUrl;
   @override
-  String get country;
+  @CountryConverter()
+  Country get country;
   @override
 
   /// マップ上に表示されるかどうか
@@ -363,7 +370,8 @@ abstract class _AppUser extends AppUser {
   @override
 
   /// 交流した人の国旗
-  List<String> get flags;
+  @FlagsConverter()
+  List<Country> get flags;
   @override
   String get comment;
   @override
