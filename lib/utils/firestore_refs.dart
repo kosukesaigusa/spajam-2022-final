@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
+import '../models/memory.dart';
 import '../models/test_notification_request.dart';
 import '../models/todo.dart';
 
@@ -41,3 +42,19 @@ DocumentReference<Todo> todoRef({
   required String todoId,
 }) =>
     todosRef(userId: userId).doc(todoId);
+
+/// memory コレクションの参照。
+CollectionReference<Memory> memoriesRef({
+  required String userId,
+}) =>
+    appUserRef(userId: userId).collection('memories').withConverter(
+          fromFirestore: (ds, _) => Memory.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+/// memory ドキュメントの参照。
+DocumentReference<Memory> memoryRef({
+  required String userId,
+  required String memoryId,
+}) =>
+    memoriesRef(userId: userId).doc(memoryId);
