@@ -13,7 +13,7 @@ class AppUserRepository {
   Future<AppUser?> fetchAppUser({
     required String appUserId,
   }) async {
-    final ds = await appUserRef(userId: appUserId).get();
+    final ds = await appUserRef(appUserId: appUserId).get();
     if (!ds.exists) {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
@@ -27,7 +27,7 @@ class AppUserRepository {
     required String appUserId,
     String? fcmToken,
   }) async {
-    await appUserRef(userId: appUserId).set(
+    await appUserRef(appUserId: appUserId).set(
       AppUser(
         appUserId: appUserId,
         // 本当は FieldValue.arrayUnion を使うべきだが、いったんこれで。

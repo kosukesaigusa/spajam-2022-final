@@ -49,21 +49,21 @@ class _MainPageState extends ConsumerState<MainPage> with WidgetsBindingObserver
           children: [for (final tab in bottomTabs) _buildStackedPages(tab)],
         ),
         // Note: BottomNavigationBar が不要になったらここをコメントアウトする。
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Theme.of(context).colorScheme.primary,
-          selectedFontSize: 12,
-          onTap: (index) => ref.read(bottomNavigationBarItemOnTapProvider)(index),
-          currentIndex: ref.watch(bottomTabStateProvider).index,
-          items: bottomTabs
-              .map(
-                (b) => BottomNavigationBarItem(
-                  icon: ref.watch(bottomTabIconProvider(b.bottomTabEnum)),
-                  label: b.bottomTabEnum.label,
-                ),
-              )
-              .toList(),
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   type: BottomNavigationBarType.fixed,
+        //   selectedItemColor: Theme.of(context).colorScheme.primary,
+        //   selectedFontSize: 12,
+        //   onTap: (index) => ref.read(bottomNavigationBarItemOnTapProvider)(index),
+        //   currentIndex: ref.watch(bottomTabStateProvider).index,
+        //   items: bottomTabs
+        //       .map(
+        //         (b) => BottomNavigationBarItem(
+        //           icon: ref.watch(bottomTabIconProvider(b.bottomTabEnum)),
+        //           label: b.bottomTabEnum.label,
+        //         ),
+        //       )
+        //       .toList(),
+        // ),
       ),
     );
   }
