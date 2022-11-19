@@ -54,22 +54,23 @@ class SignInPage extends HookConsumerWidget {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Gap(16),
+                      const Gap(32),
                       for (var i = 0; i < 5; i++)
                         ElevatedButton(
                           onPressed: () async {
-                            await ref.read(
-                              signInAsTestUserProvider(i + 1),
-                            )();
                             Navigator.pop(context);
-                            ref
-                                .read(
-                                  scaffoldMessengerServiceProvider,
-                                )
-                                .showSnackBar('ログインしました。');
+                            await ref.read(signInAsTestUserProvider(i + 1))();
+                            // try {
+                            //   Navigator.pop(context);
+                            //   ref.read(overlayLoadingProvider.notifier).update((state) => true);
+                            //   await ref.read(signInAsTestUserProvider(i + 1))();
+                            // } finally {
+                            //   ref.read(overlayLoadingProvider.notifier).update((state) => false);
+                            // }
                           },
-                          child: Text('test${i + 1}@example.com でログイン'),
+                          child: Text('ユーザー ${i + 1} でログイン'),
                         ),
+                      const Gap(32),
                     ],
                   );
                 },
