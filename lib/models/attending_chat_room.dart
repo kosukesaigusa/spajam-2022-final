@@ -9,7 +9,7 @@ part 'attending_chat_room.g.dart';
 @freezed
 class AttendingChatRoom with _$AttendingChatRoom {
   const factory AttendingChatRoom({
-    @Default('') String attendingChatRoomId,
+    @Default('') String chatRoomId,
     @Default('') String partnerId,
     @Default(false) bool isDeleted,
     @alwaysUseServerTimestampUnionTimestampConverter
@@ -26,7 +26,7 @@ class AttendingChatRoom with _$AttendingChatRoom {
     final data = ds.data()! as Map<String, dynamic>;
     return AttendingChatRoom.fromJson(<String, dynamic>{
       ...data,
-      'attendingChatRoomId': ds.id,
+      'chatRoomId': ds.id,
     });
   }
 

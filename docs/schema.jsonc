@@ -26,9 +26,9 @@
       },
       "fcmToken": "{fcmToken}"
     },
-    "collection: attendingChatRooms": {
-      "document: {attendingChatRoomId}": {
-        "attendingChatRoomId": "{attendingChatRoomId}",
+    "collection: chatRooms": {
+      "document: {chatRoomId}": {
+        "chatRoomId": "{chatRoomId}",
         // 自分じゃない方、相手の appUserId
         "partnerId": "{appUserId}",
         "isDeleted": false,
