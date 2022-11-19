@@ -41,7 +41,7 @@ final bottomTabIconProvider = Provider.family<Widget, BottomTabEnum>((ref, botto
     case BottomTabEnum.googleMap:
       return const FaIcon(FontAwesomeIcons.map);
     case BottomTabEnum.about:
-      return const FaIcon(FontAwesomeIcons.ellipsis);
+      return const FaIcon(FontAwesomeIcons.database);
   }
 });
 

@@ -5,8 +5,7 @@ import '../../models/firestore_position.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/logger.dart';
 
-final appUserRepositoryProvider =
-    Provider.autoDispose((_) => AppUserRepository());
+final appUserRepositoryProvider = Provider.autoDispose((_) => AppUserRepository());
 
 class AppUserRepository {
   /// 指定した AppUser を取得する。
@@ -29,21 +28,11 @@ class AppUserRepository {
     return docStream.map((ds) => ds.data());
   }
 
-  /// 指定した userId のユーザーを `SetOptions(merge: true)` で作成する。
+  /// 指定した userId のユーザーを作成する。
   /// 通知を受け取るために必要な fcmToken も登録する。
-  // Future<void> setUser({
-  //   required String appUserId,
-  //   String? fcmToken,
-  // }) async {
-  //   await appUserRef(appUserId: appUserId).set(
-  //     AppUser(
-  //       appUserId: appUserId,
-  //       // 本当は FieldValue.arrayUnion を使うべきだが、いったんこれで。
-  //       fcmTokens: fcmToken == null ? [] : <String>[fcmToken],
-  //     ),
-  //     SetOptions(merge: true),
-  //   );
-  // }
+  Future<void> createUser(AppUser appUser) async {
+    await appUserRef(appUserId: appUser.appUserId).set(appUser);
+  }
 
   /// 指定した userId のユーザーの fcmToken を更新する。
   Future<void> updateUserFcmToken({

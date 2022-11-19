@@ -65,7 +65,7 @@ class RepoItem extends StatelessWidget {
                 const Gap(4),
                 Row(
                   children: [
-                    const FaIcon(FontAwesomeIcons.codeFork, size: 12),
+                    const FaIcon(FontAwesomeIcons.accessibleIcon, size: 12),
                     const Gap(4),
                     Text(
                       repo.forksCount.withComma,

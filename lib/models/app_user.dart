@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../utils/enums/country.dart';
+import '../utils/json_converters/country.dart';
+import '../utils/json_converters/flags.dart';
 import 'firestore_position.dart';
 
 part 'app_user.freezed.dart';
@@ -12,13 +15,13 @@ class AppUser with _$AppUser {
     @Default('') String name,
     @Default('') String appUserId,
     @Default('') String imageUrl,
-    @Default('') String country,
+    @CountryConverter() @Default(Country.unknown) Country country,
 
     /// マップ上に表示されるかどうか
     @Default(true) bool isVisible,
 
     /// 交流した人の国旗
-    @Default(<String>[]) List<String> flags,
+    @FlagsConverter() @Default(<Country>[]) List<Country> flags,
     @Default('') String comment,
     @FirestorePositionConverter()
     @Default(FirestorePosition.defaultValue)
@@ -26,7 +29,8 @@ class AppUser with _$AppUser {
     @Default(<String>[]) List<String> fcmTokens,
   }) = _AppUser;
 
-  factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
+  factory AppUser.fromJson(Map<String, dynamic> json) =>
+      _$AppUserFromJson(json);
 
   factory AppUser.fromDocumentSnapshot(DocumentSnapshot ds) {
     final data = ds.data()! as Map<String, dynamic>;

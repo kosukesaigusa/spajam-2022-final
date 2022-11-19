@@ -7,6 +7,7 @@ import '../../pages/chat_room_page.dart';
 import '../../pages/create_memory_page.dart';
 import '../../pages/main_page.dart';
 import '../../pages/map_page.dart';
+import '../../pages/sign_in_page.dart';
 import 'app_route.dart';
 import 'app_router_state.dart';
 
@@ -19,6 +20,12 @@ final appRoutes = <AppRoute>[
     path: MainPage.path,
     name: MainPage.name,
     builder: (context, state) => const MainPage(key: ValueKey(MainPage.name)),
+  ),
+  AppRoute(
+    path: SignInPage.path,
+    name: SignInPage.name,
+    builder: (context, state) =>
+        const SignInPage(key: ValueKey(SignInPage.name)),
   ),
   AppRoute(
     path: MapPage.path,
@@ -46,6 +53,14 @@ final appRoutes = <AppRoute>[
     builder: (context, state) => ProviderScope(
       overrides: <Override>[appRouterStateProvider.overrideWithValue(state)],
       child: const ChatRoomPage(key: ValueKey(ChatRoomPage.name)),
+    ),
+  ),
+  AppRoute(
+    path: AppUserDetailPage.path,
+    name: AppUserDetailPage.name,
+    builder: (context, state) => ProviderScope(
+      overrides: <Override>[appRouterStateProvider.overrideWithValue(state)],
+      child: const AppUserDetailPage(key: ValueKey(AppUserDetailPage.name)),
     ),
   ),
   AppRoute(

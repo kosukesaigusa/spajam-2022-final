@@ -15,6 +15,7 @@ dependencies:
   confetti: ^0.7.0
   connectivity_plus: ^3.0.2
   cookie_jar:
+  country_icons: ^2.0.2
   cupertino_icons:
   dio:
   dio_cookie_manager:
@@ -33,6 +34,7 @@ dependencies:
   flutter_local_notifications:
   flutter_localizations:
     sdk: flutter
+  flutter_signin_button: ^2.0.0
   flutter_spinkit:
   font_awesome_flutter:
   freezed_annotation:
