@@ -102,7 +102,7 @@ class TodoFormStateNotifier extends StateNotifier<Todo> {
         description: description,
         dueDateTime: state.dueDateTime,
       );
-      await todoRef(userId: userId, todoId: todo.todoId).set(todo);
+      await todoRef(appUserId: userId, todoId: todo.todoId).set(todo);
     } on Exception {
       rethrow;
     } finally {

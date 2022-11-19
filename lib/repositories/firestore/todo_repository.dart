@@ -14,7 +14,7 @@ class TodoRepository {
     required String userId,
     required String todoId,
   }) async {
-    final ds = await todoRef(userId: userId, todoId: todoId).get();
+    final ds = await todoRef(appUserId: userId, todoId: todoId).get();
     if (!ds.exists) {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
@@ -27,7 +27,8 @@ class TodoRepository {
     required String userId,
     required TodoFilter todoFilter,
   }) {
-    final collectionStream = todoFilter.queryBuilder(todosRef(userId: userId)).snapshots();
+    final collectionStream =
+        todoFilter.queryBuilder(todosRef(appUserId: userId)).snapshots();
     return collectionStream.map(
       (qs) => qs.docs.map((qds) => qds.data()).toList(),
     );
@@ -38,12 +39,13 @@ class TodoRepository {
     required Todo todo,
     SetOptions? setOptions,
   }) async {
-    await todoRef(userId: todo.userId, todoId: todo.todoId).set(todo, setOptions);
+    await todoRef(appUserId: todo.userId, todoId: todo.todoId)
+        .set(todo, setOptions);
   }
 
   /// 指定した Todo の isDone を切り替える
   Future<void> toggleTodoStatus(Todo todo) async {
-    await todoRef(userId: todo.userId, todoId: todo.todoId)
+    await todoRef(appUserId: todo.userId, todoId: todo.todoId)
         .set(todo.copyWith(isDone: !todo.isDone), SetOptions(merge: true));
   }
 }
