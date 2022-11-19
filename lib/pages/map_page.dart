@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,6 +14,7 @@ import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
 import '../utils/scaffold_messenger_service.dart';
 import 'attending_chat_rooms_page.dart';
+import 'chat_room_page.dart';
 
 const double _stackedGreyBackgroundHeight = 200;
 const double _stackedGreyBackgroundBorderRadius = 36;
@@ -37,15 +37,6 @@ class MapPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    useEffect(
-      () {
-        /// 初期表示の時にユーザの位置情報を更新する
-        ref.read(updateUserLocation)();
-        return null;
-      },
-      [],
-    );
-
     return Scaffold(
       // TODO: マップは消すかもしれないけど、
       //  開発中は他の画面に遷移したりするボタンを配置したいので。
@@ -261,10 +252,7 @@ class AppUserPageView extends HookConsumerWidget {
             color: context.theme.primaryColor,
           ),
           child: GestureDetector(
-            onTap: () {
-              ref.read(backToCurrentPositionProvider)();
-              ref.read(updateUserLocation)();
-            },
+            onTap: () => ref.read(backToCurrentPositionProvider)(),
             child: const Icon(
               Icons.near_me,
               size: _nearMeIconSize,
@@ -389,7 +377,15 @@ class AppUserPageViewItem extends HookConsumerWidget {
                               )
                             else
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushNamed<void>(
+                                    context,
+                                    ChatRoomPage.location(
+                                      chatRoomId:
+                                          attendingChatRooms.first.chatRoomId,
+                                    ),
+                                  );
+                                },
                                 icon: const Icon(Icons.chat),
                               )
                           ],
