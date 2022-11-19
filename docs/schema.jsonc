@@ -27,8 +27,8 @@
       "fcmToken": "{fcmToken}"
     },
     "collection: attendingChatRooms": {
-      "document: {chatRoomId}": {
-        "chatRoomId": "{chatRoomId}",
+      "document: {attendingChatRoomId}": {
+        "attendingChatRoomId": "{attendingChatRoomId}",
         // 自分じゃない方、相手の appUserId
         "partnerId": "{appUserId}",
         "isDeleted": false,

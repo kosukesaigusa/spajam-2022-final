@@ -24,8 +24,8 @@ mixin _$UnionTimestamp {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime dateTime)? dateTime,
-    TResult Function()? serverTimestamp,
+    TResult? Function(DateTime dateTime)? dateTime,
+    TResult? Function()? serverTimestamp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$UnionTimestamp {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UnionDateTime value)? dateTime,
-    TResult Function(UnionServerTimestamp value)? serverTimestamp,
+    TResult? Function(UnionDateTime value)? dateTime,
+    TResult? Function(UnionServerTimestamp value)? serverTimestamp,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,17 +60,18 @@ mixin _$UnionTimestamp {
 abstract class $UnionTimestampCopyWith<$Res> {
   factory $UnionTimestampCopyWith(
           UnionTimestamp value, $Res Function(UnionTimestamp) then) =
-      _$UnionTimestampCopyWithImpl<$Res>;
+      _$UnionTimestampCopyWithImpl<$Res, UnionTimestamp>;
 }
 
 /// @nodoc
-class _$UnionTimestampCopyWithImpl<$Res>
+class _$UnionTimestampCopyWithImpl<$Res, $Val extends UnionTimestamp>
     implements $UnionTimestampCopyWith<$Res> {
   _$UnionTimestampCopyWithImpl(this._value, this._then);
 
-  final UnionTimestamp _value;
   // ignore: unused_field
-  final $Res Function(UnionTimestamp) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -78,26 +79,25 @@ abstract class _$$UnionDateTimeCopyWith<$Res> {
   factory _$$UnionDateTimeCopyWith(
           _$UnionDateTime value, $Res Function(_$UnionDateTime) then) =
       __$$UnionDateTimeCopyWithImpl<$Res>;
+  @useResult
   $Res call({DateTime dateTime});
 }
 
 /// @nodoc
 class __$$UnionDateTimeCopyWithImpl<$Res>
-    extends _$UnionTimestampCopyWithImpl<$Res>
+    extends _$UnionTimestampCopyWithImpl<$Res, _$UnionDateTime>
     implements _$$UnionDateTimeCopyWith<$Res> {
   __$$UnionDateTimeCopyWithImpl(
       _$UnionDateTime _value, $Res Function(_$UnionDateTime) _then)
-      : super(_value, (v) => _then(v as _$UnionDateTime));
+      : super(_value, _then);
 
-  @override
-  _$UnionDateTime get _value => super._value as _$UnionDateTime;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? dateTime = freezed,
+    Object? dateTime = null,
   }) {
     return _then(_$UnionDateTime(
-      dateTime == freezed
+      null == dateTime
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -123,15 +123,16 @@ class _$UnionDateTime extends UnionDateTime {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UnionDateTime &&
-            const DeepCollectionEquality().equals(other.dateTime, dateTime));
+            (identical(other.dateTime, dateTime) ||
+                other.dateTime == dateTime));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(dateTime));
+  int get hashCode => Object.hash(runtimeType, dateTime);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UnionDateTimeCopyWith<_$UnionDateTime> get copyWith =>
       __$$UnionDateTimeCopyWithImpl<_$UnionDateTime>(this, _$identity);
 
@@ -147,8 +148,8 @@ class _$UnionDateTime extends UnionDateTime {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime dateTime)? dateTime,
-    TResult Function()? serverTimestamp,
+    TResult? Function(DateTime dateTime)? dateTime,
+    TResult? Function()? serverTimestamp,
   }) {
     return dateTime?.call(this.dateTime);
   }
@@ -178,8 +179,8 @@ class _$UnionDateTime extends UnionDateTime {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UnionDateTime value)? dateTime,
-    TResult Function(UnionServerTimestamp value)? serverTimestamp,
+    TResult? Function(UnionDateTime value)? dateTime,
+    TResult? Function(UnionServerTimestamp value)? serverTimestamp,
   }) {
     return dateTime?.call(this);
   }
@@ -217,14 +218,11 @@ abstract class _$$UnionServerTimestampCopyWith<$Res> {
 
 /// @nodoc
 class __$$UnionServerTimestampCopyWithImpl<$Res>
-    extends _$UnionTimestampCopyWithImpl<$Res>
+    extends _$UnionTimestampCopyWithImpl<$Res, _$UnionServerTimestamp>
     implements _$$UnionServerTimestampCopyWith<$Res> {
   __$$UnionServerTimestampCopyWithImpl(_$UnionServerTimestamp _value,
       $Res Function(_$UnionServerTimestamp) _then)
-      : super(_value, (v) => _then(v as _$UnionServerTimestamp));
-
-  @override
-  _$UnionServerTimestamp get _value => super._value as _$UnionServerTimestamp;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -258,8 +256,8 @@ class _$UnionServerTimestamp extends UnionServerTimestamp {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime dateTime)? dateTime,
-    TResult Function()? serverTimestamp,
+    TResult? Function(DateTime dateTime)? dateTime,
+    TResult? Function()? serverTimestamp,
   }) {
     return serverTimestamp?.call();
   }
@@ -289,8 +287,8 @@ class _$UnionServerTimestamp extends UnionServerTimestamp {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(UnionDateTime value)? dateTime,
-    TResult Function(UnionServerTimestamp value)? serverTimestamp,
+    TResult? Function(UnionDateTime value)? dateTime,
+    TResult? Function(UnionServerTimestamp value)? serverTimestamp,
   }) {
     return serverTimestamp?.call(this);
   }

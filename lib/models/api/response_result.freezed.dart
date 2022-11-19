@@ -24,8 +24,8 @@ mixin _$ResponseResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BaseResponseData data)? success,
-    TResult Function(String message)? failure,
+    TResult? Function(BaseResponseData data)? success,
+    TResult? Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$ResponseResult {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Success value)? success,
-    TResult Function(Failure value)? failure,
+    TResult? Function(Success value)? success,
+    TResult? Function(Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,43 +60,44 @@ mixin _$ResponseResult {
 abstract class $ResponseResultCopyWith<$Res> {
   factory $ResponseResultCopyWith(
           ResponseResult value, $Res Function(ResponseResult) then) =
-      _$ResponseResultCopyWithImpl<$Res>;
+      _$ResponseResultCopyWithImpl<$Res, ResponseResult>;
 }
 
 /// @nodoc
-class _$ResponseResultCopyWithImpl<$Res>
+class _$ResponseResultCopyWithImpl<$Res, $Val extends ResponseResult>
     implements $ResponseResultCopyWith<$Res> {
   _$ResponseResultCopyWithImpl(this._value, this._then);
 
-  final ResponseResult _value;
   // ignore: unused_field
-  final $Res Function(ResponseResult) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
 abstract class _$$SuccessCopyWith<$Res> {
   factory _$$SuccessCopyWith(_$Success value, $Res Function(_$Success) then) =
       __$$SuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({BaseResponseData data});
 
   $BaseResponseDataCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class __$$SuccessCopyWithImpl<$Res> extends _$ResponseResultCopyWithImpl<$Res>
+class __$$SuccessCopyWithImpl<$Res>
+    extends _$ResponseResultCopyWithImpl<$Res, _$Success>
     implements _$$SuccessCopyWith<$Res> {
   __$$SuccessCopyWithImpl(_$Success _value, $Res Function(_$Success) _then)
-      : super(_value, (v) => _then(v as _$Success));
+      : super(_value, _then);
 
-  @override
-  _$Success get _value => super._value as _$Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? data = null,
   }) {
     return _then(_$Success(
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as BaseResponseData,
@@ -104,6 +105,7 @@ class __$$SuccessCopyWithImpl<$Res> extends _$ResponseResultCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BaseResponseDataCopyWith<$Res> get data {
     return $BaseResponseDataCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value));
@@ -129,15 +131,15 @@ class _$Success implements Success {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Success &&
-            const DeepCollectionEquality().equals(other.data, data));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$SuccessCopyWith<_$Success> get copyWith =>
       __$$SuccessCopyWithImpl<_$Success>(this, _$identity);
 
@@ -153,8 +155,8 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BaseResponseData data)? success,
-    TResult Function(String message)? failure,
+    TResult? Function(BaseResponseData data)? success,
+    TResult? Function(String message)? failure,
   }) {
     return success?.call(data);
   }
@@ -184,8 +186,8 @@ class _$Success implements Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Success value)? success,
-    TResult Function(Failure value)? failure,
+    TResult? Function(Success value)? success,
+    TResult? Function(Failure value)? failure,
   }) {
     return success?.call(this);
   }
@@ -217,24 +219,24 @@ abstract class Success implements ResponseResult {
 abstract class _$$FailureCopyWith<$Res> {
   factory _$$FailureCopyWith(_$Failure value, $Res Function(_$Failure) then) =
       __$$FailureCopyWithImpl<$Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$FailureCopyWithImpl<$Res> extends _$ResponseResultCopyWithImpl<$Res>
+class __$$FailureCopyWithImpl<$Res>
+    extends _$ResponseResultCopyWithImpl<$Res, _$Failure>
     implements _$$FailureCopyWith<$Res> {
   __$$FailureCopyWithImpl(_$Failure _value, $Res Function(_$Failure) _then)
-      : super(_value, (v) => _then(v as _$Failure));
+      : super(_value, _then);
 
-  @override
-  _$Failure get _value => super._value as _$Failure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$Failure(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -261,15 +263,15 @@ class _$Failure implements Failure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Failure &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$FailureCopyWith<_$Failure> get copyWith =>
       __$$FailureCopyWithImpl<_$Failure>(this, _$identity);
 
@@ -285,8 +287,8 @@ class _$Failure implements Failure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BaseResponseData data)? success,
-    TResult Function(String message)? failure,
+    TResult? Function(BaseResponseData data)? success,
+    TResult? Function(String message)? failure,
   }) {
     return failure?.call(message);
   }
@@ -316,8 +318,8 @@ class _$Failure implements Failure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Success value)? success,
-    TResult Function(Failure value)? failure,
+    TResult? Function(Success value)? success,
+    TResult? Function(Failure value)? failure,
   }) {
     return failure?.call(this);
   }

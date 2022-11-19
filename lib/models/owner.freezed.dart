@@ -33,43 +33,47 @@ mixin _$Owner {
 /// @nodoc
 abstract class $OwnerCopyWith<$Res> {
   factory $OwnerCopyWith(Owner value, $Res Function(Owner) then) =
-      _$OwnerCopyWithImpl<$Res>;
+      _$OwnerCopyWithImpl<$Res, Owner>;
+  @useResult
   $Res call({int id, String login, String avatarUrl, String htmlUrl});
 }
 
 /// @nodoc
-class _$OwnerCopyWithImpl<$Res> implements $OwnerCopyWith<$Res> {
+class _$OwnerCopyWithImpl<$Res, $Val extends Owner>
+    implements $OwnerCopyWith<$Res> {
   _$OwnerCopyWithImpl(this._value, this._then);
 
-  final Owner _value;
   // ignore: unused_field
-  final $Res Function(Owner) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? login = freezed,
-    Object? avatarUrl = freezed,
-    Object? htmlUrl = freezed,
+    Object? id = null,
+    Object? login = null,
+    Object? avatarUrl = null,
+    Object? htmlUrl = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      login: login == freezed
+      login: null == login
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: avatarUrl == freezed
+      avatarUrl: null == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -78,39 +82,38 @@ abstract class _$$_OwnerCopyWith<$Res> implements $OwnerCopyWith<$Res> {
   factory _$$_OwnerCopyWith(_$_Owner value, $Res Function(_$_Owner) then) =
       __$$_OwnerCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, String login, String avatarUrl, String htmlUrl});
 }
 
 /// @nodoc
-class __$$_OwnerCopyWithImpl<$Res> extends _$OwnerCopyWithImpl<$Res>
+class __$$_OwnerCopyWithImpl<$Res> extends _$OwnerCopyWithImpl<$Res, _$_Owner>
     implements _$$_OwnerCopyWith<$Res> {
   __$$_OwnerCopyWithImpl(_$_Owner _value, $Res Function(_$_Owner) _then)
-      : super(_value, (v) => _then(v as _$_Owner));
+      : super(_value, _then);
 
-  @override
-  _$_Owner get _value => super._value as _$_Owner;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? login = freezed,
-    Object? avatarUrl = freezed,
-    Object? htmlUrl = freezed,
+    Object? id = null,
+    Object? login = null,
+    Object? avatarUrl = null,
+    Object? htmlUrl = null,
   }) {
     return _then(_$_Owner(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      login: login == freezed
+      login: null == login
           ? _value.login
           : login // ignore: cast_nullable_to_non_nullable
               as String,
-      avatarUrl: avatarUrl == freezed
+      avatarUrl: null == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      htmlUrl: htmlUrl == freezed
+      htmlUrl: null == htmlUrl
           ? _value.htmlUrl
           : htmlUrl // ignore: cast_nullable_to_non_nullable
               as String,
@@ -151,23 +154,20 @@ class _$_Owner implements _Owner {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Owner &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.login, login) &&
-            const DeepCollectionEquality().equals(other.avatarUrl, avatarUrl) &&
-            const DeepCollectionEquality().equals(other.htmlUrl, htmlUrl));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.login, login) || other.login == login) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.htmlUrl, htmlUrl) || other.htmlUrl == htmlUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(login),
-      const DeepCollectionEquality().hash(avatarUrl),
-      const DeepCollectionEquality().hash(htmlUrl));
+  int get hashCode => Object.hash(runtimeType, id, login, avatarUrl, htmlUrl);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_OwnerCopyWith<_$_Owner> get copyWith =>
       __$$_OwnerCopyWithImpl<_$_Owner>(this, _$identity);
 
