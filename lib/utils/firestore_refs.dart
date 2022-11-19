@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
 import '../models/attending_chat_room.dart';
+import '../models/chat_room.dart';
 import '../models/memory.dart';
+import '../models/message.dart';
 import '../models/test_notification_request.dart';
 import '../models/todo.dart';
 
@@ -53,12 +55,40 @@ CollectionReference<AttendingChatRoom> attendingChatRoomsRef({
           toFirestore: (obj, _) => obj.toJson(),
         );
 
-///attendingChatRoom ドキュメントの参照。
+/// attendingChatRoom ドキュメントの参照。
 DocumentReference<AttendingChatRoom> attendingChatRoomRef({
   required String appUserId,
   required String attendingChatId,
 }) =>
     attendingChatRoomsRef(appUserId: appUserId).doc(attendingChatId);
+
+/// chatRooms コレクションの参照。
+final chatRoomsRef = db.collection('chatRooms').withConverter(
+      fromFirestore: (ds, _) => ChatRoom.fromDocumentSnapshot(ds),
+      toFirestore: (obj, _) => obj.toJson(),
+    );
+
+/// chatRoom ドキュメントの参照。
+DocumentReference<ChatRoom> chatRoomRef({
+  required String chatRoomId,
+}) =>
+    chatRoomsRef.doc(chatRoomId);
+
+/// messages コレクションの参照。
+CollectionReference<Message> messagesRef({
+  required String chatRoomId,
+}) =>
+    chatRoomRef(chatRoomId: chatRoomId).collection('messages').withConverter(
+          fromFirestore: (ds, _) => Message.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+/// message ドキュメントの参照。
+DocumentReference<Message> messageRef({
+  required String chatRoomId,
+  required String messageId,
+}) =>
+    messagesRef(chatRoomId: chatRoomId).doc(messageId);
 
 /// memory コレクションの参照。
 CollectionReference<Memory> memoriesRef({
