@@ -67,9 +67,13 @@ class UserView extends HookConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        CircleAvatar(
-          radius: 80,
-          foregroundImage: NetworkImage(user.imageUrl),
+        ClipOval(
+          child: Image.network(
+            user.imageUrl,
+            width: 100,
+            height: 100,
+            fit: BoxFit.contain,
+          ),
         ),
         Row(
           children: [
@@ -86,42 +90,80 @@ class UserView extends HookConsumerWidget {
             ),
           ],
         ),
-        if (user.flags.isNotEmpty)
-          Row(
-            children: [
-              const Text('国旗: '),
-              Expanded(
-                child: Wrap(
-                  children: user.flags
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: e.icon(
-                            width: 50,
-                            height: 50,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
-          )
-        else
-          const Text('まだ交流した人はいません。'),
-        if (user.comment.isNotEmpty)
-          Row(
-            children: [
-              const Text('一言: '),
-              Text(user.comment),
-            ],
-          ),
-        if (user.appUserId != ref.watch(userIdProvider).value)
-          ContactButton(
-            partnerId: user.appUserId,
-            chatButtonLabel: 'メッセージを送る',
-          ),
+        FlagsView(flags: user.flags),
+        Comment(comment: user.comment),
+        ContactButtonView(
+          userId: user.appUserId,
+        ),
       ],
     );
+  }
+}
+
+class ContactButtonView extends ConsumerWidget {
+  const ContactButtonView({super.key, required this.userId});
+  final String userId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (userId != ref.watch(userIdProvider).value) {
+      return ContactButton(
+        partnerId: userId,
+        chatButtonLabel: 'メッセージを送る',
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+}
+
+class FlagsView extends ConsumerWidget {
+  const FlagsView({super.key, required this.flags});
+
+  final List<Country> flags;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (flags.isNotEmpty) {
+      return Row(
+        children: [
+          const Text('国旗: '),
+          Expanded(
+            child: Wrap(
+              children: flags
+                  .map(
+                    (e) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: e.icon(
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return const Text('まだ交流した人はいません。');
+    }
+  }
+}
+
+class Comment extends ConsumerWidget {
+  const Comment({super.key, required this.comment});
+
+  final String comment;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return comment.isEmpty
+        ? const SizedBox.shrink()
+        : Row(
+            children: [
+              const Text('一言: '),
+              Text(comment),
+            ],
+          );
   }
 }
