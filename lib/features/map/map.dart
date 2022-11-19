@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
@@ -5,8 +6,13 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/app_user.dart';
+import '../../models/firestore_position.dart';
+import '../../repositories/firestore/app_user_repository.dart';
+import '../../repositories/firestore/chat_room_repository.dart';
+import '../../utils/exceptions/common.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
+import '../auth/auth.dart';
 
 /// マップのデフォルトの緯度経度。
 const _defaultLatLng = LatLng(35.6812, 139.7671);
@@ -15,7 +21,7 @@ const _defaultLatLng = LatLng(35.6812, 139.7671);
 const double _defaultZoom = 15;
 
 /// マップのデフォルトの検出半径。
-const double _defaultRadius = 50;
+const double _defaultRadius = 1;
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
 final googleMapControllerProvider =
@@ -93,12 +99,14 @@ final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
 
 /// マップ上に検出された AppUser 一覧のマーカーを提供する Provider。
 final markersProvider = Provider.autoDispose((ref) {
+  final userId = ref.watch(userIdProvider).value;
+
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
   final markers = <Marker>{};
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
       final appUser = ds.data();
-      if (appUser == null) {
+      if (appUser == null || appUser.appUserId == userId) {
         continue;
       }
       final marker = ref.watch(getMarkerFromAppUserProvider)(appUser);
@@ -110,12 +118,13 @@ final markersProvider = Provider.autoDispose((ref) {
 
 /// マップ上に検出された AppUser 一覧を提供する Provider。
 final appUsersOnMapProvider = Provider.autoDispose((ref) {
+  final userId = ref.watch(userIdProvider).value;
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
   final appUsers = <AppUser>[];
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
       final appUser = ds.data();
-      if (appUser == null) {
+      if (appUser == null || appUser.appUserId == userId) {
         continue;
       }
       appUsers.add(appUser);
@@ -205,3 +214,47 @@ Future<LatLng> get initialCenterLatLng async {
   final p = await currentPosition;
   return p == null ? _defaultLatLng : LatLng(p.latitude, p.longitude);
 }
+
+/// ユーザの現在位置の更新
+final updateUserLocation = Provider.autoDispose(
+  (ref) => () async {
+    final p = await currentPosition;
+    final geoPoint = p == null
+        ? GeoPoint(_defaultLatLng.latitude, _defaultLatLng.longitude)
+        : GeoPoint(p.latitude, p.longitude);
+    final geo = Geoflutterfire();
+    final geoFirePoint = geo.point(
+      latitude: geoPoint.latitude,
+      longitude: geoPoint.longitude,
+    );
+    final location = FirestorePosition(
+      geohash: geoFirePoint.data['geohash'] as String,
+      geopoint: geoPoint,
+    );
+
+    final userId = ref.watch(userIdProvider).value;
+    if (userId == null) {
+      throw const SignInRequiredException();
+    }
+    await ref.read(appUserRepositoryProvider).updateLocation(
+          appUserId: userId,
+          location: location,
+        );
+  },
+);
+
+// 連絡ボタン押下
+final startContactProvider = Provider.autoDispose.family<Function, String>(
+  (ref, partnerId) => () async {
+    final appUserId = ref.watch(userIdProvider).value;
+    if (appUserId == null) {
+      throw const SignInRequiredException();
+    }
+
+    final id = await ref.read(chatRoomRepositoryProvider).createChatRoom(
+          appUserId: appUserId,
+          partnerId: partnerId,
+        );
+    return id;
+  },
+);

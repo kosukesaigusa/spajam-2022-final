@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../repositories/firestore/app_user_repository.dart';
@@ -72,6 +73,39 @@ final signOutProvider = Provider.autoDispose<Future<void> Function()>(
     try {
       ref.read(overlayLoadingProvider.notifier).update((state) => true);
       await ref.watch(_authProvider).signOut();
+    } finally {
+      ref.read(overlayLoadingProvider.notifier).update((state) => false);
+    }
+  },
+);
+
+/// Firebase Google SignIn からログインする。
+final googleSignInProvider = Provider.autoDispose<Future<void> Function()>(
+  (ref) => () async {
+    try {
+      ref.read(overlayLoadingProvider.notifier).update((state) => true);
+        final googleUser = await GoogleSignIn().signIn();
+
+        if (googleUser == null) {
+        throw AppException(message: 'Google サインインに失敗しました。');
+        }
+
+      // Obtain the auth details from the request
+      final googleAuth =
+          await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Once signed in, return the UserCredential
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      } on FirebaseException catch (e) {
+      logger.warning(e.toString());
+    } on AppException catch (e) {
+      logger.warning(e.toString());
     } finally {
       ref.read(overlayLoadingProvider.notifier).update((state) => false);
     }

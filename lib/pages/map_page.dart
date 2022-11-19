@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,12 +8,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/auth.dart';
 import '../features/map/map.dart';
+import '../features/message/attending_chat_room.dart';
 import '../models/app_user.dart';
+import '../repositories/firestore/chat_room_repository.dart';
+import '../utils/exceptions/common.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
 import '../utils/scaffold_messenger_service.dart';
+import '../widgets/dialog.dart';
 import 'attending_chat_rooms_page.dart';
+import 'chat_room_page.dart';
 
 const double _stackedGreyBackgroundHeight = 200;
 const double _stackedGreyBackgroundBorderRadius = 36;
@@ -35,6 +41,15 @@ class MapPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(
+      () {
+        /// 初期表示の時にユーザの位置情報を更新する
+        ref.read(updateUserLocation)();
+        return null;
+      },
+      [],
+    );
+
     return Scaffold(
       // TODO: マップは消すかもしれないけど、
       //  開発中は他の画面に遷移したりするボタンを配置したいので。
@@ -61,6 +76,29 @@ class MapPage extends HookConsumerWidget {
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    try {
+                                      await ref.read(
+                                        googleSignInProvider,
+                                      )();
+                                      Navigator.pop(context);
+                                      ref
+                                          .read(
+                                            scaffoldMessengerServiceProvider,
+                                          )
+                                          .showSnackBar('ログインしました。');
+                                    } on Exception catch (e) {
+                                      // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
+                                      // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
+                                      ref
+                                          .read(
+                                              scaffoldMessengerServiceProvider)
+                                          .showSnackBarByException(e);
+                                    }
+                                  },
+                                  child: const Text('Google アカウントでサインイン'),
+                                ),
                                 for (var i = 0; i < 5; i++)
                                   ElevatedButton(
                                     onPressed: () async {
@@ -250,7 +288,10 @@ class AppUserPageView extends HookConsumerWidget {
             color: context.theme.primaryColor,
           ),
           child: GestureDetector(
-            onTap: () => ref.read(backToCurrentPositionProvider)(),
+            onTap: () {
+              ref.read(backToCurrentPositionProvider)();
+              ref.read(updateUserLocation)();
+            },
             child: const Icon(
               Icons.near_me,
               size: _nearMeIconSize,
@@ -356,6 +397,59 @@ class AppUserPageViewItem extends HookConsumerWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
               ),
+              const Spacer(),
+              ref
+                      .watch(matchAttendingChatRoomProvider(appUser.appUserId))
+                      .whenData(
+                        (attendingChatRooms) => Row(
+                          children: [
+                            const Spacer(),
+                            if (attendingChatRooms.isEmpty)
+                              ElevatedButton(
+                                onPressed: () async {
+                                  final appUserId =
+                                      ref.watch(userIdProvider).value;
+                                  if (appUserId == null) {
+                                    throw const SignInRequiredException();
+                                  }
+                                  final chatRmId = await ref
+                                      .read(chatRoomRepositoryProvider)
+                                      .createChatRoom(
+                                        appUserId: appUserId,
+                                        partnerId: appUser.appUserId,
+                                      );
+                                  await Navigator.pushNamed<void>(
+                                    context,
+                                    ChatRoomPage.location(
+                                      chatRoomId: chatRmId,
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder(),
+                                ),
+                                child: const Text(
+                                  '連絡',
+                                ),
+                              )
+                            else
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed<void>(
+                                    context,
+                                    ChatRoomPage.location(
+                                      chatRoomId:
+                                          attendingChatRooms.first.chatRoomId,
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(Icons.chat),
+                              )
+                          ],
+                        ),
+                      )
+                      .value ??
+                  Container(),
             ],
           ),
         ),
