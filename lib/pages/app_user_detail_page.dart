@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/app_user/app_user.dart';
 import '../models/app_user.dart';
+import '../utils/enums/country.dart';
 import '../utils/exceptions/base.dart';
 import '../utils/routing/app_router_state.dart';
 
@@ -82,7 +83,21 @@ class UserView extends HookConsumerWidget {
         Row(
           children: [
             const Text('国旗: '),
-            Text(user.flags.map((e) => e.name).toList().join()),
+            Expanded(
+              child: Wrap(
+                children: user.flags
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: e.icon(
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
           ],
         ),
       ],
