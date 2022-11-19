@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../repositories/firestore/app_user_repository.dart';
 import '../../utils/exceptions/base.dart';
 import '../../utils/firebase_messaging.dart';
+import '../../utils/firebase_options.dart';
 import '../../utils/loading.dart';
 import '../../utils/logger.dart';
 
@@ -84,15 +85,16 @@ final googleSignInProvider = Provider.autoDispose<Future<void> Function()>(
   (ref) => () async {
     try {
       ref.read(overlayLoadingProvider.notifier).update((state) => true);
-        final googleUser = await GoogleSignIn().signIn();
+      final googleUser = await GoogleSignIn(
+        clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
+      ).signIn();
 
-        if (googleUser == null) {
-        throw AppException(message: 'Google サインインに失敗しました。');
-        }
+      if (googleUser == null) {
+        throw const AppException(message: 'Google サインインに失敗しました。');
+      }
 
       // Obtain the auth details from the request
-      final googleAuth =
-          await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
@@ -102,7 +104,7 @@ final googleSignInProvider = Provider.autoDispose<Future<void> Function()>(
 
       // Once signed in, return the UserCredential
       await FirebaseAuth.instance.signInWithCredential(credential);
-      } on FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       logger.warning(e.toString());
     } on AppException catch (e) {
       logger.warning(e.toString());
