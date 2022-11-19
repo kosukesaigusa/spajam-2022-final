@@ -125,7 +125,8 @@ final appUsersOnMapProvider = Provider.autoDispose((ref) {
   }
 
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
-  final myCountry = ref.watch(appUserFutureProvider(myId)).value!.country;
+  final myCountry = ref.watch(appUserFutureProvider(myId)).value?.country;
+
   final appUsers = <AppUser>[];
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
@@ -241,6 +242,7 @@ final updateUserLocation = Provider.autoDispose(
     );
 
     final userId = ref.watch(userIdProvider).value;
+    print('current User:$userId');
     if (userId == null) {
       throw const SignInRequiredException();
     }

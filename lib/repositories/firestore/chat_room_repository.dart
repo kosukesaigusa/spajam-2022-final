@@ -27,6 +27,7 @@ class ChatRoomRepository {
         appUserIds: [appUserId, partnerId],
         createdAt: UnionTimestamp.dateTime(DateTime.now()),
         isDeleted: false,
+        createdByUserId: appUserId,
       ),
     );
 
