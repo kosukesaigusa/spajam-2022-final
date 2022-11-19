@@ -250,7 +250,10 @@ class AppUserPageView extends HookConsumerWidget {
             color: context.theme.primaryColor,
           ),
           child: GestureDetector(
-            onTap: () => ref.read(backToCurrentPositionProvider)(),
+            onTap: () {
+              ref.read(backToCurrentPositionProvider)();
+              ref.read(updateUserPosition)();
+            },
             child: const Icon(
               Icons.near_me,
               size: _nearMeIconSize,
