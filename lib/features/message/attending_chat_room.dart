@@ -1,31 +1,33 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/attending_chat_room.dart';
+import '../../models/message.dart';
 import '../../repositories/firestore/attending_chat_room.dart';
+import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
 import '../auth/auth.dart';
 
 /// 指定した roomId の messages サブコレクションの最新最大 1 件を購読する StreamProvider。
-// final _latestMessagesOfRoomProvider =
-//     StreamProvider.autoDispose.family<List<Message>, String>((ref, roomId) {
-//   final userId = ref.watch(userIdProvider).value;
-//   if (userId == null) {
-//     throw const SignInRequiredException();
-//   }
-//   return ref.read(messageRepositoryProvider).subscribeMessages(
-//         roomId: roomId,
-//         queryBuilder: (q) => q.orderBy('createdAt', descending: true).limit(1),
-//       );
-// });
+final _latestMessagesOfRoomProvider =
+    StreamProvider.autoDispose.family<List<Message>, String>((ref, chatRoomId) {
+  final userId = ref.watch(userIdProvider).value;
+  if (userId == null) {
+    throw const SignInRequiredException();
+  }
+  return ref.read(chatRoomRepositoryProvider).subscribeMessages(
+        chatRoomId: chatRoomId,
+        queryBuilder: (q) => q.orderBy('createdAt', descending: true).limit(1),
+      );
+});
 
 /// 指定した roomId の messages サブコレクションの最新最大 1 件を返す Provider。
-// final latestMessageOfRoomProvider = Provider.autoDispose.family<Message?, String>((ref, roomId) {
-//   return ref.watch(_latestMessagesOfRoomProvider(roomId)).when(
-//         data: (messages) => messages.isNotEmpty ? messages.first : null,
-//         error: (_, __) => null,
-//         loading: () => null,
-//       );
-// });
+final latestMessageOfRoomProvider = Provider.autoDispose.family<Message?, String>((ref, roomId) {
+  return ref.watch(_latestMessagesOfRoomProvider(roomId)).when(
+        data: (messages) => messages.isNotEmpty ? messages.first : null,
+        error: (_, __) => null,
+        loading: () => null,
+      );
+});
 
 /// ユーザーの attendingChatRoom コレクションを購読する StreamProvider。
 /// ユーザーがログインしていない場合は例外をスローする。

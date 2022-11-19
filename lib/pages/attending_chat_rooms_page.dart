@@ -8,6 +8,7 @@ import '../features/auth/auth.dart';
 import '../features/message/attending_chat_room.dart';
 import '../models/attending_chat_room.dart';
 import '../utils/extensions/build_context.dart';
+import '../utils/extensions/date_time.dart';
 import '../utils/loading.dart';
 import '../widgets/empty_placeholder.dart';
 import '../widgets/image.dart';
@@ -65,7 +66,7 @@ class AttendingChatRoomWidget extends HookConsumerWidget {
               // unawaited(
               //   ref
               //       .read(messageRepositoryProvider)
-              //       .readStatusRef(roomId: attendingChatRoom.roomId, readStatusId: userId)
+              //       .readStatusRef(chatRoomId: attendingChatRoom.chatRoomId, readStatusId: userId)
               //       .set(const ReadStatus(), SetOptions(merge: true)),
               // );
               await Navigator.pushNamed<void>(
@@ -84,7 +85,10 @@ class AttendingChatRoomWidget extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AttendingChatRoomPartnerNameWidget(partnerId: attendingChatRoom.partnerId),
-                        // AttendingChatRoomLatestMessageWidget(roomId: attendingChatRoom.chatRoomId),
+                        const Gap(4),
+                        AttendingChatRoomLatestMessageWidget(
+                          chatRoomId: attendingChatRoom.chatRoomId,
+                        ),
                       ],
                     ),
                   ),
@@ -92,9 +96,9 @@ class AttendingChatRoomWidget extends HookConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: const [
-                      // LatestMessageCreatedAtWidget(roomId: attendingChatRoom.chatRoomId),
+                      // LatestMessageCreatedAtWidget(chatRoomId: attendingChatRoom.chatRoomId),
                       Gap(4),
-                      // UnreadCountBadgeWidget(roomId: attendingChatRoom.chatRoomId),
+                      // UnreadCountBadgeWidget(chatRoomId: attendingChatRoom.chatRoomId),
                     ],
                   ),
                 ],
@@ -138,9 +142,10 @@ class AttendingChatRoomPartnerNameWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(appUserStreamProvider(partnerId)).when(
-          data: (appUser) => appUser == null
-              ? Text('-', style: context.titleSmall)
-              : Text(appUser.name, style: context.titleSmall),
+          data: (appUser) => Text(
+            appUser == null ? '-' : appUser.name,
+            style: context.titleLarge,
+          ),
           error: (error, stackTrace) => const SizedBox(),
           loading: () => const SizedBox(),
         );
@@ -148,60 +153,60 @@ class AttendingChatRoomPartnerNameWidget extends HookConsumerWidget {
 }
 
 /// 参加中のチャットルームの直近のメッセージを表示するウィジェット。
-// class AttendingChatRoomLatestMessageWidget extends HookConsumerWidget {
-//   const AttendingChatRoomLatestMessageWidget({
-//     super.key,
-//     required this.roomId,
-//   });
+class AttendingChatRoomLatestMessageWidget extends HookConsumerWidget {
+  const AttendingChatRoomLatestMessageWidget({
+    super.key,
+    required this.chatRoomId,
+  });
 
-//   final String roomId;
+  final String chatRoomId;
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final message = ref.watch(latestMessageOfRoomProvider(roomId));
-//     return Text(
-//       message == null ? 'ルームが作成されました。' : message.body,
-//       style: context.bodySmall,
-//       overflow: TextOverflow.ellipsis,
-//       maxLines: 2,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final message = ref.watch(latestMessageOfRoomProvider(chatRoomId));
+    return Text(
+      message == null ? 'ルームが作成されました。' : message.message,
+      style: context.bodySmall,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+    );
+  }
+}
 
 /// 直近のメッセージの日時を表示するウィジェット。
-// class LatestMessageCreatedAtWidget extends HookConsumerWidget {
-//   const LatestMessageCreatedAtWidget({
-//     super.key,
-//     required this.roomId,
-//   });
+class LatestMessageCreatedAtWidget extends HookConsumerWidget {
+  const LatestMessageCreatedAtWidget({
+    super.key,
+    required this.chatRoomId,
+  });
 
-//   final String roomId;
+  final String chatRoomId;
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final message = ref.watch(latestMessageOfRoomProvider(roomId));
-//     if (message == null) {
-//       return const SizedBox();
-//     }
-//     return Text(
-//       humanReadableDateTimeString(message.createdAt.dateTime),
-//       style: context.bodySmall,
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final message = ref.watch(latestMessageOfRoomProvider(chatRoomId));
+    if (message == null) {
+      return const SizedBox();
+    }
+    return Text(
+      humanReadableDateTimeString(message.createdAt.dateTime),
+      style: context.bodySmall,
+    );
+  }
+}
 
 /// 未読数カウントのバッジウィジェット。
 // class UnreadCountBadgeWidget extends HookConsumerWidget {
 //   const UnreadCountBadgeWidget({
 //     super.key,
-//     required this.roomId,
+//     required this.chatRoomId,
 //   });
 
-//   final String roomId;
+//   final String chatRoomId;
 
 //   @override
 //   Widget build(BuildContext context, WidgetRef ref) {
-//     return ref.watch(unreadCountProvider(roomId)).when(
+//     return ref.watch(unreadCountProvider(chatRoomId)).when(
 //           data: (count) => count > 0
 //               ? Container(
 //                   width: 20,

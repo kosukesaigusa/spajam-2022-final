@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -88,6 +89,7 @@ class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
                   ),
                 ),
                 RoomMessageInputWidget(chatRoomId: chatRoomId),
+                if (!KeyboardVisibilityProvider.isKeyboardVisible(context)) const Gap(32),
               ],
             ),
     );
@@ -150,7 +152,10 @@ class MessageItemWidget extends HookConsumerWidget {
           ],
         ),
         MessageAdditionalInfoWidget(
-            message: message, chatRoomId: chatRoomId, isMyMessage: isMyMessage),
+          message: message,
+          chatRoomId: chatRoomId,
+          isMyMessage: isMyMessage,
+        ),
       ],
     );
   }
