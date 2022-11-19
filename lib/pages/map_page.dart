@@ -388,7 +388,7 @@ class AppUserPageViewItem extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  appUser.appUserId,
+                  appUser.name,
                   style: context.titleMedium,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
