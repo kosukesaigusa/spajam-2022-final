@@ -46,6 +46,13 @@ final appRoutes = <AppRoute>[
   AppRoute(
     path: NotFoundPage.path,
     name: NotFoundPage.name,
-    builder: (context, state) => const NotFoundPage(key: ValueKey(NotFoundPage.name)),
+    builder: (context, state) =>
+        const NotFoundPage(key: ValueKey(NotFoundPage.name)),
+  ),
+  AppRoute(
+    path: CreateMemoryPage.path,
+    name: CreateMemoryPage.name,
+    builder: (context, state) =>
+        const CreateMemoryPage(key: ValueKey(CreateMemoryPage.name)),
   ),
 ];
