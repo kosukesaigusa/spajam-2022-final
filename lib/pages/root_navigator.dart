@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../features/auth/auth.dart';
 import '../utils/global_key.dart';
 import '../utils/loading.dart';
 import '../utils/routing/app_router.dart';
 import 'not_found_page.dart';
-import 'sign_in_page.dart';
 
 /// ウィジェットツリーの上位にある Navigator を含むウィジェット。
 class RootNavigator extends HookConsumerWidget {

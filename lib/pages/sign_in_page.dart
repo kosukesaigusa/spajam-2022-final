@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/auth/auth.dart';
+import '../utils/extensions/build_context.dart';
 import '../utils/scaffold_messenger_service.dart';
 
 class SignInPage extends HookConsumerWidget {
@@ -29,9 +29,7 @@ class SignInPage extends HookConsumerWidget {
               text: 'Google でサインイン',
               onPressed: () async {
                 try {
-                  await ref.read(
-                    googleSignInProvider,
-                  )();
+                  await ref.read(googleSignInProvider)();
                   Navigator.pop(context);
                   ref
                       .read(
@@ -39,8 +37,6 @@ class SignInPage extends HookConsumerWidget {
                       )
                       .showSnackBar('ログインしました。');
                 } on Exception catch (e) {
-                  // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
-                  // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
                   ref
                       .read(
                         scaffoldMessengerServiceProvider,
@@ -53,9 +49,7 @@ class SignInPage extends HookConsumerWidget {
           const Gap(8),
           TextButton(
             onPressed: () {
-              ref
-                  .watch(scaffoldMessengerServiceProvider)
-                  .showModalBottomSheetByBuilder<Widget>(
+              ref.watch(scaffoldMessengerServiceProvider).showModalBottomSheetByBuilder<Widget>(
                 builder: (context) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
@@ -81,7 +75,10 @@ class SignInPage extends HookConsumerWidget {
                 },
               );
             },
-            child: const Text('テストアカウントでサインイン'),
+            child: Text(
+              'テストアカウントでサインイン',
+              style: context.bodySmall!.copyWith(color: Colors.grey),
+            ),
           )
         ],
       ),
