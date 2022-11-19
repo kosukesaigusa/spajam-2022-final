@@ -1,0 +1,66 @@
+{
+  "collection:  appUsers": {
+    "document: {appUserId}": {
+      "appUserId": "{appUserId}",
+      "name": "Kosuke Saigusa",
+      "imageUrl": "https://...",
+      "country": "japan",
+      // マップ上に表示されるかどうか
+      "isVisible": true,
+      "flags": [
+        "japan",
+        "korea",
+        "china",
+        "france",
+        "spain",
+        "america",
+        "brazil"
+      ],
+      "comment": "国際交流したいです！お気軽にお声がけください、よろしくお願いします！",
+      "location": {
+        "geohash": "xn6bvm9jx",
+        "geopoint（geopoint 型）": {
+          "latitude": 35.319262230391075,
+          "longitude": 139.0995792359225
+        }
+      },
+      "fcmToken": "{fcmToken}"
+    },
+    "collection: attendingChatRooms": {
+      "document: {chatRoomId}": {
+        "chatRoomId": "{chatRoomId}",
+        // 自分じゃない方、相手の appUserId
+        "partnerId": "{appUserId}",
+        "isDeleted": false,
+        "updatedAt": "2022-11-19 00:00:00",
+        "createdAt": "2022-11-19 00:00:00"
+      }
+    },
+    "collection: memories": {
+      "document: {memoryId}": {
+        "matchingId": "{memoryId}",
+        "partnerId": "{appUserId}",
+        "imageUrl": "https://...",
+        "comment": "楽しかったです、ありがとう！",
+        "createdAt": "2022-11-19 00:00:00"
+      }
+    }
+  },
+  "collection: chatRooms": {
+    "document: {chatRoomId}": {
+      "chatRoomId": "{chatRoomId}",
+      // 必ず自分と相手の 2 つ
+      "appUserIds": ["{appUserId}", "{appUserId}"],
+      "createdAt": "2022-08-22 15:00",
+      "isDeleted": false
+    },
+    "collection: messages": {
+      "document: {messageId}": {
+        "messageId": "{messageId}",
+        "senderId": "{userId}",
+        "message": "こんにちは！",
+        "createdAt": "2022-08-22 15:00"
+      }
+    }
+  }
+}
