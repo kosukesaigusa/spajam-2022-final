@@ -502,7 +502,7 @@ packages:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "1.0.4"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -536,6 +536,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.14"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.7"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -595,6 +602,57 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  geoflutterfire:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "52300deedb6b4268eb83f32e843b7e42c8a66acd"
+      url: "https://github.com/KosukeSaigusa/GeoFlutterFire.git"
+    source: git
+    version: "3.0.3"
+  geolocator:
+    dependency: "direct main"
+    description:
+      name: geolocator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "9.0.2"
+  geolocator_android:
+    dependency: transitive
+    description:
+      name: geolocator_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.4"
+  geolocator_apple:
+    dependency: transitive
+    description:
+      name: geolocator_apple
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.3"
+  geolocator_platform_interface:
+    dependency: transitive
+    description:
+      name: geolocator_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.7"
+  geolocator_web:
+    dependency: transitive
+    description:
+      name: geolocator_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.6"
+  geolocator_windows:
+    dependency: transitive
+    description:
+      name: geolocator_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   glob:
     dependency: transitive
     description:
@@ -602,6 +660,34 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
+  google_maps_flutter_android:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.3"
+  google_maps_flutter_ios:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.12"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.4"
   graphs:
     dependency: transitive
     description:
@@ -692,7 +778,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -846,7 +932,7 @@ packages:
       name: pedantic_mono
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.20.0"
+    version: "1.19.1"
   petitparser:
     dependency: transitive
     description:
