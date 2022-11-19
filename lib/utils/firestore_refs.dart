@@ -18,9 +18,9 @@ final appUsersRef = db.collection('appUsers').withConverter(
 
 /// appUser ドキュメントの参照。
 DocumentReference<AppUser> appUserRef({
-  required String userId,
+  required String appUserId,
 }) =>
-    appUsersRef.doc(userId);
+    appUsersRef.doc(appUserId);
 
 /// testNotificationRequest コレクションの参照。
 final testNotificationRequestsRef =
@@ -32,25 +32,27 @@ final testNotificationRequestsRef =
 
 /// todo コレクションの参照。
 CollectionReference<Todo> todosRef({
-  required String userId,
+  required String appUserId,
 }) =>
-    appUserRef(userId: userId).collection('todos').withConverter(
+    appUserRef(appUserId: appUserId).collection('todos').withConverter(
           fromFirestore: (ds, _) => Todo.fromDocumentSnapshot(ds),
           toFirestore: (obj, _) => obj.toJson(),
         );
 
 /// todo ドキュメントの参照。
 DocumentReference<Todo> todoRef({
-  required String userId,
+  required String appUserId,
   required String todoId,
 }) =>
-    todosRef(userId: userId).doc(todoId);
+    todosRef(appUserId: appUserId).doc(todoId);
 
 /// attendingChatRoom コレクションの参照。
 CollectionReference<AttendingChatRoom> attendingChatRoomsRef({
   required String appUserId,
 }) =>
-    appUserRef(userId: appUserId).collection  ('attendingChatRooms').withConverter(
+    appUserRef(appUserId: appUserId)
+        .collection('attendingChatRooms')
+        .withConverter(
           fromFirestore: (ds, _) => AttendingChatRoom.fromDocumentSnapshot(ds),
           toFirestore: (obj, _) => obj.toJson(),
         );
@@ -92,16 +94,16 @@ DocumentReference<Message> messageRef({
 
 /// memory コレクションの参照。
 CollectionReference<Memory> memoriesRef({
-  required String userId,
+  required String appUserId,
 }) =>
-    appUserRef(userId: userId).collection('memories').withConverter(
+    appUserRef(appUserId: appUserId).collection('memories').withConverter(
           fromFirestore: (ds, _) => Memory.fromDocumentSnapshot(ds),
           toFirestore: (obj, _) => obj.toJson(),
         );
 
 /// memory ドキュメントの参照。
 DocumentReference<Memory> memoryRef({
-  required String userId,
+  required String appUserId,
   required String memoryId,
 }) =>
-    memoriesRef(userId: userId).doc(memoryId);
+    memoriesRef(appUserId: appUserId).doc(memoryId);
