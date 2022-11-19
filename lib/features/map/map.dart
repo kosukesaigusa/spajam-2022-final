@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
@@ -6,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/app_user.dart';
+import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
 
 /// マップのデフォルトの緯度経度。
@@ -18,13 +18,15 @@ const double _defaultZoom = 7;
 const double _defaultRadius = 50;
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
-final googleMapControllerProvider = StateProvider<GoogleMapController?>((_) => null);
+final googleMapControllerProvider =
+    StateProvider<GoogleMapController?>((_) => null);
 
 /// GeoFlutterFire のインスタンスを提供する Provider。
 final geoProvider = Provider.autoDispose((_) => Geoflutterfire());
 
 /// マップの初期中心位置を提供する Provider。ProviderScope.overrides でオーバーライドして使用する。
-final initialCenterLatLngProvider = Provider<LatLng>((_) => throw UnimplementedError());
+final initialCenterLatLngProvider =
+    Provider<LatLng>((_) => throw UnimplementedError());
 
 /// マップの中心位置を管理する StateProvider。
 final centerLatLngProvider =
@@ -54,7 +56,9 @@ final resetDetectionRangeProvider = Provider.autoDispose(
     final zoom = ref.watch(cameraPositionProvider).zoom;
     ref.read(centerLatLngProvider.notifier).update((state) => latLng);
     ref.read(zoomProvider.notifier).update((state) => zoom);
-    ref.read(radiusProvider.notifier).update((state) => getRadiusFromZoom(zoom));
+    ref
+        .read(radiusProvider.notifier)
+        .update((state) => getRadiusFromZoom(zoom));
   },
 );
 
@@ -77,15 +81,11 @@ final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
   final geo = ref.watch(geoProvider);
   final center = ref.watch(centerLatLngProvider);
   final radius = ref.watch(radiusProvider);
-  final collectionReference =
-      FirebaseFirestore.instance.collection('appUsers').withConverter<AppUser>(
-            fromFirestore: (snapshot, _) => AppUser.fromDocumentSnapshot(snapshot),
-            toFirestore: (obj, _) => obj.toJson(),
-          );
-  return geo.collectionWithConverter(collectionRef: collectionReference).within(
+
+  return geo.collectionWithConverter(collectionRef: appUsersRef).within(
         center: GeoFirePoint(center.latitude, center.longitude),
         radius: radius,
-        field: 'position',
+        field: 'location',
         geopointFrom: (appUser) => appUser.location.geopoint,
         strictMode: true,
       );
@@ -125,7 +125,8 @@ final appUsersOnMapProvider = Provider.autoDispose((ref) {
 });
 
 /// AppUser から GoogleMap の Marker インスタンスを作成して返すメソッドを提供する Provider。
-final getMarkerFromAppUserProvider = Provider.autoDispose<Marker Function(AppUser)>(
+final getMarkerFromAppUserProvider =
+    Provider.autoDispose<Marker Function(AppUser)>(
   (ref) => (appUser) {
     final geopoint = appUser.location.geopoint;
     final lat = geopoint.latitude;
@@ -140,8 +141,12 @@ final getMarkerFromAppUserProvider = Provider.autoDispose<Marker Function(AppUse
       ),
       zIndex: selected ? 10 : 0,
       onTap: () async {
-        ref.read(willResetDetectionRangeProvider.notifier).update((state) => true);
-        ref.read(centerLatLngProvider.notifier).update((state) => LatLng(lat, lng));
+        ref
+            .read(willResetDetectionRangeProvider.notifier)
+            .update((state) => true);
+        ref
+            .read(centerLatLngProvider.notifier)
+            .update((state) => LatLng(lat, lng));
         ref.read(selectedAppUserProvider.notifier).update((state) => appUser);
       },
     );
@@ -153,8 +158,9 @@ MarkerId _getMarkerIdFromLatLng(LatLng latLng) =>
     MarkerId(latLng.latitude.toString() + latLng.longitude.toString());
 
 /// PageView ウィジェットのコントローラを提供する Provider。
-final pageControllerProvider =
-    Provider.autoDispose((_) => PageController(viewportFraction: viewportFraction));
+final pageControllerProvider = Provider.autoDispose(
+  (_) => PageController(viewportFraction: viewportFraction),
+);
 
 /// PageView ウィジェトの onPageChanged プロパティに指定するメソッドを提供する Provider。
 final onPageChangedProvider = Provider.autoDispose<Future<void> Function(int)>(

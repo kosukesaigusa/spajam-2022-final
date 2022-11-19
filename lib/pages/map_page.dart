@@ -45,13 +45,17 @@ class MapPage extends HookConsumerWidget {
               ? IconButton(
                   onPressed: () async {
                     await ref.read(signOutProvider)();
-                    ref.read(scaffoldMessengerServiceProvider).showSnackBar('ログアウトしました。');
+                    ref
+                        .read(scaffoldMessengerServiceProvider)
+                        .showSnackBar('ログアウトしました。');
                   },
                   icon: const Icon(Icons.logout),
                 )
               : IconButton(
                   onPressed: () async {
-                    await ref.read(scaffoldMessengerServiceProvider).showDialogByBuilder<void>(
+                    await ref
+                        .read(scaffoldMessengerServiceProvider)
+                        .showDialogByBuilder<void>(
                           builder: (context) => AlertDialog(
                             title: const Text('テストユーザーでログイン'),
                             content: Column(
@@ -60,13 +64,18 @@ class MapPage extends HookConsumerWidget {
                                 for (var i = 0; i < 5; i++)
                                   ElevatedButton(
                                     onPressed: () async {
-                                      await ref.read(signInAsTestUserProvider(i + 1))();
+                                      await ref.read(
+                                        signInAsTestUserProvider(i + 1),
+                                      )();
                                       Navigator.pop(context);
                                       ref
-                                          .read(scaffoldMessengerServiceProvider)
+                                          .read(
+                                            scaffoldMessengerServiceProvider,
+                                          )
                                           .showSnackBar('ログインしました。');
                                     },
-                                    child: Text('test${i + 1}@example.com でログイン'),
+                                    child:
+                                        Text('test${i + 1}@example.com でログイン'),
                                   ),
                               ],
                             ),
@@ -76,7 +85,10 @@ class MapPage extends HookConsumerWidget {
                   icon: const Icon(Icons.login),
                 ),
           IconButton(
-            onPressed: () => Navigator.pushNamed<void>(context, AttendingChatRoomsPage.location),
+            onPressed: () => Navigator.pushNamed<void>(
+              context,
+              AttendingChatRoomsPage.location,
+            ),
             icon: const FaIcon(FontAwesomeIcons.message),
           ),
         ],
@@ -86,7 +98,10 @@ class MapPage extends HookConsumerWidget {
           const GoogleMapWidget(),
           if (kDebugMode)
             const Positioned(
-              child: Align(alignment: Alignment.topCenter, child: MapDebugIndicator()),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: MapDebugIndicator(),
+              ),
             ),
           Positioned(
             child: Align(
@@ -95,7 +110,10 @@ class MapPage extends HookConsumerWidget {
             ),
           ),
           const Positioned(
-            child: Align(alignment: Alignment.bottomCenter, child: AppUserPageView()),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: AppUserPageView(),
+            ),
           ),
         ],
       ),
@@ -134,14 +152,16 @@ class GoogleMapWidget extends HookConsumerWidget {
           strokeWidth: 0,
         ),
       },
-      onMapCreated: (googleMapController) =>
-          ref.read(googleMapControllerProvider.notifier).update((state) => googleMapController),
+      onMapCreated: (googleMapController) => ref
+          .read(googleMapControllerProvider.notifier)
+          .update((state) => googleMapController),
       initialCameraPosition: CameraPosition(
         target: ref.watch(centerLatLngProvider),
         zoom: ref.watch(zoomProvider),
       ),
       markers: ref.watch(markersProvider),
-      minMaxZoomPreference: const MinMaxZoomPreference(minZoomLevel, maxZoomLevel),
+      minMaxZoomPreference:
+          const MinMaxZoomPreference(minZoomLevel, maxZoomLevel),
       onCameraIdle: () {
         // マップのドラッグ操作による移動およびズームの変更のときのみ。
         // 検出範囲をリセットする。
@@ -150,11 +170,14 @@ class GoogleMapWidget extends HookConsumerWidget {
         } else {
           // PageView のスワイプによるカメラ移動ではここが動作する。
           // 次のマップのドラッグ操作・ズーム変更に備えて true に更新する。
-          ref.read(willResetDetectionRangeProvider.notifier).update((state) => true);
+          ref
+              .read(willResetDetectionRangeProvider.notifier)
+              .update((state) => true);
         }
       },
-      onCameraMove: (cameraPosition) =>
-          ref.read(cameraPositionProvider.notifier).update((state) => cameraPosition),
+      onCameraMove: (cameraPosition) => ref
+          .read(cameraPositionProvider.notifier)
+          .update((state) => cameraPosition),
     );
   }
 }
@@ -183,7 +206,10 @@ class MapDebugIndicator extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('デバッグウィンドウ', style: context.titleSmall!.copyWith(color: Colors.white)),
+          Text(
+            'デバッグウィンドウ',
+            style: context.titleSmall!.copyWith(color: Colors.white),
+          ),
           const Gap(8),
           Text(
             '検出範囲は、画面中央を中心とする薄灰色の円の内側です。',
@@ -273,23 +299,28 @@ class AppUsersOnMapPageView extends HookConsumerWidget {
       children: [
         if (appUsersOnMap.isEmpty)
           _wrapper(
-            child: Center(child: Text('周辺にデータが見つかりません。', style: context.bodySmall)),
+            child: Center(
+              child: Text('周辺にデータが見つかりません。', style: context.bodySmall),
+            ),
           ),
-        for (final appUser in appUsersOnMap) _wrapper(child: AppUserPageViewItem(appUser: appUser)),
+        for (final appUser in appUsersOnMap)
+          _wrapper(child: AppUserPageViewItem(appUser: appUser)),
       ],
     );
   }
 
   /// PageViewItem を囲む Container ウィジェット。
   static Widget _wrapper({required Widget child}) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: _pageViewHorizontalMargin),
+        margin:
+            const EdgeInsets.symmetric(horizontal: _pageViewHorizontalMargin),
         padding: const EdgeInsets.symmetric(
           horizontal: _pageViewHorizontalPadding,
           vertical: _pageViewVerticalPadding,
         ),
         decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(_pageViewBorderRadius)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(_pageViewBorderRadius)),
         ),
         child: child,
       );
