@@ -24,7 +24,7 @@
           "longitude": 139.0995792359225
         }
       },
-      "fcmToken": "{fcmToken}"
+      "fcmTokens": ["{fcmToken}"]
     },
     "collection: attendingChatRooms": {
       "document: {chatRoomId}": {
@@ -60,6 +60,11 @@
         "senderId": "{userId}",
         "message": "こんにちは！",
         "createdAt": "2022-08-22 15:00"
+      }
+    },
+    "collection: readStatuses": {
+      "document: {readStatusId}": {
+        "lastReadAt": "2022-08-22 15:00"
       }
     }
   }

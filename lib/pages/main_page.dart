@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/bottom_tab/bottom_tab.dart';
@@ -42,28 +43,30 @@ class _MainPageState extends ConsumerState<MainPage> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldMessenger(
-      key: ref.watch(scaffoldMessengerKeyProvider),
-      child: Scaffold(
-        body: Stack(
-          children: [for (final tab in bottomTabs) _buildStackedPages(tab)],
+    return KeyboardVisibilityProvider(
+      child: ScaffoldMessenger(
+        key: ref.watch(scaffoldMessengerKeyProvider),
+        child: Scaffold(
+          body: Stack(
+            children: [for (final tab in bottomTabs) _buildStackedPages(tab)],
+          ),
+          // Note: BottomNavigationBar が不要になったらここをコメントアウトする。
+          // bottomNavigationBar: BottomNavigationBar(
+          //   type: BottomNavigationBarType.fixed,
+          //   selectedItemColor: Theme.of(context).colorScheme.primary,
+          //   selectedFontSize: 12,
+          //   onTap: (index) => ref.read(bottomNavigationBarItemOnTapProvider)(index),
+          //   currentIndex: ref.watch(bottomTabStateProvider).index,
+          //   items: bottomTabs
+          //       .map(
+          //         (b) => BottomNavigationBarItem(
+          //           icon: ref.watch(bottomTabIconProvider(b.bottomTabEnum)),
+          //           label: b.bottomTabEnum.label,
+          //         ),
+          //       )
+          //       .toList(),
+          // ),
         ),
-        // Note: BottomNavigationBar が不要になったらここをコメントアウトする。
-        // bottomNavigationBar: BottomNavigationBar(
-        //   type: BottomNavigationBarType.fixed,
-        //   selectedItemColor: Theme.of(context).colorScheme.primary,
-        //   selectedFontSize: 12,
-        //   onTap: (index) => ref.read(bottomNavigationBarItemOnTapProvider)(index),
-        //   currentIndex: ref.watch(bottomTabStateProvider).index,
-        //   items: bottomTabs
-        //       .map(
-        //         (b) => BottomNavigationBarItem(
-        //           icon: ref.watch(bottomTabIconProvider(b.bottomTabEnum)),
-        //           label: b.bottomTabEnum.label,
-        //         ),
-        //       )
-        //       .toList(),
-        // ),
       ),
     );
   }

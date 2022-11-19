@@ -5,6 +5,7 @@ import '../models/attending_chat_room.dart';
 import '../models/chat_room.dart';
 import '../models/memory.dart';
 import '../models/message.dart';
+import '../models/read_status.dart';
 import '../models/test_notification_request.dart';
 import '../models/todo.dart';
 
@@ -12,9 +13,14 @@ final db = FirebaseFirestore.instance;
 
 /// appUsers コレクションの参照。
 final appUsersRef = db.collection('appUsers').withConverter(
-      fromFirestore: (ds, _) => AppUser.fromDocumentSnapshot(ds),
-      toFirestore: (obj, _) => obj.toJson(),
-    );
+  fromFirestore: (ds, _) {
+    return AppUser.fromDocumentSnapshot(ds);
+  },
+  toFirestore: (obj, _) {
+    final json = obj.toJson();
+    return json;
+  },
+);
 
 /// appUser ドキュメントの参照。
 DocumentReference<AppUser> appUserRef({
@@ -23,12 +29,10 @@ DocumentReference<AppUser> appUserRef({
     appUsersRef.doc(appUserId);
 
 /// testNotificationRequest コレクションの参照。
-final testNotificationRequestsRef =
-    db.collection('testNotificationRequests').withConverter(
-          fromFirestore: (ds, _) =>
-              TestNotificationRequest.fromDocumentSnapshot(ds),
-          toFirestore: (obj, _) => obj.toJson(),
-        );
+final testNotificationRequestsRef = db.collection('testNotificationRequests').withConverter(
+      fromFirestore: (ds, _) => TestNotificationRequest.fromDocumentSnapshot(ds),
+      toFirestore: (obj, _) => obj.toJson(),
+    );
 
 /// todo コレクションの参照。
 CollectionReference<Todo> todosRef({
@@ -50,9 +54,7 @@ DocumentReference<Todo> todoRef({
 CollectionReference<AttendingChatRoom> attendingChatRoomsRef({
   required String appUserId,
 }) =>
-    appUserRef(appUserId: appUserId)
-        .collection('attendingChatRooms')
-        .withConverter(
+    appUserRef(appUserId: appUserId).collection('attendingChatRooms').withConverter(
           fromFirestore: (ds, _) => AttendingChatRoom.fromDocumentSnapshot(ds),
           toFirestore: (obj, _) => obj.toJson(),
         );
@@ -91,6 +93,25 @@ DocumentReference<Message> messageRef({
   required String messageId,
 }) =>
     messagesRef(chatRoomId: chatRoomId).doc(messageId);
+
+/// readStatuses コレクションの参照。
+CollectionReference<ReadStatus> readStatusesRef({
+  required String chatRoomId,
+}) =>
+    chatRoomRef(chatRoomId: chatRoomId).collection('readStatuses').withConverter<ReadStatus>(
+          fromFirestore: (snapshot, _) => ReadStatus.fromDocumentSnapshot(snapshot),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+/// readStatus ドキュメントの参照。
+DocumentReference<ReadStatus> readStatusRef({
+  required String chatRoomId,
+  required String readStatusId,
+}) =>
+    readStatusesRef(chatRoomId: chatRoomId).doc(readStatusId).withConverter<ReadStatus>(
+          fromFirestore: (snapshot, _) => ReadStatus.fromDocumentSnapshot(snapshot),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
 
 /// memory コレクションの参照。
 CollectionReference<Memory> memoriesRef({

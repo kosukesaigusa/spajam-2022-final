@@ -3,14 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../pages/about_page.dart';
-import '../../pages/github_repos_page.dart';
+import '../../pages/map_page.dart';
 
 /// 現在選択状態になっている下タブを管理する StateProvider。
 final bottomTabStateProvider = StateProvider<BottomTab>((_) => bottomTabs[0]);
 
 /// BottomTab の種別。
 enum BottomTabEnum {
-  github(label: 'GitHubRepos', location: GitHubReposPage.location),
+  googleMap(label: 'GoogleMap', location: MapPage.location),
   about(label: 'About', location: AboutPage.location);
 
   const BottomTabEnum({
@@ -39,8 +39,8 @@ class BottomTab {
 final bottomTabIconProvider =
     Provider.family<Widget, BottomTabEnum>((ref, bottomTabEnum) {
   switch (bottomTabEnum) {
-    case BottomTabEnum.github:
-      return const FaIcon(FontAwesomeIcons.github);
+    case BottomTabEnum.googleMap:
+      return const FaIcon(FontAwesomeIcons.map);
     case BottomTabEnum.about:
       return const FaIcon(FontAwesomeIcons.ellipsis);
   }
@@ -51,7 +51,7 @@ final bottomTabs = <BottomTab>[
   BottomTab._(
     index: 0,
     key: GlobalKey<NavigatorState>(),
-    bottomTabEnum: BottomTabEnum.github,
+    bottomTabEnum: BottomTabEnum.googleMap,
   ),
   BottomTab._(
     index: 1,

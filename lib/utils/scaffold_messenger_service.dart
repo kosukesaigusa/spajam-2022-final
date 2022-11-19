@@ -6,11 +6,9 @@ import '../../utils/extensions/string.dart';
 import 'constants/snack_bar.dart';
 import 'constants/string.dart';
 
-final scaffoldMessengerKeyProvider =
-    Provider((_) => GlobalKey<ScaffoldMessengerState>());
+final scaffoldMessengerKeyProvider = Provider((_) => GlobalKey<ScaffoldMessengerState>());
 
-final scaffoldMessengerServiceProvider =
-    Provider.autoDispose(ScaffoldMessengerService.new);
+final scaffoldMessengerServiceProvider = Provider.autoDispose(ScaffoldMessengerService.new);
 
 /// ツリー上部の ScaffoldMessenger 上でスナックバーやダイアログの表示を操作する。
 class ScaffoldMessengerService {
@@ -71,16 +69,13 @@ class ScaffoldMessengerService {
   /// Exception 起点でスナックバーを表示する。
   /// Dart の Exception 型の場合は toString() 冒頭を取り除いて
   /// 差し支えのないメッセージに置換しておく。
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
-      showSnackBarByException(Exception e) {
-    final message =
-        e.toString().replaceAll('Exception: ', '').replaceAll('Exception', '');
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBarByException(Exception e) {
+    final message = e.toString().replaceAll('Exception: ', '').replaceAll('Exception', '');
     return showSnackBar(message.ifIsEmpty(generalExceptionMessage));
   }
 
   /// FirebaseException 起点でスナックバーを表示する
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
-      showSnackBarByFirebaseException(
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBarByFirebaseException(
     FirebaseException e,
   ) {
     return showSnackBar(
@@ -88,8 +83,7 @@ class ScaffoldMessengerService {
     );
   }
 
-  ScaffoldFeatureController<MaterialBanner, MaterialBannerClosedReason>
-      showMaterialBanner(
+  ScaffoldFeatureController<MaterialBanner, MaterialBannerClosedReason> showMaterialBanner(
     String message, {
     IconData leadingIconData = Icons.info,
     Color backgroundColor = Colors.red,
