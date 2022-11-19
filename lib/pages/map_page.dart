@@ -120,7 +120,8 @@ class MapPage extends HookConsumerWidget {
                                             .showSnackBar('ログインしました。');
                                       },
                                       child: Text(
-                                          'test${i + 1}@example.com でログイン'),
+                                        'test${i + 1}@example.com でログイン',
+                                      ),
                                     ),
                                 ],
                               ),
@@ -320,9 +321,9 @@ class AppUserPageView extends HookConsumerWidget {
             color: context.theme.primaryColor,
           ),
           child: GestureDetector(
-            onTap: () {
-              ref.read(backToCurrentPositionProvider)();
-              ref.read(updateUserLocation)();
+            onTap: () async {
+              await ref.read(updateUserLocation)();
+              await ref.read(backToCurrentPositionProvider)();
             },
             child: const Icon(
               Icons.near_me,
