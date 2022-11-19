@@ -11,7 +11,8 @@ class CreateMemoryPage extends HookConsumerWidget {
 
   static const path = '/create-memory/:chatRoomId';
   static const name = 'CreateMemoryPage';
-  static String location({required String chatRoomId}) => '/create-memory/$chatRoomId';
+  static String location({required String chatRoomId}) =>
+      '/create-memory/$chatRoomId';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,44 +20,61 @@ class CreateMemoryPage extends HookConsumerWidget {
     final uploadedImageUrl = ref.watch(uploadedImageUrlProvider);
     final chatRoomId = ref.watch(chatRoomIdProvider);
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Create Memory'),
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: Card(
-                elevation: 30,
-                child: Center(
-                  child: uploadedImageUrl.isEmpty
-                      ? IconButton(
-                          iconSize: 100,
-                          onPressed: () async {
-                            await ref.read(createMemoryProvider).call(
-                                  comment: commentController.text,
-                                  chatRoomId: chatRoomId,
-                                );
-                          },
-                          icon: const Icon(Icons.add_a_photo),
-                        )
-                      : Image.network(uploadedImageUrl),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: Card(
+                  elevation: 30,
+                  child: Center(
+                    child: uploadedImageUrl.isEmpty
+                        ? Stack(
+                            children: [
+                              IconButton(
+                                iconSize: 100,
+                                onPressed: () {
+                                  ref.read(uploadImageProvider).call();
+                                },
+                                icon: const Icon(Icons.add_a_photo),
+                              ),
+                              if (ref.watch(isUploadingProvider))
+                                const CircularProgressIndicator(),
+                            ],
+                          )
+                        : Image.network(uploadedImageUrl),
+                  ),
                 ),
               ),
-            ),
-            const Gap(50),
-            Padding(
-              padding: const EdgeInsets.all(32),
-              child: TextField(
-                controller: commentController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Memory Title',
+              const Gap(16),
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: TextField(
+                  controller: commentController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Memory Title',
+                  ),
                 ),
               ),
-            )
-          ],
+              ElevatedButton(
+                onPressed: () async {
+                  await ref.read(createMemoryProvider).call(
+                        context: context,
+                        comment: commentController.text,
+                        chatRoomId: chatRoomId,
+                      );
+                },
+                child: const Text('Create'),
+              ),
+            ],
+          ),
         ),
       ),
     );

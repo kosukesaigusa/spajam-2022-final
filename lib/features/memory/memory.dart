@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/memory.dart';
@@ -15,13 +16,19 @@ final uploadedImageUrlProvider = StateProvider.autoDispose<String>((ref) {
   return '';
 });
 
+final isUploadingProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
 final createMemoryProvider = Provider<
     Future<void> Function({
+  required BuildContext context,
   required String comment,
   required String chatRoomId,
 })>(
   (ref) {
     return ({
+      required context,
       required comment,
       required chatRoomId,
     }) async {
@@ -31,33 +38,58 @@ final createMemoryProvider = Provider<
           throw const AppException(message: 'サインインが必要です。');
         }
         ref.read(overlayLoadingProvider.notifier).update((state) => true);
-        final pickedImage = await ref.read(imagePickerServiceProvider).getImage();
-        if (pickedImage == null) {
-          return;
-        }
-        final imageUrl = await ref.read(firebaseStorageRepositoryProvider).upload(
-              path: pickedImage.name,
-              uint8list: await pickedImage.readAsBytes(),
-            );
-        ref.read(uploadedImageUrlProvider.notifier).update((state) => imageUrl);
         final attendingChatRoom = await ref
             .read(attendingChatRoomRepositoryProvider)
-            .fetchAttendingChatRoom(appUserId: currentUserId, chatRoomId: chatRoomId);
+            .fetchAttendingChatRoom(
+              appUserId: currentUserId,
+              chatRoomId: chatRoomId,
+            );
         final partnerId = attendingChatRoom?.partnerId;
         if (partnerId == null) {
           throw const AppException(message: 'パートナーが見つかりません。');
         }
+        final uploadedImage = ref.read(uploadedImageUrlProvider);
+        if (uploadedImage.isEmpty) {
+          throw const AppException(message: '思い出の写真を選択しましょう😌');
+        }
         final memory = Memory(
           memoryId: uuid,
           partnerId: partnerId,
-          imageUrl: imageUrl,
+          imageUrl: uploadedImage,
           comment: comment,
         );
         await ref.read(memoryRepositoryProvider).setMemory(memory: memory);
+        ref.read(scaffoldMessengerServiceProvider).showSnackBar('思い出を作成しました🙌');
+        Navigator.pop(context);
       } on Exception catch (e) {
         ref.read(scaffoldMessengerServiceProvider).showSnackBarByException(e);
       } finally {
         ref.read(overlayLoadingProvider.notifier).update((state) => false);
+      }
+    };
+  },
+);
+
+final uploadImageProvider = Provider<Future<void> Function()>(
+  (ref) {
+    return () async {
+      ref.read(isUploadingProvider.notifier).update((state) => true);
+      try {
+        final pickedImage =
+            await ref.read(imagePickerServiceProvider).getImage();
+        if (pickedImage == null) {
+          return;
+        }
+        final imageUrl =
+            await ref.read(firebaseStorageRepositoryProvider).upload(
+                  path: pickedImage.name,
+                  uint8list: await pickedImage.readAsBytes(),
+                );
+        ref.read(uploadedImageUrlProvider.notifier).update((state) => imageUrl);
+      } on Exception catch (e) {
+        ref.read(scaffoldMessengerServiceProvider).showSnackBarByException(e);
+      } finally {
+        ref.read(isUploadingProvider.notifier).update((state) => false);
       }
     };
   },
