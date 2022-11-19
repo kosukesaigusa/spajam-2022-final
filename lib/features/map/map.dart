@@ -12,10 +12,10 @@ import '../../utils/geo.dart';
 const _defaultLatLng = LatLng(35.6812, 139.7671);
 
 /// マップのデフォルトのズームレベル。
-const double _defaultZoom = 7;
+const double _defaultZoom = 15;
 
 /// マップのデフォルトの検出半径。
-const double _defaultRadius = 50;
+const double _defaultRadius = 1000;
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
 final googleMapControllerProvider =

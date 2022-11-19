@@ -3,8 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 const double viewportFraction = 0.85;
 const int initialRadius = 300;
 const double initialZoomLevel = 10;
-const double minZoomLevel = 5;
-const double maxZoomLevel = 17;
+const double minZoomLevel = 15;
+const double maxZoomLevel = 19;
 const initialLocation = LatLng(35.6812, 139.7671);
 
 /// Zoom Level (5.0 <= x <= 17.0) から半径 km を取得する
@@ -25,7 +25,7 @@ double getRadiusFromZoom(double zoom) {
     return 50;
   }
   if (zoom <= 11) {
-    return 25;
+    return 50;
   }
   if (zoom <= 12) {
     return 15;
