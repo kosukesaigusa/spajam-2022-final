@@ -167,3 +167,12 @@ class Comment extends ConsumerWidget {
           );
   }
 }
+
+class MemoriesView extends ConsumerWidget {
+  const MemoriesView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Container();
+  }
+}
