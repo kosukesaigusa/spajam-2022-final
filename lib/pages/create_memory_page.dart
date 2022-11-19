@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CreateMemoryPage extends StatelessWidget {
+import '../features/memory/memory.dart';
+
+class CreateMemoryPage extends ConsumerWidget {
   const CreateMemoryPage({super.key});
 
   static const path = '/create-memory';
@@ -9,7 +12,7 @@ class CreateMemoryPage extends StatelessWidget {
   static const location = path;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
         child: Column(
@@ -23,7 +26,9 @@ class CreateMemoryPage extends StatelessWidget {
                 child: Center(
                   child: IconButton(
                     iconSize: 100,
-                    onPressed: () {},
+                    onPressed: () async {
+                      await ref.read(createMemoryProvider).call();
+                    },
                     icon: const Icon(Icons.add_a_photo),
                   ),
                 ),

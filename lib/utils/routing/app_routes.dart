@@ -29,14 +29,16 @@ final appRoutes = <AppRoute>[
   AppRoute(
     path: GitHubReposPage.path,
     name: GitHubReposPage.name,
-    builder: (context, state) => const GitHubReposPage(key: ValueKey(GitHubReposPage.name)),
+    builder: (context, state) =>
+        const GitHubReposPage(key: ValueKey(GitHubReposPage.name)),
   ),
   AppRoute(
     path: GitHubRepoDetailPage.path,
     name: GitHubRepoDetailPage.name,
     builder: (context, state) => ProviderScope(
       overrides: <Override>[appRouterStateProvider.overrideWithValue(state)],
-      child: const GitHubRepoDetailPage(key: ValueKey(GitHubRepoDetailPage.name)),
+      child:
+          const GitHubRepoDetailPage(key: ValueKey(GitHubRepoDetailPage.name)),
     ),
   ),
   AppRoute(
