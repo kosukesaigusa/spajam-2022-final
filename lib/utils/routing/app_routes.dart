@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../pages/about_page.dart';
+import '../../pages/create_memory_page.dart';
 import '../../pages/github_repo_detail_page.dart';
 import '../../pages/github_repos_page.dart';
 import '../../pages/main_page.dart';
