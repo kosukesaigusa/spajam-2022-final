@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'app.dart';
+import 'features/map/map.dart';
 import 'utils/application_documents_directory.dart';
 import 'utils/firebase_messaging.dart';
 import 'utils/firebase_options.dart';
@@ -26,6 +27,7 @@ Future<void> main() async {
         firebaseMessagingProvider.overrideWithValue(
           await getFirebaseMessagingInstance,
         ),
+        initialCenterLatLngProvider.overrideWithValue(await initialCenterLatLng),
       ],
       child: const App(),
     ),

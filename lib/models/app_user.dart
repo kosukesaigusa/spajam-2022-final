@@ -9,6 +9,7 @@ part 'app_user.g.dart';
 @freezed
 class AppUser with _$AppUser {
   const factory AppUser({
+    @Default('') String name,
     @Default('') String appUserId,
     @Default('') String imageUrl,
     @Default('') String country,
@@ -23,8 +24,7 @@ class AppUser with _$AppUser {
     @Default(<String>[]) List<String> fcmTokens,
   }) = _AppUser;
 
-  factory AppUser.fromJson(Map<String, dynamic> json) =>
-      _$AppUserFromJson(json);
+  factory AppUser.fromJson(Map<String, dynamic> json) => _$AppUserFromJson(json);
 
   factory AppUser.fromDocumentSnapshot(DocumentSnapshot ds) {
     final data = ds.data()! as Map<String, dynamic>;
