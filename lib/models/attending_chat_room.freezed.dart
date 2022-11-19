@@ -20,7 +20,7 @@ AttendingChatRoom _$AttendingChatRoomFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AttendingChatRoom {
-  String get attendingChatRoomId => throw _privateConstructorUsedError;
+  String get chatRoomId => throw _privateConstructorUsedError;
   String get partnerId => throw _privateConstructorUsedError;
   bool get isDeleted => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
@@ -41,7 +41,7 @@ abstract class $AttendingChatRoomCopyWith<$Res> {
       _$AttendingChatRoomCopyWithImpl<$Res, AttendingChatRoom>;
   @useResult
   $Res call(
-      {String attendingChatRoomId,
+      {String chatRoomId,
       String partnerId,
       bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -66,16 +66,16 @@ class _$AttendingChatRoomCopyWithImpl<$Res, $Val extends AttendingChatRoom>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? attendingChatRoomId = null,
+    Object? chatRoomId = null,
     Object? partnerId = null,
     Object? isDeleted = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
     return _then(_value.copyWith(
-      attendingChatRoomId: null == attendingChatRoomId
-          ? _value.attendingChatRoomId
-          : attendingChatRoomId // ignore: cast_nullable_to_non_nullable
+      chatRoomId: null == chatRoomId
+          ? _value.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
               as String,
       partnerId: null == partnerId
           ? _value.partnerId
@@ -122,7 +122,7 @@ abstract class _$$_AttendingChatRoomCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String attendingChatRoomId,
+      {String chatRoomId,
       String partnerId,
       bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -147,16 +147,16 @@ class __$$_AttendingChatRoomCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? attendingChatRoomId = null,
+    Object? chatRoomId = null,
     Object? partnerId = null,
     Object? isDeleted = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
     return _then(_$_AttendingChatRoom(
-      attendingChatRoomId: null == attendingChatRoomId
-          ? _value.attendingChatRoomId
-          : attendingChatRoomId // ignore: cast_nullable_to_non_nullable
+      chatRoomId: null == chatRoomId
+          ? _value.chatRoomId
+          : chatRoomId // ignore: cast_nullable_to_non_nullable
               as String,
       partnerId: null == partnerId
           ? _value.partnerId
@@ -182,7 +182,7 @@ class __$$_AttendingChatRoomCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AttendingChatRoom extends _AttendingChatRoom {
   const _$_AttendingChatRoom(
-      {this.attendingChatRoomId = '',
+      {this.chatRoomId = '',
       this.partnerId = '',
       this.isDeleted = false,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -196,7 +196,7 @@ class _$_AttendingChatRoom extends _AttendingChatRoom {
 
   @override
   @JsonKey()
-  final String attendingChatRoomId;
+  final String chatRoomId;
   @override
   @JsonKey()
   final String partnerId;
@@ -214,7 +214,7 @@ class _$_AttendingChatRoom extends _AttendingChatRoom {
 
   @override
   String toString() {
-    return 'AttendingChatRoom(attendingChatRoomId: $attendingChatRoomId, partnerId: $partnerId, isDeleted: $isDeleted, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'AttendingChatRoom(chatRoomId: $chatRoomId, partnerId: $partnerId, isDeleted: $isDeleted, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -222,8 +222,8 @@ class _$_AttendingChatRoom extends _AttendingChatRoom {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AttendingChatRoom &&
-            (identical(other.attendingChatRoomId, attendingChatRoomId) ||
-                other.attendingChatRoomId == attendingChatRoomId) &&
+            (identical(other.chatRoomId, chatRoomId) ||
+                other.chatRoomId == chatRoomId) &&
             (identical(other.partnerId, partnerId) ||
                 other.partnerId == partnerId) &&
             (identical(other.isDeleted, isDeleted) ||
@@ -236,8 +236,8 @@ class _$_AttendingChatRoom extends _AttendingChatRoom {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, attendingChatRoomId, partnerId,
-      isDeleted, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, chatRoomId, partnerId, isDeleted, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -256,7 +256,7 @@ class _$_AttendingChatRoom extends _AttendingChatRoom {
 
 abstract class _AttendingChatRoom extends AttendingChatRoom {
   const factory _AttendingChatRoom(
-      {final String attendingChatRoomId,
+      {final String chatRoomId,
       final String partnerId,
       final bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
@@ -269,7 +269,7 @@ abstract class _AttendingChatRoom extends AttendingChatRoom {
       _$_AttendingChatRoom.fromJson;
 
   @override
-  String get attendingChatRoomId;
+  String get chatRoomId;
   @override
   String get partnerId;
   @override

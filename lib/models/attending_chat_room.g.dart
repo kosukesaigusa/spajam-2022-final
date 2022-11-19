@@ -8,7 +8,7 @@ part of 'attending_chat_room.dart';
 
 _$_AttendingChatRoom _$$_AttendingChatRoomFromJson(Map<String, dynamic> json) =>
     _$_AttendingChatRoom(
-      attendingChatRoomId: json['attendingChatRoomId'] as String? ?? '',
+      chatRoomId: json['chatRoomId'] as String? ?? '',
       partnerId: json['partnerId'] as String? ?? '',
       isDeleted: json['isDeleted'] as bool? ?? false,
       createdAt: json['createdAt'] == null
@@ -24,7 +24,7 @@ _$_AttendingChatRoom _$$_AttendingChatRoomFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_AttendingChatRoomToJson(
         _$_AttendingChatRoom instance) =>
     <String, dynamic>{
-      'attendingChatRoomId': instance.attendingChatRoomId,
+      'chatRoomId': instance.chatRoomId,
       'partnerId': instance.partnerId,
       'isDeleted': instance.isDeleted,
       'createdAt': alwaysUseServerTimestampUnionTimestampConverter

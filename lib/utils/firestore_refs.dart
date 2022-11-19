@@ -60,9 +60,9 @@ CollectionReference<AttendingChatRoom> attendingChatRoomsRef({
 /// attendingChatRoom ドキュメントの参照。
 DocumentReference<AttendingChatRoom> attendingChatRoomRef({
   required String appUserId,
-  required String attendingChatId,
+  required String chatRoomId,
 }) =>
-    attendingChatRoomsRef(appUserId: appUserId).doc(attendingChatId);
+    attendingChatRoomsRef(appUserId: appUserId).doc(chatRoomId);
 
 /// chatRooms コレクションの参照。
 final chatRoomsRef = db.collection('chatRooms').withConverter(
