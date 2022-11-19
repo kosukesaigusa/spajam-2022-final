@@ -36,8 +36,7 @@ class BottomTab {
 }
 
 /// BottomNavigationBarItem.icon に表示するウィジェットを提供するプロバイダ。
-final bottomTabIconProvider =
-    Provider.family<Widget, BottomTabEnum>((ref, bottomTabEnum) {
+final bottomTabIconProvider = Provider.family<Widget, BottomTabEnum>((ref, bottomTabEnum) {
   switch (bottomTabEnum) {
     case BottomTabEnum.googleMap:
       return const FaIcon(FontAwesomeIcons.map);

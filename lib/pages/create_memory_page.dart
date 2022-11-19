@@ -11,8 +11,7 @@ class CreateMemoryPage extends HookConsumerWidget {
 
   static const path = '/create-memory/:chatRoomId';
   static const name = 'CreateMemoryPage';
-  static String location({required String chatRoomId}) =>
-      '/create-memory/$chatRoomId';
+  static String location({required String chatRoomId}) => '/create-memory/$chatRoomId';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

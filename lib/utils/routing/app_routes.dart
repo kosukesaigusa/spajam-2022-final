@@ -28,8 +28,10 @@ final appRoutes = <AppRoute>[
   AppRoute(
     path: CreateMemoryPage.path,
     name: CreateMemoryPage.name,
-    builder: (context, state) =>
-        const CreateMemoryPage(key: ValueKey(CreateMemoryPage.name)),
+    builder: (context, state) => ProviderScope(
+      overrides: <Override>[appRouterStateProvider.overrideWithValue(state)],
+      child: const CreateMemoryPage(key: ValueKey(CreateMemoryPage.name)),
+    ),
   ),
   AppRoute(
     path: AttendingChatRoomsPage.path,
