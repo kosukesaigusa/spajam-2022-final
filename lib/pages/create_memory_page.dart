@@ -27,7 +27,10 @@ class CreateMemoryPage extends ConsumerWidget {
                   child: IconButton(
                     iconSize: 100,
                     onPressed: () async {
-                      await ref.read(createMemoryProvider).call();
+                      await ref.read(createMemoryProvider).call(
+                            // TODO(shimizu-saffle): 適切な値を渡す
+                            comment: 'モックコメント',
+                          );
                     },
                     icon: const Icon(Icons.add_a_photo),
                   ),

@@ -15,9 +15,8 @@ class FirebaseStorageRepository {
     required Uint8List uint8list,
   }) async {
     final storageRef = _firebaseStorage.ref().child(path);
-    UploadTask uploadTask;
     try {
-      uploadTask = storageRef.putData(uint8list);
+      final uploadTask = storageRef.putData(uint8list);
       final snapshot = await Future.value(uploadTask);
       return await snapshot.ref.getDownloadURL();
     } on FirebaseException {
