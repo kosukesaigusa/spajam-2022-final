@@ -146,7 +146,6 @@ class GoogleMapWidget extends HookConsumerWidget {
         Circle(
           circleId: const CircleId('value'),
           center: ref.watch(centerLatLngProvider),
-          // 1000 を乗じて km に換算する
           radius: ref.watch(radiusProvider) * 1000,
           fillColor: Colors.black12,
           strokeWidth: 0,
@@ -162,19 +161,7 @@ class GoogleMapWidget extends HookConsumerWidget {
       markers: ref.watch(markersProvider),
       minMaxZoomPreference:
           const MinMaxZoomPreference(minZoomLevel, maxZoomLevel),
-      onCameraIdle: () {
-        // マップのドラッグ操作による移動およびズームの変更のときのみ。
-        // 検出範囲をリセットする。
-        if (ref.read(willResetDetectionRangeProvider)) {
-          ref.read(resetDetectionRangeProvider)();
-        } else {
-          // PageView のスワイプによるカメラ移動ではここが動作する。
-          // 次のマップのドラッグ操作・ズーム変更に備えて true に更新する。
-          ref
-              .read(willResetDetectionRangeProvider.notifier)
-              .update((state) => true);
-        }
-      },
+      onCameraIdle: () {},
       onCameraMove: (cameraPosition) => ref
           .read(cameraPositionProvider.notifier)
           .update((state) => cameraPosition),
