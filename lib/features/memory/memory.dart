@@ -94,3 +94,7 @@ final uploadImageProvider = Provider<Future<void> Function()>(
     };
   },
 );
+
+final memoriesProvider = FutureProvider<List<Memory>>((ref) async {
+  return ref.watch(memoryRepositoryProvider).fetchMemories();
+});

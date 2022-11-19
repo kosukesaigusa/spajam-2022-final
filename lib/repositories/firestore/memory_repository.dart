@@ -14,6 +14,20 @@ class MemoryRepository {
   MemoryRepository(this._ref);
   final Ref _ref;
 
+  Future<List<Memory>> fetchMemories({
+    Source source = Source.serverAndCache,
+  }) {
+    final currentUserId = _ref.watch(userIdProvider).value;
+    if (currentUserId == null) {
+      throw const AppException(message: 'サインインが必要です。');
+    }
+    return memoriesRef(
+      appUserId: currentUserId,
+    ).get(GetOptions(source: source)).then((snapshot) {
+      return snapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
   /// 指定したユーザーの Todo を作成する。
   Future<void> setMemory({
     required Memory memory,
