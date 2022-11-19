@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../models/app_user.dart';
 import '../../models/firestore_position.dart';
 import '../../repositories/firestore/app_user_repository.dart';
+import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
@@ -239,5 +240,21 @@ final updateUserLocation = Provider.autoDispose(
           appUserId: userId,
           location: location,
         );
+  },
+);
+
+// 連絡ボタン押下
+final startContactProvider = Provider.autoDispose.family<Function, String>(
+  (ref, partnerId) => () async {
+    final appUserId = ref.watch(userIdProvider).value;
+    if (appUserId == null) {
+      throw const SignInRequiredException();
+    }
+
+    final id = await ref.read(chatRoomRepositoryProvider).createChatRoom(
+          appUserId: appUserId,
+          partnerId: partnerId,
+        );
+    return id;
   },
 );

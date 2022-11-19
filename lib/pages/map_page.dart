@@ -9,6 +9,8 @@ import '../features/auth/auth.dart';
 import '../features/map/map.dart';
 import '../features/message/attending_chat_room.dart';
 import '../models/app_user.dart';
+import '../repositories/firestore/chat_room_repository.dart';
+import '../utils/exceptions/common.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
@@ -367,7 +369,25 @@ class AppUserPageViewItem extends HookConsumerWidget {
                             const Spacer(),
                             if (attendingChatRooms.isEmpty)
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  final appUserId =
+                                      ref.watch(userIdProvider).value;
+                                  if (appUserId == null) {
+                                    throw const SignInRequiredException();
+                                  }
+                                  final chatRmId = await ref
+                                      .read(chatRoomRepositoryProvider)
+                                      .createChatRoom(
+                                        appUserId: appUserId,
+                                        partnerId: appUser.appUserId,
+                                      );
+                                  await Navigator.pushNamed<void>(
+                                    context,
+                                    ChatRoomPage.location(
+                                      chatRoomId: chatRmId,
+                                    ),
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: const StadiumBorder(),
                                 ),
