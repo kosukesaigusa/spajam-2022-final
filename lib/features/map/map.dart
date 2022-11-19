@@ -12,6 +12,7 @@ import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
 import '../../utils/firestore_refs.dart';
 import '../../utils/geo.dart';
+import '../app_user/app_user.dart';
 import '../auth/auth.dart';
 
 /// マップのデフォルトの緯度経度。
@@ -118,13 +119,20 @@ final markersProvider = Provider.autoDispose((ref) {
 
 /// マップ上に検出された AppUser 一覧を提供する Provider。
 final appUsersOnMapProvider = Provider.autoDispose((ref) {
-  final userId = ref.watch(userIdProvider).value;
+  final myId = ref.watch(userIdProvider).value;
+  if (myId == null) {
+    return <AppUser>[];
+  }
+
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
+  final myCountry = ref.watch(appUserFutureProvider(myId)).value!.country;
   final appUsers = <AppUser>[];
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
       final appUser = ds.data();
-      if (appUser == null || appUser.appUserId == userId) {
+      if (appUser == null ||
+          appUser.appUserId == myId ||
+          appUser.country == myCountry) {
         continue;
       }
       appUsers.add(appUser);
