@@ -13,7 +13,8 @@ _$_Memory _$$_MemoryFromJson(Map<String, dynamic> json) => _$_Memory(
       comment: json['comment'] as String? ?? '',
       createdAt: json['createdAt'] == null
           ? const UnionTimestamp.serverTimestamp()
-          : unionTimestampConverter.fromJson(json['createdAt'] as Object),
+          : alwaysUseServerTimestampUnionTimestampConverter
+              .fromJson(json['createdAt'] as Object),
     );
 
 Map<String, dynamic> _$$_MemoryToJson(_$_Memory instance) => <String, dynamic>{
@@ -21,5 +22,6 @@ Map<String, dynamic> _$$_MemoryToJson(_$_Memory instance) => <String, dynamic>{
       'appUserId': instance.appUserId,
       'imageUrl': instance.imageUrl,
       'comment': instance.comment,
-      'createdAt': unionTimestampConverter.toJson(instance.createdAt),
+      'createdAt': alwaysUseServerTimestampUnionTimestampConverter
+          .toJson(instance.createdAt),
     };

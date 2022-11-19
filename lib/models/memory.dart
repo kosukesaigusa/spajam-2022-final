@@ -13,7 +13,7 @@ class Memory with _$Memory {
     required String appUserId,
     required String imageUrl,
     @Default('') String comment,
-    @unionTimestampConverter
+    @alwaysUseServerTimestampUnionTimestampConverter
     @Default(UnionTimestamp.serverTimestamp())
         UnionTimestamp createdAt,
   }) = _Memory;
