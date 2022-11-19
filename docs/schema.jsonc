@@ -24,7 +24,7 @@
           "longitude": 139.0995792359225
         }
       },
-      "fcmToken": "{fcmToken}"
+      "fcmTokens": ["{fcmToken}"]
     },
     "collection: attendingChatRooms": {
       "document: {chatRoomId}": {

@@ -18,8 +18,8 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
       comment: json['comment'] as String? ?? '',
       location: json['location'] == null
           ? FirestorePosition.defaultValue
-          : FirestorePosition.fromJson(
-              json['location'] as Map<String, dynamic>),
+          : const FirestorePositionConverter()
+              .fromJson(json['location'] as Map<String, dynamic>),
       fcmTokens: (json['fcmTokens'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -35,6 +35,6 @@ Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
       'isVisible': instance.isVisible,
       'flags': instance.flags,
       'comment': instance.comment,
-      'location': instance.location,
+      'location': const FirestorePositionConverter().toJson(instance.location),
       'fcmTokens': instance.fcmTokens,
     };

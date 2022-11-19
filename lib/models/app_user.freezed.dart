@@ -31,6 +31,7 @@ mixin _$AppUser {
   /// 交流した人の国旗
   List<String> get flags => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
+  @FirestorePositionConverter()
   FirestorePosition get location => throw _privateConstructorUsedError;
   List<String> get fcmTokens => throw _privateConstructorUsedError;
 
@@ -52,7 +53,7 @@ abstract class $AppUserCopyWith<$Res> {
       bool isVisible,
       List<String> flags,
       String comment,
-      FirestorePosition location,
+      @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
 
   $FirestorePositionCopyWith<$Res> get location;
@@ -145,7 +146,7 @@ abstract class _$$_AppUserCopyWith<$Res> implements $AppUserCopyWith<$Res> {
       bool isVisible,
       List<String> flags,
       String comment,
-      FirestorePosition location,
+      @FirestorePositionConverter() FirestorePosition location,
       List<String> fcmTokens});
 
   @override
@@ -224,7 +225,8 @@ class _$_AppUser extends _AppUser {
       this.isVisible = true,
       final List<String> flags = const <String>[],
       this.comment = '',
-      this.location = FirestorePosition.defaultValue,
+      @FirestorePositionConverter()
+          this.location = FirestorePosition.defaultValue,
       final List<String> fcmTokens = const <String>[]})
       : _flags = flags,
         _fcmTokens = fcmTokens,
@@ -267,6 +269,7 @@ class _$_AppUser extends _AppUser {
   final String comment;
   @override
   @JsonKey()
+  @FirestorePositionConverter()
   final FirestorePosition location;
   final List<String> _fcmTokens;
   @override
@@ -339,7 +342,7 @@ abstract class _AppUser extends AppUser {
       final bool isVisible,
       final List<String> flags,
       final String comment,
-      final FirestorePosition location,
+      @FirestorePositionConverter() final FirestorePosition location,
       final List<String> fcmTokens}) = _$_AppUser;
   const _AppUser._() : super._();
 
@@ -364,6 +367,7 @@ abstract class _AppUser extends AppUser {
   @override
   String get comment;
   @override
+  @FirestorePositionConverter()
   FirestorePosition get location;
   @override
   List<String> get fcmTokens;

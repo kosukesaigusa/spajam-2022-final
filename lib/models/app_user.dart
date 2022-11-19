@@ -20,7 +20,9 @@ class AppUser with _$AppUser {
     /// 交流した人の国旗
     @Default(<String>[]) List<String> flags,
     @Default('') String comment,
-    @Default(FirestorePosition.defaultValue) FirestorePosition location,
+    @FirestorePositionConverter()
+    @Default(FirestorePosition.defaultValue)
+        FirestorePosition location,
     @Default(<String>[]) List<String> fcmTokens,
   }) = _AppUser;
 

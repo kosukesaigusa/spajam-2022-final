@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/auth/auth.dart';
 import '../features/map/map.dart';
 import '../models/app_user.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
+import '../utils/scaffold_messenger_service.dart';
+import 'attending_chat_rooms_page.dart';
 
 const double _stackedGreyBackgroundHeight = 200;
 const double _stackedGreyBackgroundBorderRadius = 36;
@@ -32,6 +36,51 @@ class MapPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      // TODO: マップは消すかもしれないけど、
+      //  開発中は他の画面に遷移したりするボタンを配置したいので。
+      appBar: AppBar(
+        title: const Text('マップ'),
+        actions: [
+          ref.watch(isSignedInProvider).value ?? false
+              ? IconButton(
+                  onPressed: () async {
+                    await ref.read(signOutProvider)();
+                    ref.read(scaffoldMessengerServiceProvider).showSnackBar('ログアウトしました。');
+                  },
+                  icon: const Icon(Icons.logout),
+                )
+              : IconButton(
+                  onPressed: () async {
+                    await ref.read(scaffoldMessengerServiceProvider).showDialogByBuilder<void>(
+                          builder: (context) => AlertDialog(
+                            title: const Text('テストユーザーでログイン'),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var i = 0; i < 5; i++)
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await ref.read(signInAsTestUserProvider(i + 1))();
+                                      Navigator.pop(context);
+                                      ref
+                                          .read(scaffoldMessengerServiceProvider)
+                                          .showSnackBar('ログインしました。');
+                                    },
+                                    child: Text('test${i + 1}@example.com でログイン'),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        );
+                  },
+                  icon: const Icon(Icons.login),
+                ),
+          IconButton(
+            onPressed: () => Navigator.pushNamed<void>(context, AttendingChatRoomsPage.location),
+            icon: const FaIcon(FontAwesomeIcons.message),
+          ),
+        ],
+      ),
       body: Stack(
         children: [
           const GoogleMapWidget(),
