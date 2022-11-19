@@ -219,7 +219,10 @@ final updateUserLocation = Provider.autoDispose(
         ? GeoPoint(_defaultLatLng.latitude, _defaultLatLng.longitude)
         : GeoPoint(p.latitude, p.longitude);
     final geo = Geoflutterfire();
-    final geoFirePoint = geo.point(latitude: 12.960632, longitude: 77.641603);
+    final geoFirePoint = geo.point(
+      latitude: geoPoint.latitude,
+      longitude: geoPoint.longitude,
+    );
     final location = FirestorePosition(
       geohash: geoFirePoint.data['geohash'] as String,
       geopoint: geoPoint,
