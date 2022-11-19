@@ -98,10 +98,10 @@ class AttendingChatRoomWidget extends HookConsumerWidget {
                   const Gap(16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      // LatestMessageCreatedAtWidget(chatRoomId: attendingChatRoom.chatRoomId),
-                      Gap(4),
-                      // UnreadCountBadgeWidget(chatRoomId: attendingChatRoom.chatRoomId),
+                    children: [
+                      LatestMessageCreatedAtWidget(chatRoomId: attendingChatRoom.chatRoomId),
+                      const Gap(4),
+                      UnreadCountBadgeWidget(chatRoomId: attendingChatRoom.chatRoomId),
                     ],
                   ),
                 ],
