@@ -212,7 +212,7 @@ Future<LatLng> get initialCenterLatLng async {
 }
 
 /// ユーザの現在位置の更新
-final updateUserPosition = Provider.autoDispose(
+final updateUserLocation = Provider.autoDispose(
   (ref) => () async {
     final p = await currentPosition;
     final geoPoint = p == null
