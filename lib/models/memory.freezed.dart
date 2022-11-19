@@ -21,7 +21,7 @@ Memory _$MemoryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Memory {
   String get memoryId => throw _privateConstructorUsedError;
-  String get appUserId => throw _privateConstructorUsedError;
+  String get partnerId => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
   @unionTimestampConverter
@@ -39,7 +39,7 @@ abstract class $MemoryCopyWith<$Res> {
   @useResult
   $Res call(
       {String memoryId,
-      String appUserId,
+      String partnerId,
       String imageUrl,
       String comment,
       @unionTimestampConverter UnionTimestamp createdAt});
@@ -61,7 +61,7 @@ class _$MemoryCopyWithImpl<$Res, $Val extends Memory>
   @override
   $Res call({
     Object? memoryId = null,
-    Object? appUserId = null,
+    Object? partnerId = null,
     Object? imageUrl = null,
     Object? comment = null,
     Object? createdAt = null,
@@ -71,9 +71,9 @@ class _$MemoryCopyWithImpl<$Res, $Val extends Memory>
           ? _value.memoryId
           : memoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      appUserId: null == appUserId
-          ? _value.appUserId
-          : appUserId // ignore: cast_nullable_to_non_nullable
+      partnerId: null == partnerId
+          ? _value.partnerId
+          : partnerId // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -107,7 +107,7 @@ abstract class _$$_MemoryCopyWith<$Res> implements $MemoryCopyWith<$Res> {
   @useResult
   $Res call(
       {String memoryId,
-      String appUserId,
+      String partnerId,
       String imageUrl,
       String comment,
       @unionTimestampConverter UnionTimestamp createdAt});
@@ -127,7 +127,7 @@ class __$$_MemoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object? memoryId = null,
-    Object? appUserId = null,
+    Object? partnerId = null,
     Object? imageUrl = null,
     Object? comment = null,
     Object? createdAt = null,
@@ -137,9 +137,9 @@ class __$$_MemoryCopyWithImpl<$Res>
           ? _value.memoryId
           : memoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      appUserId: null == appUserId
-          ? _value.appUserId
-          : appUserId // ignore: cast_nullable_to_non_nullable
+      partnerId: null == partnerId
+          ? _value.partnerId
+          : partnerId // ignore: cast_nullable_to_non_nullable
               as String,
       imageUrl: null == imageUrl
           ? _value.imageUrl
@@ -162,7 +162,7 @@ class __$$_MemoryCopyWithImpl<$Res>
 class _$_Memory extends _Memory {
   _$_Memory(
       {required this.memoryId,
-      required this.appUserId,
+      required this.partnerId,
       required this.imageUrl,
       this.comment = '',
       @unionTimestampConverter
@@ -175,7 +175,7 @@ class _$_Memory extends _Memory {
   @override
   final String memoryId;
   @override
-  final String appUserId;
+  final String partnerId;
   @override
   final String imageUrl;
   @override
@@ -188,7 +188,7 @@ class _$_Memory extends _Memory {
 
   @override
   String toString() {
-    return 'Memory(memoryId: $memoryId, appUserId: $appUserId, imageUrl: $imageUrl, comment: $comment, createdAt: $createdAt)';
+    return 'Memory(memoryId: $memoryId, partnerId: $partnerId, imageUrl: $imageUrl, comment: $comment, createdAt: $createdAt)';
   }
 
   @override
@@ -198,8 +198,8 @@ class _$_Memory extends _Memory {
             other is _$_Memory &&
             (identical(other.memoryId, memoryId) ||
                 other.memoryId == memoryId) &&
-            (identical(other.appUserId, appUserId) ||
-                other.appUserId == appUserId) &&
+            (identical(other.partnerId, partnerId) ||
+                other.partnerId == partnerId) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.comment, comment) || other.comment == comment) &&
@@ -210,7 +210,7 @@ class _$_Memory extends _Memory {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, memoryId, appUserId, imageUrl, comment, createdAt);
+      runtimeType, memoryId, partnerId, imageUrl, comment, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -229,7 +229,7 @@ class _$_Memory extends _Memory {
 abstract class _Memory extends Memory {
   factory _Memory(
       {required final String memoryId,
-      required final String appUserId,
+      required final String partnerId,
       required final String imageUrl,
       final String comment,
       @unionTimestampConverter final UnionTimestamp createdAt}) = _$_Memory;
@@ -240,7 +240,7 @@ abstract class _Memory extends Memory {
   @override
   String get memoryId;
   @override
-  String get appUserId;
+  String get partnerId;
   @override
   String get imageUrl;
   @override

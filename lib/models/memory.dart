@@ -10,7 +10,7 @@ part 'memory.g.dart';
 class Memory with _$Memory {
   factory Memory({
     required String memoryId,
-    required String appUserId,
+    required String partnerId,
     required String imageUrl,
     @Default('') String comment,
     @unionTimestampConverter

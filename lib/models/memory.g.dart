@@ -8,7 +8,7 @@ part of 'memory.dart';
 
 _$_Memory _$$_MemoryFromJson(Map<String, dynamic> json) => _$_Memory(
       memoryId: json['memoryId'] as String,
-      appUserId: json['appUserId'] as String,
+      partnerId: json['partnerId'] as String,
       imageUrl: json['imageUrl'] as String,
       comment: json['comment'] as String? ?? '',
       createdAt: json['createdAt'] == null
@@ -18,7 +18,7 @@ _$_Memory _$$_MemoryFromJson(Map<String, dynamic> json) => _$_Memory(
 
 Map<String, dynamic> _$$_MemoryToJson(_$_Memory instance) => <String, dynamic>{
       'memoryId': instance.memoryId,
-      'appUserId': instance.appUserId,
+      'partnerId': instance.partnerId,
       'imageUrl': instance.imageUrl,
       'comment': instance.comment,
       'createdAt': unionTimestampConverter.toJson(instance.createdAt),
