@@ -26,17 +26,9 @@ admin.initializeApp({
  * ここでデプロイする関数をまとめる。
  * admin.initializeApp() の順序の問題でデプロイに失敗するため。
  *  */
-// import { onCreateAppUser } from './firebase-functions/app-user/onCreateAppUser'
-// import { onCreateCompleteVotingRequest } from './firebase-functions/complete-voting-request/onCreateCompleteVotingRequest'
-// import { onCreateFeeling } from './firebase-functions/feeling/onCreateFeeling'
-// import { onCreateTestNotificationRequest } from './firebase-functions/test-notification/onCreateTestNotificationRequest'
-// import { onCreateVote } from './firebase-functions/vote/onCreateVote'
+import { onCreateTestNotificationRequest } from './firebase-functions/test-notification/onCreateTestNotificationRequest'
+import { onCreateChatRoom } from './firebase-functions/chat-room/onCreateChatRoom'
+import { onCreateMessage } from './firebase-functions/chat-room/onCreateMessage'
 
 /** index.ts で import してデプロイする関数一覧  */
-export {
-    // onCreateAppUser,
-    // onCreateTestNotificationRequest,
-    // onCreateVote,
-    // onCreateFeeling,
-    // onCreateCompleteVotingRequest
-}
+export { onCreateTestNotificationRequest, onCreateChatRoom, onCreateMessage }
