@@ -63,6 +63,10 @@ class UserView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
+        CircleAvatar(
+          radius: 80,
+          foregroundImage: NetworkImage(user.imageUrl),
+        ),
         Row(
           children: [
             const Text('名前: '),
