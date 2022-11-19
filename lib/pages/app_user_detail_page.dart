@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
+import '../features/memory/memory.dart';
 import '../models/app_user.dart';
 import '../utils/enums/country.dart';
 import '../utils/exceptions/base.dart';
@@ -35,25 +36,49 @@ class AppUserDetailPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: ref
-            .watch(
-          appUserFutureProvider(
-            ref.watch(_appUserIdProvider),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: ref
+                .watch(
+              appUserFutureProvider(
+                ref.watch(_appUserIdProvider),
+              ),
+            )
+                .when(
+              data: (user) {
+                return UserView(user: user!);
+              },
+              loading: () {
+                return const Center(child: CircularProgressIndicator());
+              },
+              error: (error, stack) {
+                return Center(child: Text(error.toString()));
+              },
+            ),
           ),
-        )
-            .when(
-          data: (user) {
-            return UserView(user: user!);
-          },
-          loading: () {
-            return const Center(child: CircularProgressIndicator());
-          },
-          error: (error, stack) {
-            return Center(child: Text(error.toString()));
-          },
-        ),
+          SliverGrid.count(
+            crossAxisCount: 3,
+            children: ref.watch(memoriesProvider).when(
+              data: (memories) {
+                return memories
+                    .map(
+                      (e) => Image.network(
+                        e.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                    .toList();
+              },
+              error: (error, stack) {
+                return [];
+              },
+              loading: () {
+                return [];
+              },
+            ),
+          ), // ),
+        ],
       ),
     );
   }
@@ -165,14 +190,5 @@ class Comment extends ConsumerWidget {
               Text(comment),
             ],
           );
-  }
-}
-
-class MemoriesView extends ConsumerWidget {
-  const MemoriesView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
   }
 }
