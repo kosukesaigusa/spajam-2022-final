@@ -22,6 +22,7 @@ ChatRoom _$ChatRoomFromJson(Map<String, dynamic> json) {
 mixin _$ChatRoom {
   String get chatRoomId => throw _privateConstructorUsedError;
   List<String> get appUserIds => throw _privateConstructorUsedError;
+  String get createdByUserId => throw _privateConstructorUsedError;
   bool get isDeleted => throw _privateConstructorUsedError;
   @alwaysUseServerTimestampUnionTimestampConverter
   UnionTimestamp get createdAt => throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $ChatRoomCopyWith<$Res> {
   $Res call(
       {String chatRoomId,
       List<String> appUserIds,
+      String createdByUserId,
       bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt});
@@ -62,6 +64,7 @@ class _$ChatRoomCopyWithImpl<$Res, $Val extends ChatRoom>
   $Res call({
     Object? chatRoomId = null,
     Object? appUserIds = null,
+    Object? createdByUserId = null,
     Object? isDeleted = null,
     Object? createdAt = null,
   }) {
@@ -74,6 +77,10 @@ class _$ChatRoomCopyWithImpl<$Res, $Val extends ChatRoom>
           ? _value.appUserIds
           : appUserIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      createdByUserId: null == createdByUserId
+          ? _value.createdByUserId
+          : createdByUserId // ignore: cast_nullable_to_non_nullable
+              as String,
       isDeleted: null == isDeleted
           ? _value.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
@@ -104,6 +111,7 @@ abstract class _$$_ChatRoomCopyWith<$Res> implements $ChatRoomCopyWith<$Res> {
   $Res call(
       {String chatRoomId,
       List<String> appUserIds,
+      String createdByUserId,
       bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
           UnionTimestamp createdAt});
@@ -125,6 +133,7 @@ class __$$_ChatRoomCopyWithImpl<$Res>
   $Res call({
     Object? chatRoomId = null,
     Object? appUserIds = null,
+    Object? createdByUserId = null,
     Object? isDeleted = null,
     Object? createdAt = null,
   }) {
@@ -137,6 +146,10 @@ class __$$_ChatRoomCopyWithImpl<$Res>
           ? _value._appUserIds
           : appUserIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      createdByUserId: null == createdByUserId
+          ? _value.createdByUserId
+          : createdByUserId // ignore: cast_nullable_to_non_nullable
+              as String,
       isDeleted: null == isDeleted
           ? _value.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
@@ -155,6 +168,7 @@ class _$_ChatRoom implements _ChatRoom {
   const _$_ChatRoom(
       {this.chatRoomId = '',
       final List<String> appUserIds = const <String>[],
+      this.createdByUserId = '',
       this.isDeleted = false,
       @alwaysUseServerTimestampUnionTimestampConverter
           this.createdAt = const UnionTimestamp.serverTimestamp()})
@@ -176,6 +190,9 @@ class _$_ChatRoom implements _ChatRoom {
 
   @override
   @JsonKey()
+  final String createdByUserId;
+  @override
+  @JsonKey()
   final bool isDeleted;
   @override
   @JsonKey()
@@ -184,7 +201,7 @@ class _$_ChatRoom implements _ChatRoom {
 
   @override
   String toString() {
-    return 'ChatRoom(chatRoomId: $chatRoomId, appUserIds: $appUserIds, isDeleted: $isDeleted, createdAt: $createdAt)';
+    return 'ChatRoom(chatRoomId: $chatRoomId, appUserIds: $appUserIds, createdByUserId: $createdByUserId, isDeleted: $isDeleted, createdAt: $createdAt)';
   }
 
   @override
@@ -196,6 +213,8 @@ class _$_ChatRoom implements _ChatRoom {
                 other.chatRoomId == chatRoomId) &&
             const DeepCollectionEquality()
                 .equals(other._appUserIds, _appUserIds) &&
+            (identical(other.createdByUserId, createdByUserId) ||
+                other.createdByUserId == createdByUserId) &&
             (identical(other.isDeleted, isDeleted) ||
                 other.isDeleted == isDeleted) &&
             (identical(other.createdAt, createdAt) ||
@@ -204,8 +223,13 @@ class _$_ChatRoom implements _ChatRoom {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, chatRoomId,
-      const DeepCollectionEquality().hash(_appUserIds), isDeleted, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      chatRoomId,
+      const DeepCollectionEquality().hash(_appUserIds),
+      createdByUserId,
+      isDeleted,
+      createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -225,6 +249,7 @@ abstract class _ChatRoom implements ChatRoom {
   const factory _ChatRoom(
       {final String chatRoomId,
       final List<String> appUserIds,
+      final String createdByUserId,
       final bool isDeleted,
       @alwaysUseServerTimestampUnionTimestampConverter
           final UnionTimestamp createdAt}) = _$_ChatRoom;
@@ -235,6 +260,8 @@ abstract class _ChatRoom implements ChatRoom {
   String get chatRoomId;
   @override
   List<String> get appUserIds;
+  @override
+  String get createdByUserId;
   @override
   bool get isDeleted;
   @override

@@ -12,25 +12,25 @@ import { sendFCMByUserIds } from '../../utils/fcm/sendFCMNotification'
 export const onCreateChatRoom = functions
     .region(`asia-northeast1`)
     .firestore.document(`/chatRooms/{chatRoomId}`)
-    .onCreate(async (snapshot, context) => {
+    .onCreate(async (snapshot) => {
         const chatRoom = chatRoomConverter.fromFirestore(snapshot)
         const chatRoomId = chatRoom.chatRoomId
         const appUserIds = chatRoom.appUserIds
-        const requesterUserId = context.auth?.uid ?? ``
+        const createdByUserId = chatRoom.createdByUserId
         const appUserRepository = new AppUserRepository()
-        const requesterUser = await appUserRepository.fetchAppUser({ appUserId: requesterUserId })
-        if (requesterUser === undefined) {
+        const createdByUser = await appUserRepository.fetchAppUser({ appUserId: createdByUserId })
+        if (createdByUser === undefined) {
             functions.logger.error(`ChatRoom を作成したユーザーが見つかりませんでした。`)
             return
         }
-        const requestedUserId = appUserIds.splice(appUserIds.indexOf(requesterUserId))[0]
+        const requestedUserId = appUserIds.splice(appUserIds.indexOf(createdByUserId))[0]
         const attendingChatRoom = new AttendingChatRoom({ chatRoomId, partnerId: requestedUserId })
         try {
-            await attendingChatRoomRef({ appUserId: requesterUserId, chatRoomId }).set(attendingChatRoom)
+            await attendingChatRoomRef({ appUserId: createdByUserId, chatRoomId }).set(attendingChatRoom)
             await sendFCMByUserIds({
                 userIds: [requestedUserId],
-                title: `${requesterUser.name}さんが近くにいるようです！`,
-                body: `国際交流のチャンス！${requesterUser.name}さんから連絡が届きました！`,
+                title: `${createdByUser.name}さんが近くにいるようです！`,
+                body: `国際交流のチャンス！${createdByUser.name}さんから連絡が届きました！`,
                 location: `/chatRooms/${chatRoomId}`
             })
         } catch (e) {

@@ -11,6 +11,7 @@ class ChatRoom with _$ChatRoom {
   const factory ChatRoom({
     @Default('') String chatRoomId,
     @Default(<String>[]) List<String> appUserIds,
+    @Default('') String createdByUserId,
     @Default(false) bool isDeleted,
     @alwaysUseServerTimestampUnionTimestampConverter
     @Default(UnionTimestamp.serverTimestamp())
