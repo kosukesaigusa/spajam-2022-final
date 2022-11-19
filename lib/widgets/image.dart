@@ -47,7 +47,8 @@ class SquareImageWidget extends StatelessWidget {
         ),
       ),
       placeholder: (context, url) =>
-          placeholder ?? SquareShimmerImagePlaceholder(size: placeholderSize ?? size),
+          placeholder ??
+          SquareShimmerImagePlaceholder(size: placeholderSize ?? size),
       errorWidget: (context, url, dynamic error) =>
           errorWidget ?? SquareImagePlaceholder(size: placeholderSize ?? size),
     );
@@ -94,7 +95,10 @@ class SquareShimmerImagePlaceholder extends StatelessWidget {
       child: const AspectRatio(
         aspectRatio: 1,
         // AspectRatio でいっぱいに広がる
-        child: ShimmerWidget.rectangular(width: double.infinity, height: double.infinity),
+        child: ShimmerWidget.rectangular(
+          width: double.infinity,
+          height: double.infinity,
+        ),
       ),
     );
   }
@@ -128,6 +132,7 @@ class CircleImageWidget extends StatelessWidget {
       return CircleImagePlaceholder(diameter: diameter);
     }
     return CachedNetworkImage(
+      fit: BoxFit.cover,
       imageUrl: imageURL!,
       imageBuilder: (context, imageProvider) => Container(
         width: diameter,

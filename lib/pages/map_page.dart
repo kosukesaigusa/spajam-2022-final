@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
 import '../features/map/map.dart';
 import '../models/app_user.dart';
@@ -12,6 +13,7 @@ import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
 import '../utils/scaffold_messenger_service.dart';
+import '../widgets/image.dart';
 import 'app_user_detail_page.dart';
 import 'attending_chat_rooms_page.dart';
 import 'widgets/contact_button.dart';
@@ -46,111 +48,144 @@ class MapPage extends HookConsumerWidget {
       [],
     );
 
-    return Scaffold(
-      // TODO: マップは消すかもしれないけど、
-      //  開発中は他の画面に遷移したりするボタンを配置したいので。
-      appBar: AppBar(
-        title: const Text('マップ'),
-        actions: [
-          ref.watch(isSignedInProvider).value ?? false
-              ? IconButton(
-                  onPressed: () async {
-                    await ref.read(signOutProvider)();
-                    ref
-                        .read(scaffoldMessengerServiceProvider)
-                        .showSnackBar('ログアウトしました。');
-                  },
-                  icon: const Icon(Icons.logout),
-                )
-              : IconButton(
-                  onPressed: () async {
-                    await ref
-                        .read(scaffoldMessengerServiceProvider)
-                        .showDialogByBuilder<void>(
-                          builder: (context) => AlertDialog(
-                            title: const Text('テストユーザーでログイン'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    try {
-                                      await ref.read(
-                                        googleSignInProvider,
-                                      )();
-                                      Navigator.pop(context);
-                                      ref
-                                          .read(
-                                            scaffoldMessengerServiceProvider,
-                                          )
-                                          .showSnackBar('ログインしました。');
-                                    } on Exception catch (e) {
-                                      // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
-                                      // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
-                                      ref
-                                          .read(
-                                            scaffoldMessengerServiceProvider,
-                                          )
-                                          .showSnackBarByException(e);
-                                    }
-                                  },
-                                  child: const Text('Google アカウントでサインイン'),
-                                ),
-                                for (var i = 0; i < 5; i++)
+    return SafeArea(
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+
+        // TODO: マップは消すかもしれないけど、
+        //  開発中は他の画面に遷移したりするボタンを配置したいので。
+        appBar: AppBar(
+          backgroundColor: Colors.transparent, // 1
+          elevation: 0,
+          actions: [
+            ref.watch(isSignedInProvider).value ?? false
+                ? CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.black38,
+                    child: IconButton(
+                      onPressed: () async {
+                        await ref.read(signOutProvider)();
+                        ref
+                            .read(scaffoldMessengerServiceProvider)
+                            .showSnackBar('ログアウトしました。');
+                      },
+                      icon: const Icon(Icons.logout),
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () async {
+                      await ref
+                          .read(scaffoldMessengerServiceProvider)
+                          .showDialogByBuilder<void>(
+                            builder: (context) => AlertDialog(
+                              title: const Text('テストユーザーでログイン'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
                                   ElevatedButton(
                                     onPressed: () async {
-                                      await ref.read(
-                                        signInAsTestUserProvider(i + 1),
-                                      )();
-                                      Navigator.pop(context);
-                                      ref
-                                          .read(
-                                            scaffoldMessengerServiceProvider,
-                                          )
-                                          .showSnackBar('ログインしました。');
+                                      try {
+                                        await ref.read(
+                                          googleSignInProvider,
+                                        )();
+                                        Navigator.pop(context);
+                                        ref
+                                            .read(
+                                              scaffoldMessengerServiceProvider,
+                                            )
+                                            .showSnackBar('ログインしました。');
+                                      } on Exception catch (e) {
+                                        // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
+                                        // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
+                                        ref
+                                            .read(
+                                              scaffoldMessengerServiceProvider,
+                                            )
+                                            .showSnackBarByException(e);
+                                      }
                                     },
-                                    child:
-                                        Text('test${i + 1}@example.com でログイン'),
+                                    child: const Text('Google アカウントでサインイン'),
                                   ),
-                              ],
+                                  for (var i = 0; i < 5; i++)
+                                    ElevatedButton(
+                                      onPressed: () async {
+                                        await ref.read(
+                                          signInAsTestUserProvider(i + 1),
+                                        )();
+                                        Navigator.pop(context);
+                                        ref
+                                            .read(
+                                              scaffoldMessengerServiceProvider,
+                                            )
+                                            .showSnackBar('ログインしました。');
+                                      },
+                                      child: Text(
+                                          'test${i + 1}@example.com でログイン'),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                  },
-                  icon: const Icon(Icons.login),
+                          );
+                    },
+                    icon: const Icon(Icons.login),
+                  ),
+
+            /// ログインしているユーザのアイコン
+            ref
+                .watch(
+                  appUserStreamProvider(ref.watch(userIdProvider).value ?? ''),
+                )
+                .when(
+                  data: (appUser) => CircleImageWidget(
+                    diameter: 36,
+                    imageURL: appUser?.imageUrl,
+                  ),
+                  error: (error, stackTrace) => const SizedBox(),
+                  loading: () => const SizedBox(),
                 ),
-          IconButton(
-            onPressed: () => Navigator.pushNamed<void>(
-              context,
-              AttendingChatRoomsPage.location,
-            ),
-            icon: const Icon(Icons.message),
-          ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          const GoogleMapWidget(),
-          if (kDebugMode)
-            const Positioned(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: MapDebugIndicator(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: CircleAvatar(
+                backgroundColor: Colors.black38,
+                radius: 20,
+                child: IconButton(
+                  onPressed: () => Navigator.pushNamed<void>(
+                    context,
+                    AttendingChatRoomsPage.location,
+                  ),
+                  icon: const Icon(
+                    Icons.message,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
-          Positioned(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: _stackedGreyBackGround,
+          ],
+        ),
+        body: Stack(
+          children: [
+            const GoogleMapWidget(),
+            if (kDebugMode)
+              const Positioned(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: MapDebugIndicator(),
+                ),
+              ),
+            Positioned(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: _stackedGreyBackGround,
+              ),
             ),
-          ),
-          const Positioned(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: AppUserPageView(),
+            const Positioned(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: AppUserPageView(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -217,7 +252,7 @@ class MapDebugIndicator extends HookConsumerWidget {
     final selectedAppUser = ref.watch(selectedAppUserProvider);
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 48, left: 16, right: 16),
+      margin: const EdgeInsets.only(top: 80, left: 16, right: 16),
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
         color: Colors.black38,
