@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/app_user.dart';
 import '../../repositories/firestore/app_user_repository.dart';
-import '../../utils/enum/country.dart';
+import '../../utils/enums/country.dart';
 import '../../utils/exceptions/base.dart';
 import '../../utils/extensions/list.dart';
 import '../../utils/firebase_messaging.dart';
@@ -110,8 +110,7 @@ final googleSignInProvider = Provider.autoDispose<Future<void> Function()>(
       }
       final name = googleUser.displayName ?? '未設定';
       final imageUrl = googleUser.photoUrl ?? '';
-      final country =
-          Country.values.where((e) => e != Country.unknown).map((e) => e.name).toList().random;
+      final country = Country.values.where((e) => e != Country.unknown).toList().random;
       final fcmToken = await ref.read(getFcmTokenProvider)();
       final appUser = AppUser(
         appUserId: appUserId,
