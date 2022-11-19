@@ -1,12 +1,12 @@
 name: spajam2022final
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
   cached_network_image:
@@ -46,6 +46,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   google_sign_in: ^5.4.2
   hooks_riverpod: ^2.1.1
+  image_picker: ^0.8.6
   intl:
   json_annotation:
   lottie: ^1.4.1
@@ -80,13 +81,13 @@ flutter_icons:
   ios: true
 
 flutter_native_splash:
-  color: '#ffffff'
-  image: 'assets/splash_icons/splash_icon_light.png'
-  color_dark: '#000000'
-  image_dark: 'assets/splash_icons/splash_icon_dark.png'
+  color: "#ffffff"
+  image: "assets/splash_icons/splash_icon_light.png"
+  color_dark: "#000000"
+  image_dark: "assets/splash_icons/splash_icon_dark.png"
   fullscreen: true
   android_12:
-    icon_background_color: '#ffffff'
-    image: 'assets/splash_icons/splash_icon_light.png'
-    icon_background_color_dark: '#000000'
-    image_dark: 'assets/splash_icons/splash_icon_dark.png'
+    icon_background_color: "#ffffff"
+    image: "assets/splash_icons/splash_icon_light.png"
+    icon_background_color_dark: "#000000"
+    image_dark: "assets/splash_icons/splash_icon_dark.png"
