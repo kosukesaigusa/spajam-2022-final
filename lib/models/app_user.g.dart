@@ -10,11 +10,13 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
       name: json['name'] as String? ?? '',
       appUserId: json['appUserId'] as String? ?? '',
       imageUrl: json['imageUrl'] as String? ?? '',
-      country: json['country'] as String? ?? '',
+      country: json['country'] == null
+          ? Country.unknown
+          : const CountryConverter().fromJson(json['country']),
       isVisible: json['isVisible'] as bool? ?? true,
-      flags:
-          (json['flags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const <String>[],
+      flags: json['flags'] == null
+          ? const <Country>[]
+          : const FlagsConverter().fromJson(json['flags']),
       comment: json['comment'] as String? ?? '',
       location: json['location'] == null
           ? FirestorePosition.defaultValue
@@ -31,9 +33,9 @@ Map<String, dynamic> _$$_AppUserToJson(_$_AppUser instance) =>
       'name': instance.name,
       'appUserId': instance.appUserId,
       'imageUrl': instance.imageUrl,
-      'country': instance.country,
+      'country': const CountryConverter().toJson(instance.country),
       'isVisible': instance.isVisible,
-      'flags': instance.flags,
+      'flags': const FlagsConverter().toJson(instance.flags),
       'comment': instance.comment,
       'location': const FirestorePositionConverter().toJson(instance.location),
       'fcmTokens': instance.fcmTokens,

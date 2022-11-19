@@ -74,10 +74,12 @@ final unreadCountProvider =
                 .limit(10)
             : q.orderBy('createdAt', descending: true).limit(10),
       )
-      .map((messages) => messages
-          .where((message) => message.senderId != userId)
-          .toList()
-          .length);
+      .map(
+        (messages) => messages
+            .where((message) => message.senderId != userId)
+            .toList()
+            .length,
+      );
 });
 
 final matchAttendingChatRoomProvider = StreamProvider.autoDispose
@@ -89,7 +91,7 @@ final matchAttendingChatRoomProvider = StreamProvider.autoDispose
   return ref
       .read(attendingChatRoomRepositoryProvider)
       .subscribeAttendingChatRooms(
-        appUserId: partnerId,
-        queryBuilder: (q) => q.where('partnerId', isEqualTo: myId),
+        appUserId: myId,
+        queryBuilder: (q) => q.where('partnerId', isEqualTo: partnerId),
       );
 });

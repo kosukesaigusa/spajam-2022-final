@@ -1,12 +1,12 @@
 name: spajam2022final
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: ">=2.18.2 <3.0.0"
 
 dependencies:
   cached_network_image:
@@ -15,6 +15,7 @@ dependencies:
   confetti: ^0.7.0
   connectivity_plus: ^3.0.2
   cookie_jar:
+  country_icons: ^2.0.2
   cupertino_icons:
   dio:
   dio_cookie_manager:
@@ -33,6 +34,7 @@ dependencies:
   flutter_local_notifications:
   flutter_localizations:
     sdk: flutter
+  flutter_signin_button: ^2.0.0
   flutter_spinkit:
   font_awesome_flutter:
   freezed_annotation:
@@ -45,6 +47,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   google_sign_in: ^5.4.2
   hooks_riverpod: ^2.1.1
+  image_picker: ^0.8.6
   intl:
   json_annotation:
   lottie: ^1.4.1
@@ -77,15 +80,16 @@ flutter:
 flutter_icons:
   android: true
   ios: true
+  image_path: "assets/launcher_icons/launcher_icon-prod.png"
 
 flutter_native_splash:
-  color: '#ffffff'
-  image: 'assets/splash_icons/splash_icon_light.png'
-  color_dark: '#000000'
-  image_dark: 'assets/splash_icons/splash_icon_dark.png'
+  color: "#ffffff"
+  image: "assets/splash_icons/splash_icon_light.png"
+  color_dark: "#000000"
+  image_dark: "assets/splash_icons/splash_icon_dark.png"
   fullscreen: true
   android_12:
-    icon_background_color: '#ffffff'
-    image: 'assets/splash_icons/splash_icon_light.png'
-    icon_background_color_dark: '#000000'
-    image_dark: 'assets/splash_icons/splash_icon_dark.png'
+    icon_background_color: "#ffffff"
+    image: "assets/splash_icons/splash_icon_light.png"
+    icon_background_color_dark: "#000000"
+    image_dark: "assets/splash_icons/splash_icon_dark.png"

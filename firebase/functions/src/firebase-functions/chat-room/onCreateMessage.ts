@@ -30,7 +30,7 @@ export const onCreateMessage = functions
             return
         }
         const appUserIds = chatRoom.appUserIds
-        const receiverUserId = appUserIds.splice(appUserIds.indexOf(senderUserId))[0]
+        const receiverUserId = appUserIds.filter((e) => e != senderUserId)[0]
         try {
             await attendingChatRoomRef({ appUserId: receiverUserId, chatRoomId }).update({
                 updatedAt: FieldValue.serverTimestamp()
@@ -39,7 +39,7 @@ export const onCreateMessage = functions
                 userIds: [receiverUserId],
                 title: `${sender.name}さんからメッセージ`,
                 body: message.message,
-                location: `/chatRooms/${chatRoomId}`
+                location: `/chatRoom/${chatRoomId}`
             })
         } catch (e) {
             functions.logger.error(`chatRoom ドキュメントの作成に伴う attendingChatRoom の作成に失敗しました。${e}`)

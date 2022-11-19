@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../features/auth/auth.dart';
 import '../features/bottom_tab/bottom_tab.dart';
 import '../utils/firebase_messaging.dart';
 import '../utils/logger.dart';
 import '../utils/routing/app_router.dart';
 import '../utils/scaffold_messenger_service.dart';
 import 'not_found_page.dart';
+import 'sign_in_page.dart';
 
 /// Consistent な BottomNavigationBar を含むアプリのメインのページ。
 /// 目には見えないが、アプリケーション上の全てのページがこの Scaffold の上に載るので
@@ -23,7 +25,8 @@ class MainPage extends StatefulHookConsumerWidget {
   ConsumerState<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends ConsumerState<MainPage> with WidgetsBindingObserver {
+class _MainPageState extends ConsumerState<MainPage>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -47,9 +50,13 @@ class _MainPageState extends ConsumerState<MainPage> with WidgetsBindingObserver
       child: ScaffoldMessenger(
         key: ref.watch(scaffoldMessengerKeyProvider),
         child: Scaffold(
-          body: Stack(
-            children: [for (final tab in bottomTabs) _buildStackedPages(tab)],
-          ),
+          body: (ref.watch(isSignedInProvider).value ?? false)
+              ? Stack(
+                  children: [
+                    for (final tab in bottomTabs) _buildStackedPages(tab),
+                  ],
+                )
+              : const SignInPage(),
           // Note: BottomNavigationBar が不要になったらここをコメントアウトする。
           // bottomNavigationBar: BottomNavigationBar(
           //   type: BottomNavigationBarType.fixed,
@@ -102,10 +109,11 @@ class MainStackedPagesNavigator extends HookConsumerWidget {
       key: bottomTab.key,
       initialRoute: MainPage.location,
       // MainPage の StackedPages 上での Navigation の設定
-      onGenerateRoute: (routeSettings) => ref.watch(appRouterProvider).onGenerateRoute(
-            routeSettings,
-            bottomNavigationPath: bottomTab.bottomTabEnum.location,
-          ),
+      onGenerateRoute: (routeSettings) =>
+          ref.watch(appRouterProvider).onGenerateRoute(
+                routeSettings,
+                bottomNavigationPath: bottomTab.bottomTabEnum.location,
+              ),
       onUnknownRoute: (settings) {
         final route = MaterialPageRoute<void>(
           settings: settings,
