@@ -22,12 +22,15 @@ final isSignedInProvider = Provider(
 );
 
 /// test1@example.com 〜 test5@example.com
-final signInAsTestUserProvider = Provider.autoDispose.family<Future<void> Function(), int>(
+final signInAsTestUserProvider =
+    Provider.autoDispose.family<Future<void> Function(), int>(
   (ref, userNumber) => () async {
     try {
-      final userCredential = await ref
-          .watch(_authProvider)
-          .signInWithEmailAndPassword(email: 'test$userNumber@example.com', password: '12345678');
+      final userCredential =
+          await ref.watch(_authProvider).signInWithEmailAndPassword(
+                email: 'test$userNumber@example.com',
+                password: '12345678',
+              );
       final user = userCredential.user;
       if (user == null) {
         throw const AppException(message: 'Email とパスワードによるサインインに失敗しました。');

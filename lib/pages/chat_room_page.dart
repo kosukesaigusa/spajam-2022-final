@@ -16,7 +16,7 @@ import '../utils/extensions/date_time.dart';
 import '../utils/routing/app_router_state.dart';
 import '../widgets/image.dart';
 
-final _chatRoomIdProvider = Provider.autoDispose<String>(
+final chatRoomIdProvider = Provider.autoDispose<String>(
   (ref) {
     final state = ref.watch(appRouterStateProvider);
     final chatRoomId = state.params['chatRoomId'];
@@ -40,7 +40,8 @@ class ChatRoomPage extends StatefulHookConsumerWidget {
 
   static const path = '/chatRoom/:chatRoomId';
   static const name = 'ChatRoomPage';
-  static String location({required String chatRoomId}) => '/chatRoom/$chatRoomId';
+  static String location({required String chatRoomId}) =>
+      '/chatRoom/$chatRoomId';
 
   @override
   ConsumerState<ChatRoomPage> createState() => _ChatRoomPageState();
@@ -49,8 +50,9 @@ class ChatRoomPage extends StatefulHookConsumerWidget {
 class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
   @override
   Widget build(BuildContext context) {
-    final chatRoomId = ref.watch(_chatRoomIdProvider);
-    final messages = ref.watch(roomPageStateNotifierProvider(chatRoomId).select((s) => s.messages));
+    final chatRoomId = ref.watch(chatRoomIdProvider);
+    final messages = ref.watch(
+        roomPageStateNotifierProvider(chatRoomId).select((s) => s.messages));
     final userId = ref.watch(userIdProvider).value;
     return Scaffold(
       appBar: AppBar(),
@@ -69,7 +71,8 @@ class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: ListView.builder(
                       controller: ref
-                          .watch(roomPageStateNotifierProvider(chatRoomId).notifier)
+                          .watch(roomPageStateNotifierProvider(chatRoomId)
+                              .notifier)
                           .scrollController,
                       itemBuilder: (context, index) {
                         final message = messages[index];
@@ -90,7 +93,8 @@ class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
                   ),
                 ),
                 RoomMessageInputWidget(chatRoomId: chatRoomId),
-                if (!KeyboardVisibilityProvider.isKeyboardVisible(context)) const Gap(32),
+                if (!KeyboardVisibilityProvider.isKeyboardVisible(context))
+                  const Gap(32),
               ],
             ),
     );
@@ -138,11 +142,14 @@ class MessageItemWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        if (showDate) DateOnChatRoomWidget(dateTime: message.createdAt.dateTime),
+        if (showDate)
+          DateOnChatRoomWidget(dateTime: message.createdAt.dateTime),
         Row(
-          mainAxisAlignment: isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment:
+              isMyMessage ? MainAxisAlignment.end : MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             if (!isMyMessage) ...[
@@ -240,7 +247,9 @@ class RoomMessageInputWidget extends HookConsumerWidget {
             if (!ref.read(roomPageStateNotifierProvider(chatRoomId)).isValid) {
               return;
             }
-            await ref.read(roomPageStateNotifierProvider(chatRoomId).notifier).send();
+            await ref
+                .read(roomPageStateNotifierProvider(chatRoomId).notifier)
+                .send();
           },
           child: Container(
             margin: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
@@ -248,9 +257,10 @@ class RoomMessageInputWidget extends HookConsumerWidget {
             height: 32,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: ref.watch(roomPageStateNotifierProvider(chatRoomId)).isValid
-                  ? context.theme.primaryColor
-                  : context.theme.disabledColor,
+              color:
+                  ref.watch(roomPageStateNotifierProvider(chatRoomId)).isValid
+                      ? context.theme.primaryColor
+                      : context.theme.disabledColor,
             ),
             child: const Icon(Icons.send, size: 20, color: Colors.white),
           ),
@@ -272,7 +282,8 @@ class SenderImageWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(appUserStreamProvider(senderId)).when(
-          data: (appUser) => CircleImageWidget(diameter: 36, imageURL: appUser?.imageUrl),
+          data: (appUser) =>
+              CircleImageWidget(diameter: 36, imageURL: appUser?.imageUrl),
           error: (error, stackTrace) => const SizedBox(),
           loading: () => const SizedBox(),
         );
@@ -294,8 +305,10 @@ class MessageContentWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       constraints: BoxConstraints(
-        maxWidth:
-            (MediaQuery.of(context).size.width - partnerImageSize - horizontalPadding * 3) * 0.9,
+        maxWidth: (MediaQuery.of(context).size.width -
+                partnerImageSize -
+                horizontalPadding * 3) *
+            0.9,
       ),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -305,11 +318,14 @@ class MessageContentWidget extends HookConsumerWidget {
           bottomLeft: Radius.circular(isMyMessage ? 8 : 0),
           bottomRight: Radius.circular(isMyMessage ? 0 : 8),
         ),
-        color: isMyMessage ? context.theme.primaryColor : messageBackgroundColor,
+        color:
+            isMyMessage ? context.theme.primaryColor : messageBackgroundColor,
       ),
       child: Text(
         message.message,
-        style: isMyMessage ? context.bodySmall!.copyWith(color: Colors.white) : context.bodySmall,
+        style: isMyMessage
+            ? context.bodySmall!.copyWith(color: Colors.white)
+            : context.bodySmall,
       ),
     );
   }
@@ -337,15 +353,19 @@ class MessageAdditionalInfoWidget extends HookConsumerWidget {
         bottom: 16,
       ),
       child: Column(
-        crossAxisAlignment: isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment:
+            isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(to24HourNotationString(message.createdAt.dateTime), style: context.bodySmall),
+          Text(to24HourNotationString(message.createdAt.dateTime),
+              style: context.bodySmall),
           if (isMyMessage)
             SizedBox(
               height: 14,
               child: ref.watch(partnerReadStatusProvider(chatRoomId)).when(
                     data: (readStatus) => Text(
-                      _isRead(message: message, lastReadAt: readStatus?.lastReadAt.dateTime)
+                      _isRead(
+                              message: message,
+                              lastReadAt: readStatus?.lastReadAt.dateTime)
                           ? '既読'
                           : '未読',
                       style: context.bodySmall,
