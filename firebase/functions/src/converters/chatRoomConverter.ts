@@ -6,6 +6,7 @@ export const chatRoomConverter: FirestoreDataConverter<ChatRoom> = {
         const data = qds.data()
         return {
             chatRoomId: qds.id,
+            createdByUserId: qds.id,
             appUserIds: data.appUserIds,
             isDeleted: data.isDeleted,
             createdAt: data.createdAt,
@@ -14,6 +15,7 @@ export const chatRoomConverter: FirestoreDataConverter<ChatRoom> = {
     toFirestore(chatRoom: ChatRoom): FirebaseFirestore.DocumentData {
         return {
             chatRoomId: chatRoom.chatRoomId,
+            createdByUserId: chatRoom.createdByUserId,
             appUserIds: chatRoom.appUserIds,
             isDeleted: chatRoom.isDeleted,
             createdAt: chatRoom.createdAt
