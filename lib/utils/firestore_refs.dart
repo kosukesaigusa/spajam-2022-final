@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/app_user.dart';
+import '../models/attending_chat_room.dart';
 import '../models/test_notification_request.dart';
 import '../models/todo.dart';
 
@@ -39,3 +40,19 @@ DocumentReference<Todo> todoRef({
   required String todoId,
 }) =>
     todosRef(userId: userId).doc(todoId);
+
+/// attendingChatRoom コレクションの参照。
+CollectionReference<AttendingChatRoom> attendingChatRoomsRef({
+  required String appUserId,
+}) =>
+    appUserRef(userId: appUserId).collection  ('attendingChatRooms').withConverter(
+          fromFirestore: (ds, _) => AttendingChatRoom.fromDocumentSnapshot(ds),
+          toFirestore: (obj, _) => obj.toJson(),
+        );
+
+///attendingChatRoom ドキュメントの参照。
+DocumentReference<AttendingChatRoom> attendingChatRoomRef({
+  required String appUserId,
+  required String attendingChatId,
+}) =>
+    attendingChatRoomsRef(appUserId: appUserId).doc(attendingChatId);
