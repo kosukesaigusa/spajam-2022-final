@@ -15,6 +15,7 @@ dependencies:
   confetti: ^0.7.0
   connectivity_plus: ^3.0.2
   cookie_jar:
+  country_icons: ^2.0.2
   cupertino_icons:
   dio:
   dio_cookie_manager:
