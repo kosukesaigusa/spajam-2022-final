@@ -12,19 +12,18 @@ import { Feeling } from '../models/feeling'
 import { feelingConverter } from '../converters/feelingConverter'
 import { Vote } from '../models/vote'
 import { voteConverter } from '../converters/voteConverter'
+import { AttendingChatRoom } from '../models/attendingChatRoom'
+import { attendingChatRoomConverter } from '../converters/attendingChatRoomConverter'
+import { ChatRoom } from '../models/chatRoom'
+import { chatRoomConverter } from '../converters/chatRoomConverter'
+import { Memory } from '../models/memory'
+import { memoryConverter } from '../converters/memoryConverter'
+import { messageConverter } from '../converters/messageConverter'
+import { Message } from '../models/message'
 
 /** undefined なプロパティを無視するよう設定した db オブジェクト。 */
 const db = admin.firestore()
 db.settings({ ignoreUndefinedProperties: true })
-
-/** appUsers コレクションの参照 */
-export const appUsersRef: CollectionReference<AppUser> = db
-    .collection(`appUsers`)
-    .withConverter<AppUser>(appUserConverter)
-
-/** appUser ドキュメントの参照 */
-export const appUserRef = ({ appUserId }: { appUserId: string }): DocumentReference<AppUser> =>
-    appUsersRef.doc(appUserId)
 
 /** todos コレクションの参照 */
 export const todosRef = ({ appUserId }: { appUserId: string }): CollectionReference<Todo> =>
@@ -98,3 +97,62 @@ export const voteRef = ({
     votingEventId: string
     voteId: string
 }): DocumentReference<Vote> => votesRef({ roomId: roomId, votingEventId: votingEventId }).doc(voteId)
+
+
+/// spajam2022 final/** appUsers コレクションの参照 */
+export const appUsersRef: CollectionReference<AppUser> = db
+    .collection(`appUsers`)
+    .withConverter<AppUser>(appUserConverter)
+
+/** appUser ドキュメントの参照 */
+export const appUserRef = ({ appUserId }: { appUserId: string }): DocumentReference<AppUser> =>
+    appUsersRef.doc(appUserId)
+
+
+/** attendingChatRooms コレクションの参照 */
+export const attendingChatRoomsRef = ({ appUserId }: { appUserId: string }): CollectionReference<AttendingChatRoom> =>
+    appUserRef({ appUserId: appUserId }).collection(`attendingChatRooms`).withConverter<AttendingChatRoom>(attendingChatRoomConverter)
+
+/** attendingChatRoom ドキュメントの参照 */
+export const attendingChatRoomRef = ({
+    appUserId,
+    chatRoomId
+}: {
+    appUserId: string
+    chatRoomId: string
+}): DocumentReference<AttendingChatRoom> => attendingChatRoomsRef({ appUserId: appUserId }).doc(chatRoomId)
+
+/** memories コレクションの参照 */
+export const memoriesRef = ({ appUserId }: { appUserId: string }): CollectionReference<Memory> =>
+    appUserRef({ appUserId: appUserId }).collection(`memories`).withConverter<Memory>(memoryConverter)
+
+/** memory ドキュメントの参照 */
+export const memoryRef = ({
+    appUserId,
+    memoryId
+}: {
+    appUserId: string
+    memoryId: string
+}): DocumentReference<Memory> => memoriesRef({ appUserId: appUserId }).doc(memoryId)
+
+/** chatRooms コレクションの参照 */
+export const chatRoomsRef: CollectionReference<ChatRoom> = db
+    .collection(`chatRooms`)
+    .withConverter<ChatRoom>(chatRoomConverter)
+
+/** chatRoom ドキュメントの参照 */
+export const chatRoomRef = ({ chatRoomId }: { chatRoomId: string }): DocumentReference<ChatRoom> =>
+    chatRoomsRef.doc(chatRoomId)
+
+/** messages コレクションの参照 */
+export const messagesRef = ({ chatRoomId }: { chatRoomId: string }): CollectionReference<Message> =>
+    chatRoomRef({ chatRoomId: chatRoomId }).collection(`messages`).withConverter<Message>(messageConverter)
+
+/** message ドキュメントの参照 */
+export const messageRef = ({
+    chatRoomId,
+    messageId
+}: {
+    chatRoomId: string
+    messageId: string
+}): DocumentReference<Message> => messagesRef({ chatRoomId: chatRoomId }).doc(messageId)
