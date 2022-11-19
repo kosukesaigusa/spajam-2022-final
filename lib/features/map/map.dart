@@ -94,12 +94,14 @@ final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
 
 /// マップ上に検出された AppUser 一覧のマーカーを提供する Provider。
 final markersProvider = Provider.autoDispose((ref) {
+  final userId = ref.watch(userIdProvider).value;
+
   final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
   final markers = <Marker>{};
   if (documentSnapshots != null) {
     for (final ds in documentSnapshots) {
       final appUser = ds.data();
-      if (appUser == null) {
+      if (appUser == null || appUser.appUserId == userId) {
         continue;
       }
       final marker = ref.watch(getMarkerFromAppUserProvider)(appUser);
