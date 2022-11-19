@@ -3,14 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../pages/about_page.dart';
-import '../../pages/github_page.dart';
+import '../../pages/github_repos_page.dart';
 
 /// 現在選択状態になっている下タブを管理する StateProvider。
 final bottomTabStateProvider = StateProvider<BottomTab>((_) => bottomTabs[0]);
 
 /// BottomTab の種別。
 enum BottomTabEnum {
-  github(label: 'GitHub', location: GitHubPage.location),
+  github(label: 'GitHubRepos', location: GitHubReposPage.location),
   about(label: 'About', location: AboutPage.location);
 
   const BottomTabEnum({
