@@ -1,21 +1,60 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../models/attending_chat_room.dart';
 import '../../models/chat_room.dart';
 import '../../models/message.dart';
 import '../../models/read_status.dart';
 import '../../utils/firestore_refs.dart';
+import '../../utils/json_converters/union_timestamp.dart';
 
 final chatRoomRepositoryProvider =
     Provider.autoDispose<ChatRoomRepository>((_) => ChatRoomRepository());
 
 class ChatRoomRepository {
+  /// ChatRoomを作成
+  Future<String> createChatRoom({
+    required String appUserId,
+    required String partnerId,
+  }) async {
+    final batch = FirebaseFirestore.instance.batch();
+    final chatRmDoc = chatRoomsRef.doc();
+
+    batch.set(
+      chatRmDoc,
+      ChatRoom(
+        chatRoomId: chatRmDoc.id,
+        appUserIds: [appUserId, partnerId],
+        createdAt: UnionTimestamp.dateTime(DateTime.now()),
+        isDeleted: false,
+      ),
+    );
+
+    final attendingChatRmDoc =
+        attendingChatRoomsRef(appUserId: appUserId).doc(chatRmDoc.id);
+
+    batch.set(
+      attendingChatRmDoc,
+      AttendingChatRoom(
+        chatRoomId: chatRmDoc.id,
+        partnerId: partnerId,
+        isDeleted: false,
+        updatedAt: UnionTimestamp.dateTime(DateTime.now()),
+        createdAt: UnionTimestamp.dateTime(DateTime.now()),
+      ),
+    );
+
+    await batch.commit();
+    return chatRmDoc.id;
+  }
+
   /// 指定した ChatRoom を取得する。
   Future<ChatRoom?> fetchChatRoom({
     required String chatRoomId,
     Source source = Source.serverAndCache,
   }) async {
-    final ds = await chatRoomRef(chatRoomId: chatRoomId).get(GetOptions(source: source));
+    final ds = await chatRoomRef(chatRoomId: chatRoomId)
+        .get(GetOptions(source: source));
     return ds.data();
   }
 
@@ -78,7 +117,8 @@ class ChatRoomRepository {
     }
     var collectionStream = query.snapshots();
     if (excludePendingWrites) {
-      collectionStream = collectionStream.where((qs) => !qs.metadata.hasPendingWrites);
+      collectionStream =
+          collectionStream.where((qs) => !qs.metadata.hasPendingWrites);
     }
     return collectionStream.map((qs) {
       final result = qs.docs.map((qds) => qds.data()).toList();
@@ -95,8 +135,9 @@ class ChatRoomRepository {
     required String readStatusId,
     Source source = Source.serverAndCache,
   }) async {
-    final ds = await readStatusRef(chatRoomId: chatRoomId, readStatusId: readStatusId)
-        .get(GetOptions(source: source));
+    final ds =
+        await readStatusRef(chatRoomId: chatRoomId, readStatusId: readStatusId)
+            .get(GetOptions(source: source));
     return ds.data();
   }
 
@@ -106,7 +147,9 @@ class ChatRoomRepository {
     required String readStatusId,
     bool excludePendingWrites = false,
   }) {
-    var docStream = readStatusRef(chatRoomId: chatRoomId, readStatusId: readStatusId).snapshots();
+    var docStream =
+        readStatusRef(chatRoomId: chatRoomId, readStatusId: readStatusId)
+            .snapshots();
     if (excludePendingWrites) {
       docStream = docStream.where((ds) => !ds.metadata.hasPendingWrites);
     }

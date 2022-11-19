@@ -50,6 +50,7 @@
     "document: {chatRoomId}": {
       "chatRoomId": "{chatRoomId}",
       // 必ず自分と相手の 2 つ
+      "createdByUserId": "{appUserId}",
       "appUserIds": ["{appUserId}", "{appUserId}"],
       "createdAt": "2022-08-22 15:00",
       "isDeleted": false
