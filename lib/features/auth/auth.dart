@@ -87,7 +87,7 @@ final googleSignInProvider = Provider.autoDispose<Future<void> Function()>(
         final googleUser = await GoogleSignIn().signIn();
 
         if (googleUser == null) {
-        throw Exception();
+        throw AppException(message: 'Google サインインに失敗しました。');
         }
 
       // Obtain the auth details from the request
