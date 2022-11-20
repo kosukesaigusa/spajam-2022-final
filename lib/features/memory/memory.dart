@@ -21,14 +21,12 @@ final isUploadingProvider = StateProvider<bool>((ref) {
 });
 
 final createMemoryProvider = Provider<
-    Future<void> Function({
-  required BuildContext context,
+    Future<bool?> Function({
   required String comment,
   required String chatRoomId,
 })>(
   (ref) {
     return ({
-      required context,
       required comment,
       required chatRoomId,
     }) async {
@@ -60,12 +58,13 @@ final createMemoryProvider = Provider<
         );
         await ref.read(memoryRepositoryProvider).setMemory(memory: memory);
         ref.read(scaffoldMessengerServiceProvider).showSnackBar('思い出を作成しました🙌');
-        Navigator.pop(context);
       } on Exception catch (e) {
         ref.read(scaffoldMessengerServiceProvider).showSnackBarByException(e);
+        return false;
       } finally {
         ref.read(overlayLoadingProvider.notifier).update((state) => false);
       }
+      return true;
     };
   },
 );
