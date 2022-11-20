@@ -19,7 +19,7 @@ class TodoRepository {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
     }
-    return ds.data()!;
+    return ds.data();
   }
 
   /// 指定したユーザー かつ TodoFilter の条件で絞り込んだ Todo 一覧を購読する。
@@ -27,8 +27,7 @@ class TodoRepository {
     required String userId,
     required TodoFilter todoFilter,
   }) {
-    final collectionStream =
-        todoFilter.queryBuilder(todosRef(appUserId: userId)).snapshots();
+    final collectionStream = todoFilter.queryBuilder(todosRef(appUserId: userId)).snapshots();
     return collectionStream.map(
       (qs) => qs.docs.map((qds) => qds.data()).toList(),
     );
@@ -39,8 +38,7 @@ class TodoRepository {
     required Todo todo,
     SetOptions? setOptions,
   }) async {
-    await todoRef(appUserId: todo.userId, todoId: todo.todoId)
-        .set(todo, setOptions);
+    await todoRef(appUserId: todo.userId, todoId: todo.todoId).set(todo, setOptions);
   }
 
   /// 指定した Todo の isDone を切り替える

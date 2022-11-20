@@ -19,7 +19,7 @@ class AttendingChatRoomRepository {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
     }
-    return ds.data()!;
+    return ds.data();
   }
 
   /// AttendingChatRoom 一覧を購読する。
