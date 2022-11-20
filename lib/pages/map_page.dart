@@ -12,7 +12,6 @@ import '../models/app_user.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
-import '../utils/scaffold_messenger_service.dart';
 import '../widgets/image.dart';
 import 'app_user_detail_page.dart';
 import 'attending_chat_rooms_page.dart';
@@ -58,79 +57,6 @@ class MapPage extends HookConsumerWidget {
           backgroundColor: Colors.transparent, // 1
           elevation: 0,
           actions: [
-            ref.watch(isSignedInProvider).value ?? false
-                ? CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Colors.black38,
-                    child: IconButton(
-                      onPressed: () async {
-                        await ref.read(signOutProvider)();
-                        ref
-                            .read(scaffoldMessengerServiceProvider)
-                            .showSnackBar('ログアウトしました。');
-                      },
-                      icon: const Icon(Icons.logout),
-                    ),
-                  )
-                : IconButton(
-                    onPressed: () async {
-                      await ref
-                          .read(scaffoldMessengerServiceProvider)
-                          .showDialogByBuilder<void>(
-                            builder: (context) => AlertDialog(
-                              title: const Text('テストユーザーでログイン'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () async {
-                                      try {
-                                        await ref.read(
-                                          googleSignInProvider,
-                                        )();
-                                        Navigator.pop(context);
-                                        ref
-                                            .read(
-                                              scaffoldMessengerServiceProvider,
-                                            )
-                                            .showSnackBar('ログインしました。');
-                                      } on Exception catch (e) {
-                                        // 本来は Exception 型を指定したいがここではスナックバーを表示することにする。
-                                        // GoogleSIgnIn を使用する際にアカウント選択時にキャンセルされるとエラーが発生するためにこのような実装とする。
-                                        ref
-                                            .read(
-                                              scaffoldMessengerServiceProvider,
-                                            )
-                                            .showSnackBarByException(e);
-                                      }
-                                    },
-                                    child: const Text('Google アカウントでサインイン'),
-                                  ),
-                                  for (var i = 0; i < 5; i++)
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        await ref.read(
-                                          signInAsTestUserProvider(i + 1),
-                                        )();
-                                        Navigator.pop(context);
-                                        ref
-                                            .read(
-                                              scaffoldMessengerServiceProvider,
-                                            )
-                                            .showSnackBar('ログインしました。');
-                                      },
-                                      child: Text(
-                                        'test${i + 1}@example.com でログイン',
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          );
-                    },
-                    icon: const Icon(Icons.login),
-                  ),
-
             /// ログインしているユーザのアイコン
             ref
                 .watch(
