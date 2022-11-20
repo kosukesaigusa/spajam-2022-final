@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -49,64 +50,9 @@ class MapPage extends HookConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-
-        // TODO: マップは消すかもしれないけど、
-        //  開発中は他の画面に遷移したりするボタンを配置したいので。
-        appBar: AppBar(
-          backgroundColor: Colors.transparent, // 1
-          elevation: 0,
-          actions: [
-            /// ログインしているユーザのアイコン
-            ref
-                .watch(
-                  appUserStreamProvider(ref.watch(userIdProvider).value ?? ''),
-                )
-                .when(
-                  data: (appUser) => GestureDetector(
-                    onTap: () => Navigator.pushNamed<void>(
-                      context,
-                      AppUserDetailPage.location(
-                        appUserId: appUser?.appUserId ?? '',
-                      ),
-                    ),
-                    child: CircleImageWidget(
-                      diameter: 36,
-                      imageURL: appUser?.imageUrl,
-                    ),
-                  ),
-                  error: (error, stackTrace) => const SizedBox(),
-                  loading: () => const SizedBox(),
-                ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: CircleAvatar(
-                backgroundColor: Colors.black38,
-                radius: 20,
-                child: IconButton(
-                  onPressed: () => Navigator.pushNamed<void>(
-                    context,
-                    AttendingChatRoomsPage.location,
-                  ),
-                  icon: const Icon(
-                    Icons.message,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
         body: Stack(
           children: [
             const GoogleMapWidget(),
-            if (kDebugMode)
-              const Positioned(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: MapDebugIndicator(),
-                ),
-              ),
             Positioned(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -117,6 +63,58 @@ class MapPage extends HookConsumerWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: AppUserPageView(),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18,
+                  vertical: 18,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.black38,
+                      radius: 25,
+                      child: IconButton(
+                        onPressed: () => Navigator.pushNamed<void>(
+                          context,
+                          AttendingChatRoomsPage.location,
+                        ),
+                        icon: const Icon(
+                          Icons.message,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+
+                    /// ログインしているユーザのアイコン
+                    ref
+                        .watch(
+                          appUserStreamProvider(
+                              ref.watch(userIdProvider).value ?? ''),
+                        )
+                        .when(
+                          data: (appUser) => GestureDetector(
+                            onTap: () => Navigator.pushNamed<void>(
+                              context,
+                              AppUserDetailPage.location(
+                                appUserId: appUser?.appUserId ?? '',
+                              ),
+                            ),
+                            child: CircleImageWidget(
+                              diameter: 50,
+                              imageURL: appUser?.imageUrl,
+                            ),
+                          ),
+                          error: (error, stackTrace) => const SizedBox(),
+                          loading: () => const SizedBox(),
+                        ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -344,11 +342,14 @@ class AppUserPageViewItem extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 4,
+            child: SizedBox.square(
+              dimension: MediaQuery.of(context).size.width / 4,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(pageViewImageBorderRadius),
-                child: Image.network(appUser.imageUrl),
+                child: CachedNetworkImage(
+                  imageUrl: appUser.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
