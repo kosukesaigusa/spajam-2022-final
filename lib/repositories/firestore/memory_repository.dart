@@ -23,7 +23,7 @@ class MemoryRepository {
     }
     return memoriesRef(
       appUserId: currentUserId,
-    ).get(GetOptions(source: source)).then((snapshot) {
+    ).orderBy('createdAt', descending: true).get(GetOptions(source: source)).then((snapshot) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
   }
