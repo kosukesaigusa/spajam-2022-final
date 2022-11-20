@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +9,7 @@ import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
 import '../features/map/map.dart';
 import '../models/app_user.dart';
+import '../utils/enums/country.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/extensions/int.dart';
 import '../utils/geo.dart';
@@ -95,7 +95,8 @@ class MapPage extends HookConsumerWidget {
                     ref
                         .watch(
                           appUserStreamProvider(
-                              ref.watch(userIdProvider).value ?? ''),
+                            ref.watch(userIdProvider).value ?? '',
+                          ),
                         )
                         .when(
                           data: (appUser) => GestureDetector(
@@ -358,11 +359,20 @@ class AppUserPageViewItem extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  appUser.name,
-                  style: context.titleMedium,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+                Row(
+                  children: [
+                    Text(
+                      appUser.name,
+                      style: context.titleMedium,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    const Spacer(),
+                    appUser.country.icon(
+                      width: 30,
+                      height: 30,
+                    ),
+                  ],
                 ),
                 const Gap(4),
                 Text(
