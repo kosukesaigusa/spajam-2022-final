@@ -111,12 +111,15 @@ class UserView extends HookConsumerWidget {
       // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Gap(40),
-        ClipOval(
-          child: Image.network(
-            user.imageUrl,
-            width: 200,
-            height: 200,
-            fit: BoxFit.contain,
+        Container(
+          width: 110,
+          height: 110,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(user.imageUrl),
+            ),
           ),
         ),
         const Gap(8),
@@ -137,18 +140,25 @@ class UserView extends HookConsumerWidget {
           ],
         ),
         const Gap(24),
-        Row(
-          children: [
-            const Text('住んでる国'),
-            const Gap(16),
-            user.country.icon(
-              width: 50,
-              height: 50,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Text('住んでいる国'),
+                  const Gap(16),
+                  user.country.icon(
+                    width: 50,
+                    height: 50,
+                  ),
+                ],
+              ),
+              const Gap(16),
+              FlagsView(flags: user.flags),
+            ],
+          ),
         ),
-        const Gap(16),
-        FlagsView(flags: user.flags),
         const Gap(24),
         ContactButtonView(
           userId: user.appUserId,
@@ -221,19 +231,21 @@ class Comment extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return comment.isEmpty
         ? const SizedBox.shrink()
-        : Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: Colors.white,
-                ),
-                child: Text(
-                  comment,
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Colors.white,
+              ),
+              child: Text(
+                comment,
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ],
+            ),
           );
   }
 }
