@@ -10,16 +10,12 @@ class FlagsConverter implements JsonConverter<List<Country>, dynamic> {
   @override
   List<Country> fromJson(dynamic json) {
     if (json is List<dynamic>) {
-      return json
-          .map((dynamic e) => const CountryConverter().fromJson(e))
-          .toList();
+      return json.map((dynamic e) => const CountryConverter().fromJson(e)).toList();
     } else {
       return <Country>[];
     }
   }
 
   @override
-  dynamic toJson(List<Country> flags) => <String, List<String>>{
-        'flags': flags.map((e) => e.name).toList(),
-      };
+  dynamic toJson(List<Country> flags) => flags.map((e) => e.name).toList();
 }

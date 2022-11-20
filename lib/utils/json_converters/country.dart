@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import '../enums/country.dart';
 
 /// Firestore の Country 型 と Dart の Country 型とを変換するコンバータ。
-class CountryConverter implements JsonConverter<Country, dynamic> {
+class CountryConverter implements JsonConverter<Country, String> {
   const CountryConverter();
 
   @override
@@ -17,7 +17,5 @@ class CountryConverter implements JsonConverter<Country, dynamic> {
   }
 
   @override
-  dynamic toJson(Country country) => <String, String>{
-        'country': country.name,
-      };
+  String toJson(Country country) => country.name;
 }

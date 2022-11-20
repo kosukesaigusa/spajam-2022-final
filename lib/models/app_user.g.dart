@@ -12,7 +12,7 @@ _$_AppUser _$$_AppUserFromJson(Map<String, dynamic> json) => _$_AppUser(
       imageUrl: json['imageUrl'] as String? ?? '',
       country: json['country'] == null
           ? Country.unknown
-          : const CountryConverter().fromJson(json['country']),
+          : const CountryConverter().fromJson(json['country'] as String),
       isVisible: json['isVisible'] as bool? ?? true,
       flags: json['flags'] == null
           ? const <Country>[]

@@ -21,8 +21,14 @@ class SignInPage extends HookConsumerWidget {
         title: const Text('サインイン'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Gap(120),
+          Image.asset(
+            'assets/launcher_icons/launcher_icon-dev.png',
+            width: 160,
+            height: 160,
+          ),
+          const Gap(32),
           Center(
             child: SignInButton(
               Buttons.Google,
@@ -49,27 +55,30 @@ class SignInPage extends HookConsumerWidget {
           const Gap(8),
           TextButton(
             onPressed: () {
-              ref.watch(scaffoldMessengerServiceProvider).showModalBottomSheetByBuilder<Widget>(
+              ref
+                  .watch(scaffoldMessengerServiceProvider)
+                  .showModalBottomSheetByBuilder<Widget>(
                 builder: (context) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Gap(16),
+                      const Gap(32),
                       for (var i = 0; i < 5; i++)
                         ElevatedButton(
                           onPressed: () async {
-                            await ref.read(
-                              signInAsTestUserProvider(i + 1),
-                            )();
                             Navigator.pop(context);
-                            ref
-                                .read(
-                                  scaffoldMessengerServiceProvider,
-                                )
-                                .showSnackBar('ログインしました。');
+                            await ref.read(signInAsTestUserProvider(i + 1))();
+                            // try {
+                            //   Navigator.pop(context);
+                            //   ref.read(overlayLoadingProvider.notifier).update((state) => true);
+                            //   await ref.read(signInAsTestUserProvider(i + 1))();
+                            // } finally {
+                            //   ref.read(overlayLoadingProvider.notifier).update((state) => false);
+                            // }
                           },
-                          child: Text('test${i + 1}@example.com でログイン'),
+                          child: Text('ユーザー ${i + 1} でログイン'),
                         ),
+                      const Gap(32),
                     ],
                   );
                 },

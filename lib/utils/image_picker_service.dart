@@ -9,7 +9,7 @@ class ImagePickerService {
   final _picker = ImagePicker();
 
   Future<XFile?> getImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
     return pickedFile;
   }
 }

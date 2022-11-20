@@ -17,7 +17,7 @@ class AppUserRepository {
       logger.warning('Document not found: ${ds.reference.path}');
       return null;
     }
-    return ds.data()!;
+    return ds.data();
   }
 
   /// 指定した AppUser を購読する。

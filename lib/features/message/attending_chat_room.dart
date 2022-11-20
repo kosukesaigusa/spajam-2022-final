@@ -2,9 +2,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/attending_chat_room.dart';
 import '../../models/message.dart';
+import '../../repositories/firestore/app_user_repository.dart';
 import '../../repositories/firestore/attending_chat_room.dart';
 import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
+import '../app_user/app_user.dart';
 import '../auth/auth.dart';
 import 'chat_room.dart';
 import 'read_status.dart';
@@ -34,7 +36,8 @@ final latestMessageOfRoomProvider =
 
 /// ユーザーの attendingChatRoom コレクションを購読する StreamProvider。
 /// ユーザーがログインしていない場合は例外をスローする。
-final attendingChatRoomsProvider = StreamProvider.autoDispose<List<AttendingChatRoom>>((ref) {
+final attendingChatRoomsProvider =
+    StreamProvider.autoDispose<List<AttendingChatRoom>>((ref) {
   final appUserId = ref.watch(userIdProvider).value;
   if (appUserId == null) {
     throw const SignInRequiredException();
@@ -50,7 +53,8 @@ final attendingChatRoomsProvider = StreamProvider.autoDispose<List<AttendingChat
 /// 指定した chatRoomId の messages サブコレクションに、message.createdAt が指定した DateTime より
 /// 未来かつ送信者が相手である（自分ではない）ドキュメントの個数（最大 10 個）を購読する
 /// StreamProvider。
-final unreadCountProvider = StreamProvider.autoDispose.family<int, String>((ref, chatRoomId) {
+final unreadCountProvider =
+    StreamProvider.autoDispose.family<int, String>((ref, chatRoomId) {
   final userId = ref.watch(userIdProvider).value;
   if (userId == null) {
     return Stream.value(0);
@@ -73,18 +77,48 @@ final unreadCountProvider = StreamProvider.autoDispose.family<int, String>((ref,
             : q.orderBy('createdAt', descending: true).limit(10),
       )
       .map(
-        (messages) => messages.where((message) => message.senderId != userId).toList().length,
+        (messages) => messages
+            .where((message) => message.senderId != userId)
+            .toList()
+            .length,
       );
 });
 
-final matchAttendingChatRoomProvider =
-    StreamProvider.autoDispose.family<List<AttendingChatRoom>, String>((ref, partnerId) {
+final matchAttendingChatRoomProvider = StreamProvider.autoDispose
+    .family<List<AttendingChatRoom>, String>((ref, partnerId) {
   final myId = ref.watch(userIdProvider).value;
   if (myId == null) {
     return Stream.value([]);
   }
-  return ref.read(attendingChatRoomRepositoryProvider).subscribeAttendingChatRooms(
-        appUserId: partnerId,
-        queryBuilder: (q) => q.where('partnerId', isEqualTo: myId),
+  return ref
+      .read(attendingChatRoomRepositoryProvider)
+      .subscribeAttendingChatRooms(
+        appUserId: myId,
+        queryBuilder: (q) => q.where('partnerId', isEqualTo: partnerId),
       );
 });
+
+final attendeesNameProvider = FutureProvider.autoDispose.family<String, String>(
+  (ref, chatRoomId) async {
+    final chatRoom = await ref
+        .read(chatRoomRepositoryProvider)
+        .fetchChatRoom(chatRoomId: chatRoomId);
+
+    if (chatRoom == null) {
+      return '';
+    }
+
+    final appUserIds = chatRoom.appUserIds;
+    final names = <String>[];
+    for (final appUserId in appUserIds) {
+      final user = await ref
+          .read(appUserRepositoryProvider)
+          .fetchAppUser(appUserId: appUserId);
+      if (user == null) {
+        continue;
+      }
+      names.add(user.name);
+    }
+    return names.join(', ');
+  },
+);
