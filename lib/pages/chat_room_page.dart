@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/app_user/app_user.dart';
 import '../features/auth/auth.dart';
+import '../features/message/attending_chat_room.dart';
 import '../features/message/chat_room.dart';
 import '../features/message/read_status.dart';
 import '../models/message.dart';
@@ -58,7 +59,11 @@ class _ChatRoomPageState extends ConsumerState<ChatRoomPage> {
     final userId = ref.watch(userIdProvider).value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('メッセージ'),
+        title: ref
+                .watch(attendeesNameProvider(chatRoomId))
+                .whenData((name) => Text(name))
+                .value ??
+            Container(),
         actions: [
           IconButton(
             onPressed: () => Navigator.pushNamed<void>(
