@@ -23,6 +23,11 @@ const double _defaultZoom = 15;
 /// マップのデフォルトの検出半径。
 const double _defaultRadius = 1;
 
+/// 現在地の位置情報を提供する
+final currentLocationProvider = StateProvider.autoDispose<LatLng>(
+  (ref) => ref.watch(initialCenterLatLngProvider),
+);
+
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
 final googleMapControllerProvider =
     StateProvider<GoogleMapController?>((_) => null);
@@ -236,6 +241,10 @@ final updateUserLocation = Provider.autoDispose(
     if (userId == null) {
       throw const SignInRequiredException();
     }
+    ref
+        .read(centerLatLngProvider.notifier)
+        .update((state) => LatLng(geoPoint.latitude, geoPoint.longitude));
+
     await ref.read(appUserRepositoryProvider).updateLocation(
           appUserId: userId,
           location: location,
