@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/memory.dart';
@@ -36,12 +35,11 @@ final createMemoryProvider = Provider<
           throw const AppException(message: 'サインインが必要です。');
         }
         ref.read(overlayLoadingProvider.notifier).update((state) => true);
-        final attendingChatRoom = await ref
-            .read(attendingChatRoomRepositoryProvider)
-            .fetchAttendingChatRoom(
-              appUserId: currentUserId,
-              chatRoomId: chatRoomId,
-            );
+        final attendingChatRoom =
+            await ref.read(attendingChatRoomRepositoryProvider).fetchAttendingChatRoom(
+                  appUserId: currentUserId,
+                  chatRoomId: chatRoomId,
+                );
         final partnerId = attendingChatRoom?.partnerId;
         if (partnerId == null) {
           throw const AppException(message: 'パートナーが見つかりません。');
@@ -74,16 +72,14 @@ final uploadImageProvider = Provider<Future<void> Function()>(
     return () async {
       ref.read(isUploadingProvider.notifier).update((state) => true);
       try {
-        final pickedImage =
-            await ref.read(imagePickerServiceProvider).getImage();
+        final pickedImage = await ref.read(imagePickerServiceProvider).getImage();
         if (pickedImage == null) {
           return;
         }
-        final imageUrl =
-            await ref.read(firebaseStorageRepositoryProvider).upload(
-                  path: pickedImage.name,
-                  uint8list: await pickedImage.readAsBytes(),
-                );
+        final imageUrl = await ref.read(firebaseStorageRepositoryProvider).upload(
+              path: pickedImage.name,
+              uint8list: await pickedImage.readAsBytes(),
+            );
         ref.read(uploadedImageUrlProvider.notifier).update((state) => imageUrl);
       } on Exception catch (e) {
         ref.read(scaffoldMessengerServiceProvider).showSnackBarByException(e);
@@ -94,6 +90,6 @@ final uploadImageProvider = Provider<Future<void> Function()>(
   },
 );
 
-final memoriesProvider = FutureProvider<List<Memory>>((ref) async {
+final memoriesProvider = FutureProvider.autoDispose<List<Memory>>((ref) async {
   return ref.watch(memoryRepositoryProvider).fetchMemories();
 });
