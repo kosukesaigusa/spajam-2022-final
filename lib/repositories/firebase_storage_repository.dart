@@ -57,7 +57,7 @@ class FirebaseStorageRepository {
 
       return bytes;
     } on Exception catch (e, stackTrace) {
-      throw Exception('画像の圧縮に失敗しました。error: $e, stackTrace: $stackTrace');
+      rethrow;
     }
   }
 }
