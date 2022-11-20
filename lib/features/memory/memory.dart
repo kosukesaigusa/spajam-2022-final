@@ -90,6 +90,7 @@ final uploadImageProvider = Provider<Future<void> Function()>(
   },
 );
 
-final memoriesProvider = FutureProvider.autoDispose<List<Memory>>((ref) async {
-  return ref.watch(memoryRepositoryProvider).fetchMemories();
+final memoriesProvider =
+    FutureProvider.family.autoDispose<List<Memory>, String>((ref, appUserId) async {
+  return ref.watch(memoryRepositoryProvider).fetchMemories(appUserId: appUserId);
 });

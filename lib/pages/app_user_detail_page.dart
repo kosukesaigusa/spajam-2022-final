@@ -45,9 +45,7 @@ class AppUserDetailPage extends HookConsumerWidget {
               ? IconButton(
                   onPressed: () async {
                     await ref.read(signOutProvider)();
-                    ref
-                        .read(scaffoldMessengerServiceProvider)
-                        .showSnackBar('ログアウトしました。');
+                    ref.read(scaffoldMessengerServiceProvider).showSnackBar('ログアウトしました。');
                   },
                   icon: const Icon(Icons.logout),
                 )
@@ -77,7 +75,7 @@ class AppUserDetailPage extends HookConsumerWidget {
           ),
           SliverGrid.count(
             crossAxisCount: 3,
-            children: ref.watch(memoriesProvider).when(
+            children: ref.watch(memoriesProvider(ref.watch(_appUserIdProvider))).when(
               data: (memories) {
                 return memories
                     .map(

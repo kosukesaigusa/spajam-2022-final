@@ -15,14 +15,11 @@ class MemoryRepository {
   final Ref _ref;
 
   Future<List<Memory>> fetchMemories({
+    required String appUserId,
     Source source = Source.serverAndCache,
   }) {
-    final currentUserId = _ref.watch(userIdProvider).value;
-    if (currentUserId == null) {
-      throw const AppException(message: 'サインインが必要です。');
-    }
     return memoriesRef(
-      appUserId: currentUserId,
+      appUserId: appUserId,
     ).orderBy('createdAt', descending: true).get(GetOptions(source: source)).then((snapshot) {
       return snapshot.docs.map((doc) => doc.data()).toList();
     });
