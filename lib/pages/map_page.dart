@@ -63,9 +63,17 @@ class MapPage extends HookConsumerWidget {
                   appUserStreamProvider(ref.watch(userIdProvider).value ?? ''),
                 )
                 .when(
-                  data: (appUser) => CircleImageWidget(
-                    diameter: 36,
-                    imageURL: appUser?.imageUrl,
+                  data: (appUser) => GestureDetector(
+                    onTap: () => Navigator.pushNamed<void>(
+                      context,
+                      AppUserDetailPage.location(
+                        appUserId: appUser?.appUserId ?? '',
+                      ),
+                    ),
+                    child: CircleImageWidget(
+                      diameter: 36,
+                      imageURL: appUser?.imageUrl,
+                    ),
                   ),
                   error: (error, stackTrace) => const SizedBox(),
                   loading: () => const SizedBox(),

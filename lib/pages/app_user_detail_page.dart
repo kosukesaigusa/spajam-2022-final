@@ -42,18 +42,14 @@ class AppUserDetailPage extends HookConsumerWidget {
       appBar: AppBar(
         actions: [
           ref.watch(isSignedInProvider).value ?? false
-              ? CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.black38,
-                  child: IconButton(
-                    onPressed: () async {
-                      await ref.read(signOutProvider)();
-                      ref
-                          .read(scaffoldMessengerServiceProvider)
-                          .showSnackBar('ログアウトしました。');
-                    },
-                    icon: const Icon(Icons.logout),
-                  ),
+              ? IconButton(
+                  onPressed: () async {
+                    await ref.read(signOutProvider)();
+                    ref
+                        .read(scaffoldMessengerServiceProvider)
+                        .showSnackBar('ログアウトしました。');
+                  },
+                  icon: const Icon(Icons.logout),
                 )
               : Container()
         ],
