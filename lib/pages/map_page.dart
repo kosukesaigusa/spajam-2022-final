@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -341,11 +342,14 @@ class AppUserPageViewItem extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width / 4,
+            child: SizedBox.square(
+              dimension: MediaQuery.of(context).size.width / 4,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(pageViewImageBorderRadius),
-                child: Image.network(appUser.imageUrl),
+                child: CachedNetworkImage(
+                  imageUrl: appUser.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
