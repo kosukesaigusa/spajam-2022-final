@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../features/memory/memory.dart';
 import 'chat_room_page.dart';
 
-class CreateMemoryPage extends ConsumerStatefulWidget {
+class CreateMemoryPage extends StatefulHookConsumerWidget {
   const CreateMemoryPage({super.key});
 
   static const path = '/create-memory/:chatRoomId';
@@ -34,7 +34,6 @@ class _CreateMemoryPageState extends ConsumerState<CreateMemoryPage> {
   @override
   void dispose() {
     confettiController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -43,38 +42,47 @@ class _CreateMemoryPageState extends ConsumerState<CreateMemoryPage> {
     final commentController = useTextEditingController();
     final uploadedImageUrl = ref.watch(uploadedImageUrlProvider);
     final chatRoomId = ref.watch(chatRoomIdProvider);
+    final displaySize = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Memory'),
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 200,
-                  height: 200,
+                  width: displaySize.width * 0.9,
+                  height: displaySize.height * 0.4,
                   child: Card(
                     elevation: 30,
-                    child: Center(
-                      child: uploadedImageUrl.isEmpty
-                          ? Stack(
-                              children: [
-                                IconButton(
-                                  iconSize: 100,
-                                  onPressed: () {
-                                    ref.read(uploadImageProvider).call();
-                                  },
-                                  icon: const Icon(Icons.add_a_photo),
-                                ),
-                                if (ref.watch(isUploadingProvider))
-                                  const CircularProgressIndicator(),
-                              ],
-                            )
-                          : Image.network(uploadedImageUrl),
-                    ),
+                    child: uploadedImageUrl.isEmpty
+                        ? Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              IconButton(
+                                iconSize: 100,
+                                onPressed: () async {
+                                  await ref.read(uploadImageProvider).call();
+                                  confettiController.play();
+                                },
+                                icon: const Icon(Icons.add_a_photo),
+                              ),
+                              if (ref.watch(isUploadingProvider))
+                                const CircularProgressIndicator(),
+                            ],
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.network(
+                              uploadedImageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                   ),
                 ),
                 const Gap(16),
@@ -94,12 +102,13 @@ class _CreateMemoryPageState extends ConsumerState<CreateMemoryPage> {
                           comment: commentController.text,
                           chatRoomId: chatRoomId,
                         );
-                    if (result == true) {
-                      confettiController.play();
-                      await Future.delayed(const Duration(seconds: 10), () {
-                        Navigator.of(context).pop();
-                      });
-                    }
+                    // if (result == true) {
+                    //   confettiController.play();
+                    //   await Future.delayed(const Duration(seconds: 10), () {
+                    //     Navigator.of(context).pop();
+                    //   });
+                    // }
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Create'),
                 ),
@@ -107,7 +116,7 @@ class _CreateMemoryPageState extends ConsumerState<CreateMemoryPage> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(30),
+            // padding: const EdgeInsets.all(30),
             alignment: Alignment.topCenter,
             child: ConfettiWidget(
               confettiController: confettiController,
