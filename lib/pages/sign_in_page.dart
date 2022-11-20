@@ -21,8 +21,14 @@ class SignInPage extends HookConsumerWidget {
         title: const Text('サインイン'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Gap(120),
+          Image.asset(
+            'assets/launcher_icons/launcher_icon-dev.png',
+            width: 160,
+            height: 160,
+          ),
+          const Gap(32),
           Center(
             child: SignInButton(
               Buttons.Google,
@@ -49,7 +55,9 @@ class SignInPage extends HookConsumerWidget {
           const Gap(8),
           TextButton(
             onPressed: () {
-              ref.watch(scaffoldMessengerServiceProvider).showModalBottomSheetByBuilder<Widget>(
+              ref
+                  .watch(scaffoldMessengerServiceProvider)
+                  .showModalBottomSheetByBuilder<Widget>(
                 builder: (context) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,

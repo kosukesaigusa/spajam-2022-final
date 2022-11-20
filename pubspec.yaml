@@ -76,6 +76,7 @@ flutter:
   assets:
     # - assets/lotties/
     - assets/images/
+    - assets/launcher_icons/launcher_icon-dev.png
 
 flutter_icons:
   android: true
