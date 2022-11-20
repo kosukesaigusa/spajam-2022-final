@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../features/app_user/app_user.dart';
@@ -7,6 +8,7 @@ import '../features/memory/memory.dart';
 import '../models/app_user.dart';
 import '../utils/enums/country.dart';
 import '../utils/exceptions/base.dart';
+import '../utils/extensions/build_context.dart';
 import '../utils/routing/app_router_state.dart';
 import 'widgets/contact_button.dart';
 
@@ -35,6 +37,7 @@ class AppUserDetailPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 241, 233, 233),
       appBar: AppBar(),
       body: CustomScrollView(
         slivers: [
@@ -90,33 +93,48 @@ class UserView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const Gap(40),
         ClipOval(
           child: Image.network(
             user.imageUrl,
-            width: 100,
-            height: 100,
+            width: 200,
+            height: 200,
             fit: BoxFit.contain,
           ),
         ),
+        const Gap(8),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('名前: '),
-            Text(user.name),
+            Text(
+              user.name,
+              style: context.displayMedium,
+            ),
           ],
         ),
+        const Gap(8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Comment(comment: user.comment),
+          ],
+        ),
+        const Gap(24),
         Row(
           children: [
-            const Text('国: '),
+            const Text('住んでる国'),
+            const Gap(16),
             user.country.icon(
               width: 50,
               height: 50,
             ),
           ],
         ),
+        const Gap(16),
         FlagsView(flags: user.flags),
-        Comment(comment: user.comment),
+        const Gap(24),
         ContactButtonView(
           userId: user.appUserId,
         ),
@@ -132,9 +150,12 @@ class ContactButtonView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (userId != ref.watch(userIdProvider).value) {
-      return ContactButton(
-        partnerId: userId,
-        chatButtonLabel: 'メッセージを送る',
+      return SizedBox(
+        width: 250,
+        child: ContactButton(
+          partnerId: userId,
+          chatButtonLabel: 'メッセージを送る',
+        ),
       );
     } else {
       return const SizedBox.shrink();
@@ -151,7 +172,8 @@ class FlagsView extends ConsumerWidget {
     if (flags.isNotEmpty) {
       return Row(
         children: [
-          const Text('国旗: '),
+          const Text('国際交流'),
+          const Gap(24),
           Expanded(
             child: Wrap(
               children: flags
@@ -159,7 +181,7 @@ class FlagsView extends ConsumerWidget {
                     (e) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: e.icon(
-                        width: 50,
+                        width: 60,
                         height: 50,
                       ),
                     ),
@@ -186,8 +208,16 @@ class Comment extends ConsumerWidget {
         ? const SizedBox.shrink()
         : Row(
             children: [
-              const Text('一言: '),
-              Text(comment),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: Colors.white,
+                ),
+                child: Text(
+                  comment,
+                ),
+              ),
             ],
           );
   }
