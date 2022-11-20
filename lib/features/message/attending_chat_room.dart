@@ -2,9 +2,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../models/attending_chat_room.dart';
 import '../../models/message.dart';
+import '../../repositories/firestore/app_user_repository.dart';
 import '../../repositories/firestore/attending_chat_room.dart';
 import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
+import '../app_user/app_user.dart';
 import '../auth/auth.dart';
 import 'chat_room.dart';
 import 'read_status.dart';
@@ -95,3 +97,28 @@ final matchAttendingChatRoomProvider = StreamProvider.autoDispose
         queryBuilder: (q) => q.where('partnerId', isEqualTo: partnerId),
       );
 });
+
+final attendeesNameProvider = FutureProvider.autoDispose.family<String, String>(
+  (ref, chatRoomId) async {
+    final chatRoom = await ref
+        .read(chatRoomRepositoryProvider)
+        .fetchChatRoom(chatRoomId: chatRoomId);
+
+    if (chatRoom == null) {
+      return '';
+    }
+
+    final appUserIds = chatRoom.appUserIds;
+    final names = <String>[];
+    for (final appUserId in appUserIds) {
+      final user = await ref
+          .read(appUserRepositoryProvider)
+          .fetchAppUser(appUserId: appUserId);
+      if (user == null) {
+        continue;
+      }
+      names.add(user.name);
+    }
+    return names.join(', ');
+  },
+);

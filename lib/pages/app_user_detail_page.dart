@@ -10,6 +10,7 @@ import '../utils/enums/country.dart';
 import '../utils/exceptions/base.dart';
 import '../utils/extensions/build_context.dart';
 import '../utils/routing/app_router_state.dart';
+import '../utils/scaffold_messenger_service.dart';
 import 'widgets/contact_button.dart';
 
 final _appUserIdProvider = Provider.autoDispose<String>(
@@ -38,7 +39,21 @@ class AppUserDetailPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 241, 233, 233),
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          ref.watch(isSignedInProvider).value ?? false
+              ? IconButton(
+                  onPressed: () async {
+                    await ref.read(signOutProvider)();
+                    ref
+                        .read(scaffoldMessengerServiceProvider)
+                        .showSnackBar('ログアウトしました。');
+                  },
+                  icon: const Icon(Icons.logout),
+                )
+              : Container()
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(

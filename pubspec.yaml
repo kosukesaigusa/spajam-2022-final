@@ -30,6 +30,7 @@ dependencies:
     sdk: flutter
   flutter_datetime_picker_bdaya:
   flutter_hooks:
+  flutter_image_compress: ^1.1.3
   flutter_keyboard_visibility:
   flutter_local_notifications:
   flutter_localizations:
