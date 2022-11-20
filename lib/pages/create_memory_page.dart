@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../features/memory/memory.dart';
 import 'chat_room_page.dart';
 
-class CreateMemoryPage extends ConsumerStatefulWidget {
+class CreateMemoryPage extends StatefulHookConsumerWidget {
   const CreateMemoryPage({super.key});
 
   static const path = '/create-memory/:chatRoomId';
@@ -48,6 +48,7 @@ class _CreateMemoryPageState extends ConsumerState<CreateMemoryPage> {
         title: const Text('Create Memory'),
       ),
       body: Stack(
+        alignment: Alignment.center,
         children: [
           SingleChildScrollView(
             child: Column(
