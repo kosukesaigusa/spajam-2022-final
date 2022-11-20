@@ -21,7 +21,7 @@ class CreateMemoryPage extends HookConsumerWidget {
     final chatRoomId = ref.watch(chatRoomIdProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Memory'),
+        title: const Text('思い出を記録'),
       ),
       body: Center(
         child: SingleChildScrollView(
