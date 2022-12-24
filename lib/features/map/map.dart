@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
+// import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,15 +30,13 @@ final currentLocationProvider = StateProvider.autoDispose<LatLng>(
 );
 
 /// GoogleMap ウィジェットを作成する際に値を更新して使用する。
-final googleMapControllerProvider =
-    StateProvider<GoogleMapController?>((_) => null);
+final googleMapControllerProvider = StateProvider<GoogleMapController?>((_) => null);
 
 /// GeoFlutterFire のインスタンスを提供する Provider。
-final geoProvider = Provider.autoDispose((_) => Geoflutterfire());
+// final geoProvider = Provider.autoDispose((_) => Geoflutterfire());
 
 /// マップの初期中心位置を提供する Provider。ProviderScope.overrides でオーバーライドして使用する。
-final initialCenterLatLngProvider =
-    Provider<LatLng>((_) => throw UnimplementedError());
+final initialCenterLatLngProvider = Provider<LatLng>((_) => throw UnimplementedError());
 
 /// マップの中心位置を管理する StateProvider。
 final centerLatLngProvider =
@@ -67,9 +66,7 @@ final resetDetectionRangeProvider = Provider.autoDispose(
     final zoom = ref.watch(cameraPositionProvider).zoom;
     ref.read(centerLatLngProvider.notifier).update((state) => latLng);
     ref.read(zoomProvider.notifier).update((state) => zoom);
-    ref
-        .read(radiusProvider.notifier)
-        .update((state) => getRadiusFromZoom(zoom));
+    ref.read(radiusProvider.notifier).update((state) => getRadiusFromZoom(zoom));
   },
 );
 
@@ -89,58 +86,64 @@ final backToCurrentPositionProvider = Provider.autoDispose(
 /// マップの現在の検出範囲内に入っている AppUser の DocumentSnapshot 一覧を
 /// 購読する Stream を提供する Provider。
 final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
-  final geo = ref.watch(geoProvider);
   final center = ref.watch(centerLatLngProvider);
   final radius = ref.watch(radiusProvider);
 
-  return geo.collectionWithConverter(collectionRef: appUsersRef).within(
-        center: GeoFirePoint(center.latitude, center.longitude),
-        radius: radius,
-        field: 'location',
-        geopointFrom: (appUser) => appUser.location.geopoint,
-        strictMode: true,
-      );
+  return GeoCollectionRef<AppUser>(appUsersRef).within(
+    center: GeoFirePoint(latitude: center.latitude, longitude: center.longitude),
+    radius: radius,
+    field: 'location',
+    geoPointFromObject: (appUser) => appUser.location.geopoint,
+    strictMode: true,
+  );
+
+  // return ref.watch(geoProvider).collectionWithConverter(collectionRef: appUsersRef).within(
+  //       center: GeoFirePoint(center.latitude, center.longitude),
+  //       radius: radius,
+  //       field: 'location',
+  //       geopointFrom: (appUser) => appUser.location.geopoint,
+  //       strictMode: true,
+  //     );
 });
 
 /// マップ上に検出された AppUser 一覧のマーカーを提供する Provider。
 final markersProvider = Provider.autoDispose((ref) {
   final userId = ref.watch(userIdProvider).value;
 
-  final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
+  final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value ?? [];
   final markers = <Marker>{};
-  if (documentSnapshots != null) {
-    for (final ds in documentSnapshots) {
-      final appUser = ds.data();
-      if (appUser == null || appUser.appUserId == userId) {
-        continue;
-      }
-      final marker = ref.watch(getMarkerFromAppUserProvider)(appUser);
-      markers.add(marker);
+  for (final ds in documentSnapshots) {
+    final appUser = ds.documentSnapshot.data();
+    // final appUser = ds.data();
+    if (appUser == null || appUser.appUserId == userId) {
+      continue;
     }
+    final marker = ref.watch(getMarkerFromAppUserProvider)(appUser);
+    markers.add(marker);
   }
+
   return markers;
 });
 
 /// マップ上に検出された AppUser 一覧を提供する Provider。
 final appUsersOnMapProvider = Provider.autoDispose((ref) {
   final userId = ref.watch(userIdProvider).value;
-  final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value;
+  final documentSnapshots = ref.watch(appUserDocumentSnapshotsStream).value ?? [];
   final appUsers = <AppUser>[];
-  if (documentSnapshots != null) {
-    for (final ds in documentSnapshots) {
-      final appUser = ds.data();
-      if (appUser == null || appUser.appUserId == userId) {
-        continue;
-      }
-      appUsers.add(appUser);
+  for (final ds in documentSnapshots) {
+    final appUser = ds.documentSnapshot.data();
+    // final appUser = ds.data();
+    if (appUser == null || appUser.appUserId == userId) {
+      continue;
     }
+    appUsers.add(appUser);
   }
+
   return appUsers;
 });
 
 /// AppUser から GoogleMap の Marker インスタンスを作成して返すメソッドを提供する Provider。
-final getMarkerFromAppUserProvider =
-    Provider.autoDispose<Marker Function(AppUser)>(
+final getMarkerFromAppUserProvider = Provider.autoDispose<Marker Function(AppUser)>(
   (ref) => (appUser) {
     final geopoint = appUser.location.geopoint;
     final lat = geopoint.latitude;
@@ -155,12 +158,8 @@ final getMarkerFromAppUserProvider =
       ),
       zIndex: selected ? 10 : 0,
       onTap: () async {
-        ref
-            .read(willResetDetectionRangeProvider.notifier)
-            .update((state) => true);
-        ref
-            .read(centerLatLngProvider.notifier)
-            .update((state) => LatLng(lat, lng));
+        ref.read(willResetDetectionRangeProvider.notifier).update((state) => true);
+        ref.read(centerLatLngProvider.notifier).update((state) => LatLng(lat, lng));
         ref.read(selectedAppUserProvider.notifier).update((state) => appUser);
       },
     );
@@ -227,11 +226,15 @@ final updateUserLocation = Provider.autoDispose(
     final geoPoint = p == null
         ? GeoPoint(_defaultLatLng.latitude, _defaultLatLng.longitude)
         : GeoPoint(p.latitude, p.longitude);
-    final geo = Geoflutterfire();
-    final geoFirePoint = geo.point(
+    // final geo = Geoflutterfire();
+    final geoFirePoint = GeoFirePoint(
       latitude: geoPoint.latitude,
       longitude: geoPoint.longitude,
     );
+    // final geoFirePoint = GeoFirePoint(
+    //   geoPoint.latitude,
+    //   geoPoint.longitude,
+    // );
     final location = FirestorePosition(
       geohash: geoFirePoint.data['geohash'] as String,
       geopoint: geoPoint,
