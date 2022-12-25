@@ -1,0 +1,3 @@
+[submodule "geoflutterfire_plus"]
+	path = geoflutterfire_plus
+	url = https://github.com/KosukeSaigusa/geoflutterfire_plus
