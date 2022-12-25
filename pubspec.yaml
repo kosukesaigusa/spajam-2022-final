@@ -39,7 +39,7 @@ dependencies:
   flutter_spinkit:
   font_awesome_flutter:
   freezed_annotation:
-  gap:
+  gap: ^2.0.1
   geoflutterfire:
     git:
       url: https://github.com/KosukeSaigusa/GeoFlutterFire.git
