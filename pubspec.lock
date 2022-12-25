@@ -684,7 +684,7 @@ packages:
   geoflutterfire_plus:
     dependency: "direct main"
     description:
-      path: "../geoflutterfire_plus"
+      path: geoflutterfire_plus
       relative: true
     source: path
     version: "0.0.1"
