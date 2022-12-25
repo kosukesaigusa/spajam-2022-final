@@ -97,7 +97,7 @@ final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
     center: GeoFirePoint(center.latitude, center.longitude),
     radiusInKm: radius,
     field: 'location',
-    geopointFromObject: (appUser) => appUser.location.geopoint,
+    geopointFrom: (appUser) => appUser.location.geopoint,
     strictMode: true,
   );
 
