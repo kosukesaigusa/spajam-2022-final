@@ -118,8 +118,7 @@ final markersProvider = Provider.autoDispose((ref) {
       ref.watch(appUserDocumentSnapshotsStream).value ?? [];
   final markers = <Marker>{};
   for (final ds in documentSnapshots) {
-    final appUser = ds.documentSnapshot.data();
-    // final appUser = ds.data();
+    final appUser = ds.data();
     if (appUser == null || appUser.appUserId == userId) {
       continue;
     }
@@ -137,7 +136,7 @@ final appUsersOnMapProvider = Provider.autoDispose((ref) {
       ref.watch(appUserDocumentSnapshotsStream).value ?? [];
   final appUsers = <AppUser>[];
   for (final ds in documentSnapshots) {
-    final appUser = ds.documentSnapshot.data();
+    final appUser = ds.data();
     // final appUser = ds.data();
     if (appUser == null || appUser.appUserId == userId) {
       continue;
