@@ -6,7 +6,6 @@ import '../../repositories/firestore/app_user_repository.dart';
 import '../../repositories/firestore/attending_chat_room.dart';
 import '../../repositories/firestore/chat_room_repository.dart';
 import '../../utils/exceptions/common.dart';
-import '../app_user/app_user.dart';
 import '../auth/auth.dart';
 import 'chat_room.dart';
 import 'read_status.dart';

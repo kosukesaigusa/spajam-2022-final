@@ -93,7 +93,7 @@ final appUserDocumentSnapshotsStream = StreamProvider.autoDispose((ref) {
   final center = ref.watch(centerLatLngProvider);
   final radius = ref.watch(radiusProvider);
 
-  return GeoCollectionRef<AppUser>(appUsersRef).within(
+  return GeoCollectionReference<AppUser>(appUsersRef).within(
     center: GeoFirePoint(center.latitude, center.longitude),
     radiusInKm: radius,
     field: 'location',
